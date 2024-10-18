@@ -1,0 +1,31 @@
+{
+    "name": "nwidart/productstock",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\ProductStock\\": "",
+            "Modules\\ProductStock\\App\\": "app/",
+            "Modules\\ProductStock\\Database\\Factories\\": "database/factories/",
+            "Modules\\ProductStock\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\ProductStock\\Tests\\": "tests/"
+        }
+    }
+}

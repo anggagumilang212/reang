@@ -1,0 +1,31 @@
+{
+    "name": "nwidart/transferstock",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\TransferStock\\": "",
+            "Modules\\TransferStock\\App\\": "app/",
+            "Modules\\TransferStock\\Database\\Factories\\": "database/factories/",
+            "Modules\\TransferStock\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\TransferStock\\Tests\\": "tests/"
+        }
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "name": "ProductStock",
+    "alias": "productstock",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ProductStock\\Providers\\ProductStockServiceProvider"
+    ],
+    "files": []
+}

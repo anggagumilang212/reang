@@ -1,0 +1,31 @@
+{
+    "name": "nwidart/testimoni",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Testimoni\\": "",
+            "Modules\\Testimoni\\App\\": "app/",
+            "Modules\\Testimoni\\Database\\Factories\\": "database/factories/",
+            "Modules\\Testimoni\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Testimoni\\Tests\\": "tests/"
+        }
+    }
+}

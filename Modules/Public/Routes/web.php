@@ -1,0 +1,44 @@
+<?php
+
+use Modules\Product\Http\Controllers\ProductController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+// Route::get('/', function () {
+//     return view('auth.login');
+// })->middleware('guest');
+
+
+Route::get('/', 'PageController@home')->name('public.home');
+Route::get('/blog', 'PageController@blog')->name('public.blog');
+Route::get('/blog/{post:slug}', 'PageController@detailblog')->name('public.blog-detail');
+Route::get('/store', 'PageController@store')->name('public.store');
+Route::get('/product/{product:product_slug}', 'PageController@detailstore')->name('public.product-detail');
+Route::get('/about', 'PageController@about')->name('public.about');
+// detail blog sebenernya
+Route::get('/blog-detail/{post:slug}', 'PageController@BlogDetail')->name('public.BlogDetail');
+
+Route::get('/tes' , function () {
+    return view('public::beranda');
+});
+
+Route::get('/pricing' , function () {
+    return view('public::pricing');
+});
+Route::get('/testimoni' , function () {
+    return view('public::testimoni');
+});
+Route::get('/product', 'PageController@ProductPage')->name('public.productPage');
+Route::get('/search-products', 'PageController@search')->name('products.search');
+Route::get('/panduan' , function () {
+    return view('public::panduan');
+});
