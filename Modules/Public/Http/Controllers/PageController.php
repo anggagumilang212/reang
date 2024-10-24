@@ -2,16 +2,17 @@
 
 namespace Modules\Public\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
+use Midtrans\Snap;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Routing\Controller;
 use Modules\Blog\Entities\Tag;
 use Modules\Blog\Entities\Post;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\Category;
 use Modules\Blog\Entities\PostCategory;
 use Modules\Testimoni\Entities\Testimoni;
+use Illuminate\Contracts\Support\Renderable;
 
 class PageController extends Controller
 {
@@ -22,11 +23,32 @@ class PageController extends Controller
     public function home()
     {
         $posts = Post::latest()->where('status', 'publish')->take(3)->get();
-        $products = Product::latest()->paginate(10);
+        $products = Product::latest()->paginate(4);
         $testimoni = Testimoni::all();
         return view('public::beranda', compact('posts', 'products', 'testimoni'));
     }
 
+    public function token(Request $request)
+    {
+        $product = Product::findOrFail($request->id);
+        $snapToken = Snap::getSnapToken($product->product_price);
+        return view('public::token', compact('snapToken'));
+    }
+
+    public function detailProduct(Product $product)
+    {
+        $mediaReviews = $product->mediaReviews()
+        ->where('is_active', true)
+        ->get()
+        ->map(function($media) {
+            return [
+                'type' => $media->type,
+                'src' => asset('storage/' . $media->media_path),
+               'thumbnail' => $media->thumbnail_path ? asset('storage/' . $media->thumbnail_path) : null,
+            ];
+        });
+        return view('public::productDetail', compact('product', 'mediaReviews'));
+    }
     public function BlogDetail($slug)
     {
         $blog = Post::where('slug', $slug)->first();
@@ -78,7 +100,7 @@ class PageController extends Controller
     // product page
 public function ProductPage()
 {
-    $products = Product::latest()->paginate(10);
+    $products = Product::latest()->get();
     $categories = Category::all();
     return view('public::product', compact('products', 'categories'));
 }

@@ -410,6 +410,12 @@
         <i class="c-sidebar-nav-icon bi bi-chat" style="line-height: 1;"></i> Testimoni Management
     </a>
 </li>
+<li class="c-sidebar-nav-item">
+    <a class="c-sidebar-nav-link {{ request()->routeIs('mediareview*') ? 'c-active' : '' }}"
+        href="{{ route('mediareview.create') }}">
+        <i class="c-sidebar-nav-icon bi bi-image" style="line-height: 1;"></i> Add Media Product Review
+    </a>
+</li>
 
 @can('access_currencies|access_settings')
     <li

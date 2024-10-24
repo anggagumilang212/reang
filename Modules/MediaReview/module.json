@@ -1,0 +1,11 @@
+{
+    "name": "MediaReview",
+    "alias": "mediareview",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\MediaReview\\Providers\\MediaReviewServiceProvider"
+    ],
+    "files": []
+}

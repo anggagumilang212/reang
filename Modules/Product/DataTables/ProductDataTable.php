@@ -30,14 +30,16 @@ class ProductDataTable extends DataTable
                 return format_currency($data->product_cost);
             })
             ->addColumn('product_quantity', function ($data) {
-                return $data->product_quantity . ' ' . $data->product_unit;
+                // Ambil quantity dari relasi ProductStock
+                $quantity = $data->productStock->quantity ?? 0;
+                return $quantity . ' ' . $data->product_unit;
             })
             ->rawColumns(['product_image']);
     }
 
     public function query(Product $model)
     {
-        return $model->newQuery()->with('category');
+        return $model->newQuery()->with('category','productStock');
     }
 
     public function html()

@@ -6,6 +6,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Modules\ProductStock\Entities\ProductStock;
+use Modules\MediaReview\Entities\ProductMediaReview;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Product\Notifications\NotifyQuantityAlert;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -19,6 +20,12 @@ class Product extends Model implements HasMedia
 
     protected $with = ['media'];
 
+    public function productStock()
+    {
+        return $this->hasOne(ProductStock::class);
+    }
+
+
     public function stocks()
     {
         return $this->hasMany(ProductStock::class, 'product_id', 'id');
@@ -27,6 +34,11 @@ class Product extends Model implements HasMedia
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function mediaReviews()
+    {
+        return $this->hasMany(ProductMediaReview::class)->orderBy('order');
     }
 
     public function registerMediaCollections(): void

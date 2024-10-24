@@ -58,19 +58,20 @@
                                 </tr>
                                 <tr>
                                     <th>Quantity</th>
-                                    <td>{{ $product->product_quantity . ' ' . $product->product_unit }}</td>
+                                    <td>{{ $product->productStock->quantity??'0' }} {{ $product->product_unit }}</td>
                                 </tr>
                                 <tr>
                                     <th>Stock Worth</th>
                                     <td>
-                                        COST:: {{ format_currency($product->product_cost * $product->product_quantity) }} /
-                                        PRICE:: {{ format_currency($product->product_price * $product->product_quantity) }}
+                                        COST:: {{ format_currency($product->product_cost * (optional($product->productStock)->quantity ?? 0)) }} /
+                                        PRICE:: {{ format_currency($product->product_price * (optional($product->productStock)->quantity ?? 0)) }}
                                     </td>
+
                                 </tr>
-                                <tr>
+                                {{-- <tr>
                                     <th>Alert Quantity</th>
-                                    <td>{{ $product->product_stock_alert }}</td>
-                                </tr>
+                                    <td>{{ $product->product_alert_quantity }}</td>
+                                </tr> --}}
                                 <tr>
                                     <th>Tax (%)</th>
                                     <td>{{ $product->product_order_tax ?? 'N/A' }}</td>

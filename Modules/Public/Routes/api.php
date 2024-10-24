@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Modules\Public\Http\Controllers\CheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,13 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/public', function (Request $request) {
     return $request->user();
 });
+
+// midtrans api main
+Route::group(['prefix' => 'api'], function () {
+    Route::post('/checkout/snaptoken', [CheckoutController::class, 'snaptoken'])->name('api.checkout.snaptoken');
+    Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('api.checkout.process');
+    Route::post('/midtrans/callback', [CheckoutController::class, 'callback'])->name('api.midtrans.callback');
+});
+
+
+

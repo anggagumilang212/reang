@@ -20,5 +20,8 @@
     "Testimoni": true,
     "Branch": true,
     "ProductStock": true,
-    "TransferStock": true
+    "TransferStock": true,
+    "Checkout": true,
+    "MediaReview": true,
+    "Transaction": true
 }

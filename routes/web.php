@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Modules\Public\Http\Controllers\CheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,3 +49,6 @@ Route::get('/storage-link', function () {
 
     return 'Storage link has been created successfully!';
 });
+
+
+

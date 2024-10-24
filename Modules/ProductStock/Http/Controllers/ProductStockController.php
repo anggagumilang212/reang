@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Productstock\Http\Controllers;
+namespace Modules\ProductStock\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
-use Modules\Productstock\Entities\Productstock;
+use Modules\ProductStock\Entities\ProductStock;
 use Modules\Upload\Entities\Upload;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
@@ -21,7 +21,7 @@ class ProductStockController extends Controller
     {
         abort_if(Gate::denies('access_productstocks'), 403);
 
-        $productstock = Productstock::get();
+        $productstock = ProductStock::get();
         return $dataTable->render('Productstock::productstocks.index', compact('productstock'));
     }
 
@@ -44,7 +44,7 @@ class ProductStockController extends Controller
     }
 
 
-    public function show(Productstock $Productstock)
+    public function show(ProductStock $Productstock)
     {
         abort_if(Gate::denies('show_productstocks'), 403);
 
@@ -52,7 +52,7 @@ class ProductStockController extends Controller
     }
 
 
-    public function edit(Productstock $Productstock)
+    public function edit(ProductStock $Productstock)
     {
         abort_if(Gate::denies('edit_productstocks'), 403);
 
@@ -60,7 +60,7 @@ class ProductStockController extends Controller
     }
 
 
-    public function update(UpdateProductStockRequest $request, Productstock $productstock)
+    public function update(UpdateProductStockRequest $request, ProductStock $productstock)
     {
         try {
             DB::beginTransaction();
@@ -81,10 +81,10 @@ class ProductStockController extends Controller
         }
     }
 
- 
 
 
-    public function destroy(Productstock $Productstock)
+
+    public function destroy(ProductStock $Productstock)
     {
         abort_if(Gate::denies('delete_productstocks'), 403);
 

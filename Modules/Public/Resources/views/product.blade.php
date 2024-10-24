@@ -34,8 +34,8 @@
             <div
                 class="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-100 shadow-lg  rounded-lg p-6 w-96 max-w-full">
                 <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-lg font-semibold text-gray-900 ">Filter by Category</h3>
-                    <button onclick="toggleModal()" class="text-gray-500 hover:text-gray-700 ">
+                    <h3 class="text-lg font-semibold text-gray-900">Filter by Category</h3>
+                    <button onclick="toggleModal()" class="text-gray-500 hover:text-gray-700">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd"
                                 d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -46,11 +46,11 @@
 
                 <!-- Filter Options -->
                 <div class="space-y-4">
-                    @foreach ($categories as $item)
+                    @foreach ($categories as $category)
                         <label class="flex items-center space-x-2">
-                            <input type="checkbox" value="{{ $item->id }}"
-                                class="rounded border-orange-300 text-orange-600 focus:ring-orange-500">
-                            <span class="text-gray-700 text-gray-300">{{ $item->category_name }}</span>
+                            <input type="checkbox" value="{{ $category->id }}" data-category-id="{{ $category->id }}"
+                                class="category-checkbox rounded border-orange-300 text-orange-600 focus:ring-orange-500">
+                            <span class="text-gray-700">{{ $category->category_name }}</span>
                         </label>
                     @endforeach
                 </div>
@@ -58,7 +58,7 @@
                 <!-- Filter Actions -->
                 <div class="flex justify-end space-x-2 mt-6">
                     <button onclick="toggleModal()"
-                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 ">
+                        class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                         Cancel
                     </button>
                     <button onclick="applyFilter()"
@@ -72,25 +72,22 @@
 
     <section class="py-0">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-20 md:px-12">
-            {{-- <h2 class="font-manrope font-bold text-4xl text-black mb-8 max-xl:text-center">New Arrivals</h2> --}}
             <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
                 @foreach ($products as $item)
-                    <a href="javascript:;"
+                    <a href="{{ route('products.detail', $item) }}"
                         class="relative bg-cover group rounded-3xl bg-center overflow-hidden mx-auto sm:mr-0 xl:mx-auto cursor-pointer">
                         <img class="rounded-2xl object-cover" src="{{ $item->getFirstMediaUrl('images') }}"
-                            alt="Jacket image">
+                            alt="Product image">
                         <div
                             class="absolute z-10 bottom-3 left-0 mx-3 p-3 bg-white w-[calc(100%-24px)] rounded-xl shadow-sm shadow-transparent transition-all duration-500 group-hover:shadow-indigo-200 group-hover:bg-indigo-50">
                             <div class="flex items-center justify-between mb-2">
-                                <h6 class="font-semibold text-base leading-7 text-black ">{{ $item->product_name }}</h6>
-                                <h6 class="font-semibold text-base leading-7 text-indigo-600 text-right">Rp.
-                                    {{ $item->product_price }}</h6>
+                                <h6 class="font-semibold text-base leading-7 text-black">{{ $item->product_name }}</h6>
+                                <h6 class="font-semibold text-base leading-7 text-indigo-600 text-right">
+                                    {{ format_currency($item->product_price) }}</h6>
                             </div>
-                            {{-- <p class="text-xs leading-5 text-gray-500">{{ $item->product_note }}</p> --}}
                         </div>
                     </a>
                 @endforeach
-
             </div>
         </div>
     </section>
@@ -116,8 +113,8 @@
 
         function applyFilter() {
             selectedCategories = [];
-            document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
-                selectedCategories.push(checkbox.value);
+            document.querySelectorAll('.category-checkbox:checked').forEach(checkbox => {
+                selectedCategories.push(checkbox.dataset.categoryId);
             });
             performSearch();
             toggleModal();
@@ -166,14 +163,13 @@
             let html = '';
             products.forEach(product => {
                 html += `
-                    <a href="javascript:;" class="relative bg-cover group rounded-3xl bg-center overflow-hidden mx-auto sm:mr-0 xl:mx-auto cursor-pointer">
+                    <a href="/products-detail/${product.id}" class="relative bg-cover group rounded-3xl bg-center overflow-hidden mx-auto sm:mr-0 xl:mx-auto cursor-pointer">
                         <img class="rounded-2xl object-cover" src="${product.image}" alt="${product.product_name}">
                         <div class="absolute z-10 bottom-3 left-0 mx-3 p-3 bg-white w-[calc(100%-24px)] rounded-xl shadow-sm shadow-transparent transition-all duration-500 group-hover:shadow-indigo-200 group-hover:bg-indigo-50">
                             <div class="flex items-center justify-between mb-2">
                                 <h6 class="font-semibold text-base leading-7 text-black">${product.product_name}</h6>
                                 <h6 class="font-semibold text-base leading-7 text-indigo-600 text-right">Rp. ${product.product_price}</h6>
                             </div>
-
                         </div>
                     </a>
                 `;
@@ -182,9 +178,8 @@
             gridContainer.innerHTML = html;
         }
 
-        // Implementasi search dengan debounce
+        // Search implementation with debounce
         $(document).ready(function() {
-            // Inisialisasi loading state
             const originalGrid = document.querySelector('.grid').innerHTML;
 
             $('#search-input').on('keyup', function() {
@@ -192,17 +187,11 @@
 
                 const query = $(this).val();
                 if (query.length === 0) {
-                    // Reset ke tampilan awal jika search kosong
                     document.querySelector('.grid').innerHTML = originalGrid;
                     return;
                 }
 
-                searchTimer = setTimeout(performSearch, 500); // Delay 500ms
-            });
-
-            // Tambahkan value pada checkbox kategori
-            document.querySelectorAll('input[type="checkbox"]').forEach((checkbox, index) => {
-                checkbox.value = index + 1; // Sesuaikan dengan ID kategori Anda
+                searchTimer = setTimeout(performSearch, 500);
             });
         });
     </script>

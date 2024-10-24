@@ -458,6 +458,48 @@
         </div>
     </div>
 
+       {{-- product --}}
+       <section class="pt-24" >
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-20 md:px-12" id="product">
+            {{-- <h2 class="font-manrope font-bold text-4xl text-black mb-8 max-xl:text-center">New Arrivals</h2> --}}
+            <h3 class="text-3xl md:text-5xl text-indigo-950 font-['Clash_Display'] font-bold mb-10">
+                Produk Terbaru
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
+                @forelse ($products as $item)
+                    <a href="{{ route('products.detail', $item) }}"
+                        class="relative bg-cover group rounded-3xl bg-center overflow-hidden mx-auto sm:mr-0 xl:mx-auto cursor-pointer">
+                        <img class="rounded-2xl object-cover" src="{{ $item->getFirstMediaUrl('images') }}"
+                            alt="Jacket image">
+                        <div
+                            class="absolute z-10 bottom-3 left-0 mx-3 p-3 bg-white w-[calc(100%-24px)] rounded-xl shadow-sm shadow-transparent transition-all duration-500 group-hover:shadow-indigo-200 group-hover:bg-indigo-50">
+                            <div class="flex items-center justify-between mb-2">
+                                <h6 class="font-semibold text-base leading-7 text-black ">{{ $item->product_name }}</h6>
+                                <h6 class="font-semibold text-base leading-7 text-indigo-600 text-right">
+                                    Rp. {{ format_currency($item->product_price) }}</h6>
+                            </div>
+                            {{-- <p class="text-xs leading-5 text-gray-500">{{ $item->product_note }}</p> --}}
+                        </div>
+                    </a>
+                @empty
+                    <p>tidak ada data</p>
+                @endforelse
+            </div>
+            <div class="flex justify-center  mt-10">
+                <a href="/product"
+                    class="flex items-center py-3  bg-gradient-to-r from-amber-400 to-amber-600  text-white text-base px-5 text-center w-60 text-center justify-center rounded-full">
+                    Lihat lebih banyak
+                    <svg class="h-6 w-6 ml-2 text-gray-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 448 512">
+                        <path
+                            d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+                    </svg>
+                </a>
+            </div>
+            {{-- <p>{{ $products->links() }}</p> --}}
+        </div>
+    </section>
+
     {{-- testimoni --}}
     <style>
         .swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet,
@@ -577,50 +619,10 @@
         });
     </script>
 
-    {{-- product --}}
-    <section class="py-0" id="product">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-20 md:px-12">
-            {{-- <h2 class="font-manrope font-bold text-4xl text-black mb-8 max-xl:text-center">New Arrivals</h2> --}}
-            <h3 class="text-3xl md:text-5xl text-indigo-950 font-['Clash_Display'] font-bold mb-10">
-                Produk Terbaru
-            </h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
-                @forelse ($products as $item)
-                    <a href="javascript:;"
-                        class="relative bg-cover group rounded-3xl bg-center overflow-hidden mx-auto sm:mr-0 xl:mx-auto cursor-pointer">
-                        <img class="rounded-2xl object-cover" src="{{ $item->getFirstMediaUrl('images') }}"
-                            alt="Jacket image">
-                        <div
-                            class="absolute z-10 bottom-3 left-0 mx-3 p-3 bg-white w-[calc(100%-24px)] rounded-xl shadow-sm shadow-transparent transition-all duration-500 group-hover:shadow-indigo-200 group-hover:bg-indigo-50">
-                            <div class="flex items-center justify-between mb-2">
-                                <h6 class="font-semibold text-base leading-7 text-black ">{{ $item->product_name }}</h6>
-                                <h6 class="font-semibold text-base leading-7 text-indigo-600 text-right">
-                                    Rp.{{ $item->product_price }}</h6>
-                            </div>
-                            {{-- <p class="text-xs leading-5 text-gray-500">{{ $item->product_note }}</p> --}}
-                        </div>
-                    </a>
-                @empty
-                    <p>tidak ada data</p>
-                @endforelse
-            </div>
-            <div class="flex justify-center  mt-10">
-                <a href="/product"
-                    class="flex items-center py-3  bg-gradient-to-r from-amber-400 to-amber-600  text-white text-base px-5 text-center w-60 text-center justify-center rounded-full">
-                    Lihat lebih banyak
-                    <svg class="h-6 w-6 ml-2 text-gray-white" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 448 512">
-                        <path
-                            d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
-                    </svg>
-                </a>
-            </div>
-            {{-- <p>{{ $products->links() }}</p> --}}
-        </div>
-    </section>
+
 
     {{-- blogs --}}
-    <section class="py-24" id="blog">
+    <section class="py-10" id="blog">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h2 class="font-manrope text-4xl font-['Clash_Display']  font-bold text-gray-900 text-center mb-14">Blogs &
                 Berita Terbaru</h2>

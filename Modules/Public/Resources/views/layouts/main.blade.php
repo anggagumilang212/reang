@@ -74,7 +74,7 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
     <!-- Optional: Tambahkan Sweet Alert untuk notifikasi yang lebih baik -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-[#F1F4F5] font-['Poppins'] overflow-x-hidden">
@@ -224,7 +224,7 @@
                 <div class="grid grid-cols-2 md:grid-cols-3 sm:grid-cols-2 gap-x-5 gap-y-5">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3020.572898635295!2d108.31571437355608!3d-6.3330968619634!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6eb9599846003b%3A0x7ecc6be9c46f85de!2sReang%20Computer!5e1!3m2!1sid!2sid!4v1727404400717!5m2!1sid!2sid"
-                        class="md:w-[500px] md:h-[400px] w-[325px] h-[300px] rounded-lg" style="border:0;"
+                        class="md:w-[500px] md:h-[400px] w-[300px] h-[300px] rounded-lg" style="border:0;"
                         allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
                 </div>

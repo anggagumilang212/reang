@@ -1,6 +1,7 @@
 {
     "name": "Public",
     "alias": "public",
+    "active": true,
     "description": "",
     "keywords": [],
     "priority": 0,
