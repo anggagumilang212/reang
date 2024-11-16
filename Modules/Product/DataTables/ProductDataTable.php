@@ -68,34 +68,35 @@ class ProductDataTable extends DataTable
     {
         return [
             Column::computed('product_image')
-                ->title('Image')
+                ->title(__('messages.image'))
                 ->className('text-center align-middle'),
 
             Column::make('category.category_name')
-                ->title('Category')
+            ->title(__('messages.category'))
                 ->className('text-center align-middle'),
 
             Column::make('product_code')
-                ->title('Code')
+            ->title(__('messages.code'))
                 ->className('text-center align-middle'),
 
             Column::make('product_name')
-                ->title('Name')
+            ->title(__('messages.productname'))
                 ->className('text-center align-middle'),
 
             Column::computed('product_cost')
-                ->title('Cost')
+            ->title(__('messages.cost'))
                 ->className('text-center align-middle'),
 
             Column::computed('product_price')
-                ->title('Price')
+            ->title(__('messages.price'))
                 ->className('text-center align-middle'),
 
             Column::computed('product_quantity')
-                ->title('Quantity')
+            ->title(__('messages.quantity'))
                 ->className('text-center align-middle'),
 
             Column::computed('action')
+            ->title(__('messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),
