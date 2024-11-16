@@ -7,16 +7,19 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Modules\Branch\Entities\Branch;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\RedirectResponse;
 use Modules\Product\Entities\Product;
+
 use Modules\ProductStock\Entities\ProductStock;
-use Modules\Transferstock\DataTables\TransferstockDataTable;
 use Modules\TransferStock\Entities\TransferStock;
+use Modules\TransferStock\DataTables\TransferstockDataTable;
 
 class TransferStockController extends Controller
 {
     public function index(TransferstockDataTable $dataTable)
     {
+        abort_if(Gate::denies('access_transfer_stock'), 403);
         $transfers = TransferStock::with(['fromBranch', 'toBranch', 'product'])
             ->latest()
             ->paginate(10);

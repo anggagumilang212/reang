@@ -1,4 +1,5 @@
 @extends('public::layouts.main')
+
 @section('content')
     <div class="max-w-screen-lg mx-auto">
 
@@ -209,31 +210,49 @@
             const modal = document.getElementById('shareModal');
             const closeModalButton = document.getElementById('closeModalButton');
 
-            // Ambil elemen-elemen di dalam modal share untuk memasukkan link dinamis
+            // Get sharing elements
             const facebookShare = document.querySelector('.facebook-share');
             const twitterShare = document.querySelector('.twitter-share');
-            const instagramShare = document.querySelector('.instagram-share');
-            const WhatsappShare = document.querySelector('.whatsapp-share');
-            const TelegramShare = document.querySelector('.telegram-share');
+            const whatsappShare = document.querySelector('.whatsapp-share');
+            const telegramShare = document.querySelector('.telegram-share');
 
-            // Event listener untuk membuka modal
             openModalButton.addEventListener('click', function() {
-                const shareUrl = this.getAttribute('data-url'); // Ambil URL dari data-url
+                const shareUrl = encodeURIComponent(this.getAttribute('data-url'));
+                const shareTitle = encodeURIComponent('{{ $blog->title }}');
+                const shareImage = encodeURIComponent('{{ $blog->getFirstMediaUrl('images') }}');
 
-                // Set URL dinamis ke dalam link share (Contoh: untuk Facebook, Twitter, dan Instagram)
+                // Update share URLs with encoded parameters
                 facebookShare.href = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
-                twitterShare.href = `https://twitter.com/intent/tweet?url=${shareUrl}`;
-                instagramShare.href = `https://www.instagram.com/?url=${shareUrl}`;
-                WhatsappShare.href = `https://wa.me/?text=${shareUrl}`;
-                TelegramShare.href = `https://telegram.me/share/url?url=${shareUrl}`;
+                twitterShare.href = `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`;
+                whatsappShare.href = `https://api.whatsapp.com/send?text=${shareTitle}%20${shareUrl}`;
+                telegramShare.href = `https://telegram.me/share/url?url=${shareUrl}&text=${shareTitle}`;
 
-                modal.classList.remove('hidden'); // Tampilkan modal
+                modal.classList.remove('hidden');
             });
 
-            // Event listener untuk menutup modal
             closeModalButton.addEventListener('click', () => {
                 modal.classList.add('hidden');
             });
         });
+
+        function copyToClipboard() {
+            var copyText = document.getElementById("linkToCopy");
+
+            // Create a temporary textarea element to handle copying
+            const textarea = document.createElement('textarea');
+            textarea.value = copyText.value;
+            document.body.appendChild(textarea);
+            textarea.select();
+
+            try {
+                document.execCommand('copy');
+                alert("Link copied to clipboard!");
+            } catch (err) {
+                console.error('Failed to copy text:', err);
+                alert("Failed to copy link");
+            }
+
+            document.body.removeChild(textarea);
+        }
     </script>
 @endsection

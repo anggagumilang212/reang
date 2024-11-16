@@ -64,25 +64,28 @@
             <i class="c-sidebar-nav-icon bi  bi-archive" style="line-height: 1;"></i> Stock Management
         </a>
         <ul class="c-sidebar-nav-dropdown-items">
+            @can('access_transfer_stock')
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->routeIs('transferstock.index') ? 'c-active' : '' }}"
                 href="{{ route('transferstock.index') }}">
                     <i class="c-sidebar-nav-icon bi bi-folder-minus" style="line-height: 1;"></i>Transfer Stock
                 </a>
             </li>
+            @endcan
+            @can('access_product_stock')
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->routeIs('productstocks.index') ? 'c-active' : '' }}"
                     href="{{ route('productstocks.index') }}">
                     <i class="c-sidebar-nav-icon bi bi-clipboard-check" style="line-height: 1;"></i> Product Stock
                 </a>
             </li>
-
+            @endcan
         </ul>
     </li>
 @endcan
 
 
-@can('access_adjustments')
+{{-- @can('access_adjustments')
     <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('adjustments.*') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
             <i class="c-sidebar-nav-icon bi bi-clipboard-check" style="line-height: 1;"></i> Stock Adjustments
@@ -104,7 +107,7 @@
             </li>
         </ul>
     </li>
-@endcan
+@endcan --}}
 
 @can('access_quotations')
     <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('quotations.*') ? 'c-show' : '' }}">
@@ -410,12 +413,21 @@
         <i class="c-sidebar-nav-icon bi bi-chat" style="line-height: 1;"></i> Testimoni Management
     </a>
 </li>
+{{-- Media Product Review --}}
 <li class="c-sidebar-nav-item">
     <a class="c-sidebar-nav-link {{ request()->routeIs('mediareview*') ? 'c-active' : '' }}"
         href="{{ route('mediareview.create') }}">
         <i class="c-sidebar-nav-icon bi bi-image" style="line-height: 1;"></i> Add Media Product Review
     </a>
 </li>
+{{-- transaction --}}
+<li class="c-sidebar-nav-item">
+    <a class="c-sidebar-nav-link {{ request()->routeIs('transactions*') ? 'c-active' : '' }}"
+        href="{{ route('transactions.index') }}">
+        <i class="c-sidebar-nav-icon bi bi-currency-exchange" style="line-height: 1;"></i> Transactions
+    </a>
+</li>
+
 
 @can('access_currencies|access_settings')
     <li

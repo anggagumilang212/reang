@@ -17,7 +17,7 @@ class SettingDatabaseSeeder extends Seeder
     {
         Setting::create([
             'company_name' => 'ReangNET Corporation',
-            'company_email' => 'mail@reang.net',
+            'company_email' => 'info@reang.net',
             'company_phone' => '087828496000',
             'notification_email' => 'notification@reang.net',
             'default_currency_id' => 1,

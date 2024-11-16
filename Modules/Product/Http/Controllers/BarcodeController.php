@@ -14,4 +14,6 @@ class BarcodeController extends Controller
         return view('product::barcode.index');
     }
 
+    
+
 }

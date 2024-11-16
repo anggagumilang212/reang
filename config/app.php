@@ -79,8 +79,20 @@ return [
     | to any of the locales which will be supported by the application.
     |
     */
+    'locale' => 'id',
+    'fallback_locale' => 'en',
+    'available_locales' => [
+        'en' => [
+            'name' => 'English',
+            'flag' => 'images/en.png'
+        ],
+        'id' => [
+            'name' => 'Indonesia',
+            'flag' => 'images/id.png'
+        ]
+    ],
 
-    'locale' => 'en',
+    // 'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +105,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    // 'fallback_locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------

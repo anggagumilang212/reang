@@ -25,11 +25,11 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label>Customer</label>
-                                    <select wire:model="customer_id" class="form-control" name="customer_id">
-                                        <option value="">Select Customer</option>
+                                    <label>Cabang Toko</label>
+                                    <select wire:model="branch_id" class="form-control" name="branch_id">
+                                        <option value="">Select Cabang</option>
                                         @foreach($customers as $customer)
-                                            <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
+                                            <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>

@@ -132,7 +132,17 @@ class PermissionsTableSeeder extends Seeder
             //Settings
             'access_settings',
             //Units
-            'access_units'
+            'access_units',
+            // branchs
+            'access_branch_management',
+            'create_branchs',
+            'edit_branchs',
+            'delete_branchs',
+            // stock menagement
+            'access_stock_management',
+            'access_transfer_stock',
+            'access_product_stock',
+
         ];
 
         foreach ($permissions as $permission) {

@@ -3,6 +3,7 @@
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css" rel="stylesheet">
+@section('title', 'Pilih Cabang Toko')
 @section('content')
     <div class="container mx-auto px-4 py-8">
         <h2 class="text-2xl font-bold mb-6 text-center">Pilih Cabang Toko</h2>

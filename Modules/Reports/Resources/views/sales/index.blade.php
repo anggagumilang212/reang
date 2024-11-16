@@ -11,6 +11,9 @@
 
 @section('content')
     <div class="container-fluid">
-        <livewire:reports.sales-report :customers="\Modules\People\Entities\Customer::all()"/>
+        <livewire:reports.sales-report :customers="\Modules\Branch\Entities\Branch::all()"/>
+        {{-- <div class="table-responsive">
+            {!! $dataTable->table() !!}
+        </div> --}}
     </div>
 @endsection

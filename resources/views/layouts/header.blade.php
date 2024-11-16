@@ -13,13 +13,37 @@
 </ul>
 <ul class="c-header-nav ml-auto mr-4">
     @can('create_pos_sales')
-        <li class="c-header-nav-item mr-3">
-            <a class="btn btn-primary btn-pill {{ request()->routeIs('branch.selector') ? 'disabled' : '' }}"
-                href="{{ route('branch.selector') }}">
-                <i class="bi bi-cart mr-1"></i> POS System
-            </a>
-        </li>
-    @endcan
+    <li class="c-header-nav-item mr-3">
+        <a class="btn btn-primary btn-pill {{ request()->routeIs('app.pos.index') ? 'disabled' : '' }}"
+            href="{{ route('branch.selector') }}">
+            <i class="bi bi-cart mr-1"></i> {{ __('messages.pos') }}
+        </a>
+    </li>
+@endcan
+    <div class="dropdown">
+        <button class="btn btn-light dropdown-toggle" type="button" id="languageDropdown" data-toggle="dropdown" aria-expanded="false">
+            <img src="{{ asset(config('app.available_locales')[app()->getLocale()]['flag']) }}"
+                 class="flag-icon"
+                 width="24"
+                 height="16">
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
+            @foreach(config('app.available_locales') as $locale => $language)
+                <li>
+                    <a class="dropdown-item d-flex align-items-center {{ app()->getLocale() == $locale ? 'active' : '' }}"
+                       href="{{ route('language.switch', $locale) }}">
+                        <img src="{{ asset($language['flag']) }}"
+                             alt="{{ $language['name'] }}"
+                             class="flag-icon me-2 mr-1"
+                             width="24"
+                             height="16">
+                          {{ $language['name'] }}
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+
 
     @can('show_notifications')
         <li class="c-header-nav-item dropdown d-md-down-none mr-2">
@@ -28,8 +52,10 @@
                 <i class="bi bi-bell" style="font-size: 20px;"></i>
                 <span class="badge badge-pill badge-danger">
                     @php
-                        $low_quantity_products = \Modules\Product\Entities\Product::select('id', 'product_quantity', 'product_stock_alert', 'product_code')
-                            ->whereColumn('product_quantity', '<=', 'product_stock_alert')
+                        $low_quantity_products = \Modules\Product\Entities\Product::with('productStock')
+                            ->whereHas('productStock', function ($query) {
+                                $query->where('quantity', '<', 5);
+                            })
                             ->get();
                         echo $low_quantity_products->count();
                     @endphp
@@ -39,16 +65,18 @@
                 <div class="dropdown-header bg-light">
                     <strong>{{ $low_quantity_products->count() }} Notifications</strong>
                 </div>
-                @forelse($low_quantity_products as $product)
-                    <a class="dropdown-item" href="{{ route('products.show', $product->id) }}">
-                        <i class="bi bi-hash mr-1 text-primary"></i> Product: "{{ $product->product_code }}" is low in
-                        quantity!
-                    </a>
-                @empty
-                    <a class="dropdown-item" href="#">
-                        <i class="bi bi-app-indicator mr-2 text-danger"></i> No notifications available.
-                    </a>
-                @endforelse
+                <div style="max-height: 300px; overflow-y: auto;">
+                    @forelse($low_quantity_products as $product)
+                        <a class="dropdown-item" href="{{ route('products.show', $product->id) }}">
+                            <i class="bi bi-hash mr-1 text-primary"></i> Product: "{{ $product->product_name }}" Stock is
+                            low! (Current: {{ $product->productStock->quantity }})
+                        </a>
+                    @empty
+                        <a class="dropdown-item" href="#">
+                            <i class="bi bi-app-indicator mr-2 text-danger"></i> No notifications available.
+                        </a>
+                    @endforelse
+                </div>
             </div>
         </li>
     @endcan
@@ -57,8 +85,6 @@
         <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
             aria-expanded="false">
             <div class="c-avatar mr-2">
-                {{-- <img class="c-avatar rounded-circle" src="{{ auth()->user()->getFirstMediaUrl('avatars') }}"
-                    alt="Profile Image"> --}}
                 @if (auth()->user()->hasMedia('avatars'))
                     <img class="c-avatar rounded-circle" src="{{ auth()->user()->getFirstMediaUrl('avatars') }}"
                         alt="Profile Image">

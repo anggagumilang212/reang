@@ -32,7 +32,8 @@
                 <div class="bg-white rounded-xl shadow-md overflow-hidden">
                     <!-- Banner Image -->
                     <div class="w-full h-32 bg-gray-800 overflow-hidden">
-                        <img src="{{ $product->getFirstMediaUrl('images') }}" alt="Netflix Banner" class="w-full h-full object-cover">
+                        <img src="{{ $product->getFirstMediaUrl('images') }}" alt="Netflix Banner"
+                            class="w-full h-full object-cover">
                     </div>
 
                     <!-- Product Info -->
@@ -50,27 +51,38 @@
                                             d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                                     </svg>
                                     <span class="ml-1 text-sm text-gray-600">4.9</span> --}}
-                                    <span class="ml-1 text-xs text-gray-400">Stock : {{ $product->productStock->quantity ?? '0' }} </span>
+                                    <span class="ml-1 text-xs text-gray-400">Stock :
+                                        {{ is_array($flashSale) ? $flashSale['stock'] : $flashSale->stock ?? ($product->productStock->quantity ?? '0') }}</span>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Price Info -->
                         <div class="flex justify-between items-center mb-3">
-                            <span class="text-lg font-bold">Rp
-                                {{ number_format($product->product_price, 0, ',', '.') }}</span>
+                            @if ($flashSale && isset($flashSale['flash_sale_price'], $flashSale['normal_price']))
+                                <span class="text-lg font-bold text-red-500">
+                                    Rp {{ number_format($flashSale['flash_sale_price'], 0, ',', '.') }}
+                                    <span class="text-sm font-bold line-through text-gray-500">
+                                        Rp {{ number_format($flashSale['normal_price'], 0, ',', '.') }}
+                                    @else
+                                        <span class="text-lg font-bold">Rp
+                                            {{ number_format($product->product_price, 0, ',', '.') }}</span>
+                            @endif
                             <span
-                                class="bg-pink-500 text-white px-2 py-1 rounded-full text-xs">{{ $product->category->category_name }}</span>
+                                class="bg-pink-500 text-white px-2 py-1 rounded-full text-xs ">{{ $product->category->category_name }}</span>
                         </div>
 
                         <!-- Discount Badge -->
-                        <div class="flex items-center text-green-600 text-sm">
-                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M5 13l4 4L19 7" />
-                            </svg>
-                            <span>Lebih hemat 50%</span>
-                        </div>
+                        @if ($product->is_flash_sale)
+                            <div class="flex items-center text-green-600 text-sm">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Diskon Flash Sale: Hemat
+                                    {{ number_format((($product->product_price - $product->flash_sale_price) / $product->product_price) * 100, 0) }}%</span>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -126,30 +138,41 @@
                             </div>
 
 
-
-
-                            <!-- Payment Method -->
+                            <!-- Branch -->
                             <div class="mb-6">
                                 <h3 class="font-semibold mb-4">Ambil Di Cabang Toko</h3>
                                 <div class="space-y-3">
-                                    <!-- Cabang Toko -->
                                     @foreach ($branch as $item)
+                                        @php
+                                            // Mengambil stok produk di branch tersebut
+                                            $stock = $item
+                                                ->stocks()
+                                                ->where('product_id', $product->id)
+                                                ->first();
+                                            $quantity = $stock ? $stock->quantity : 0;
+                                        @endphp
+
                                         <label class="block">
                                             <div
-                                                class="bg-white border rounded-lg p-4 cursor-pointer hover:border-orange-500 transition-colors [&:has(input:checked)]:border-orange-500 [&:has(input:checked)]:ring-2 [&:has(input:checked)]:ring-orange-200">
-
+                                                class="bg-white border rounded-lg p-4 {{ $quantity > 0 ? 'cursor-pointer hover:border-orange-500' : 'opacity-50' }} transition-colors [&:has(input:checked)]:border-orange-500 [&:has(input:checked)]:ring-2 [&:has(input:checked)]:ring-orange-200">
                                                 <div class="flex items-center justify-between">
-
                                                     <div class="flex items-center gap-3">
                                                         <input type="radio" name="branch_id"
                                                             value="{{ $item->id }}"
-                                                            class="w-4 h-4 text-orange-600">
+                                                            class="w-4 h-4 text-orange-600"
+                                                            {{ $quantity <= 0 ? 'disabled' : '' }}>
                                                         <div class="flex items-center gap-3">
-
                                                             <div>
                                                                 <p class="font-medium">{{ $item->name }}</p>
                                                                 <p class="text-sm text-gray-500">{{ $item->address }}
                                                                 </p>
+                                                                @if ($quantity <= 0)
+                                                                    <p class="text-sm text-red-500">stok kosong</p>
+                                                                @else
+                                                                    <p class="text-sm text-green-500">stok tersedia
+                                                                        {{ is_array($flashSale) ? $flashSale['stock'] : $flashSale->stock ?? ($product->productStock->quantity ?? '0') }}
+                                                                    </p>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
@@ -162,8 +185,6 @@
                                             </div>
                                         </label>
                                     @endforeach
-
-
                                 </div>
                             </div>
                             <!-- Payment Method -->
@@ -244,8 +265,15 @@
                                 <div class="max-w-6xl mx-auto flex items-center justify-between">
                                     <div class="flex flex-col">
                                         <span class="text-gray-600 text-sm">Total Price</span>
-                                        <span class="text-xl font-bold text-pink-500">Rp
-                                            {{ number_format($product->product_price, 0, ',', '.') }}</span>
+
+                                        @if ($flashSale && isset($flashSale['flash_sale_price'], $flashSale['normal_price']))
+                                            <span class="text-xl font-bold text-pink-500">
+                                                Rp {{ number_format($flashSale['flash_sale_price'], 0, ',', '.') }}
+                                            </span>
+                                        @else
+                                            <span class="text-lg font-bold">
+                                                Rp {{ number_format($product->product_price, 0, ',', '.') }}</span>
+                                        @endif
                                     </div>
                                     <button type="submit" id="pay-button"
                                         class="bg-gradient-to-r from-orange-300 to-orange-500  text-white px-8 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors">
@@ -253,8 +281,6 @@
                                     </button>
                                 </div>
                             </div>
-
-
                         </form>
                     </div>
                 </div>

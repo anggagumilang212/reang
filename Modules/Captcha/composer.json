@@ -1,0 +1,31 @@
+{
+    "name": "nwidart/captcha",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Captcha\\": "",
+            "Modules\\Captcha\\App\\": "app/",
+            "Modules\\Captcha\\Database\\Factories\\": "database/factories/",
+            "Modules\\Captcha\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Captcha\\Tests\\": "tests/"
+        }
+    }
+}

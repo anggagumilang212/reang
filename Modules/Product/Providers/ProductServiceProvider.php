@@ -28,6 +28,7 @@ class ProductServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/Migrations'));
+        $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'Product');
     }
 
     /**

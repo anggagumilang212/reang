@@ -23,5 +23,6 @@
     "TransferStock": true,
     "Checkout": true,
     "MediaReview": true,
-    "Transaction": true
+    "Transaction": true,
+    "Captcha": true
 }

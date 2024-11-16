@@ -52,5 +52,6 @@ Route::get('/products-detail/{product}', [PageController::class, 'detailProduct'
 Route::get('/checkout/{product}', [CheckoutController::class, 'checkout'])->name('checkout');
 
 // handle seteleh pembayaran
-Route::get('/payment/success/{transaction}', [CheckoutController::class, 'showPaymentSuccess'])->name('payment.success');
+Route::get('/payment/success/{transaction}/{productId}', [CheckoutController::class, 'showPaymentSuccess'])->name('payment.success');
 Route::post('/payment/notification', [CheckoutController::class, 'handleNotification'])->name('payment.notification');
+Route::get('/products/load-more', [PageController::class, 'loadMore'])->name('products.loadMore');

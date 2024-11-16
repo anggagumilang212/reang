@@ -7,7 +7,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
 use Modules\Transferstock\Entities\Transferstock;
 
-class TransferStockDataTable extends DataTable
+class TransferstockDataTable extends DataTable
 {
     public function dataTable($query)
     {

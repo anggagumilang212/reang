@@ -2,6 +2,7 @@
 
 namespace Modules\Sale\Entities;
 
+use Modules\Branch\Entities\Branch;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -10,6 +11,11 @@ class Sale extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function branch() {
+        return $this->belongsTo(Branch::class, 'branch_id', 'id');
+
+    }
 
     public function saleDetails() {
         return $this->hasMany(SaleDetails::class, 'sale_id', 'id');

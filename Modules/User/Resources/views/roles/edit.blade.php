@@ -151,6 +151,105 @@
                                     </div>
                                 </div>
 
+                                <!-- Branch Permission -->
+                                <div class="col-lg-4 col-md-6 mb-3">
+                                    <div class="card h-100 border-0 shadow">
+                                        <div class="card-header">
+                                            Toko Management
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="access_branch_management" name="permissions[]"
+                                                            value="access_branch_management"
+                                                            {{ $role->hasPermissionTo('access_branch_management') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label"
+                                                            for="access_branch_management">Access</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="create_branchs" name="permissions[]"
+                                                            value="create_branchs"
+                                                            {{ $role->hasPermissionTo('create_branchs') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label"
+                                                            for="create_branchs">Create</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="edit_branchs" name="permissions[]" value="edit_branchs"
+                                                            {{ $role->hasPermissionTo('edit_branchs') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label"
+                                                            for="edit_branchs">Edit</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="delete_branchs" name="permissions[]"
+                                                            value="delete_branchs"
+                                                            {{ $role->hasPermissionTo('delete_branchs') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label"
+                                                            for="delete_branchs">Delete</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Branch Permission -->
+                                <div class="col-lg-4 col-md-6 mb-3">
+                                    <div class="card h-100 border-0 shadow">
+                                        <div class="card-header">
+                                            Stock Management
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="access_stock_management" name="permissions[]"
+                                                            value="access_stock_management"
+                                                            {{ $role->hasPermissionTo('access_stock_management') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label"
+                                                            for="access_stock_management">Access</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="access_transfer_stock" name="permissions[]"
+                                                            value="access_transfer_stock"
+                                                            {{ $role->hasPermissionTo('access_transfer_stock') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label"
+                                                            for="access_transfer_stock">Transfer Stock</label>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="access_product_stock" name="permissions[]"
+                                                            value="access_product_stock"
+                                                            {{ $role->hasPermissionTo('access_product_stock') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label"
+                                                            for="access_product_stock">Product Stock</label>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <!-- Products Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
@@ -233,7 +332,7 @@
                                 </div>
 
                                 <!-- Adjustments Permission -->
-                                <div class="col-lg-4 col-md-6 mb-3">
+                                {{-- <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
                                         <div class="card-header">
                                             Adjustments
@@ -293,7 +392,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <!-- Quotations Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">

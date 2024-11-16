@@ -44,7 +44,7 @@
                 <div class="col-lg-12">
                     @include('utils.alerts')
                     <div class="form-group">
-                        <button class="btn btn-primary">Create Productstock <i class="bi bi-check"></i></button>
+                        <button class="btn btn-primary">{{ __('messages.create') }} Productstock <i class="bi bi-check"></i></button>
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -56,8 +56,9 @@
                                     <div class="from-group">
                                         <div class="form-group">
                                             <label for="product_id">Product <span class="text-danger">*</span></label>
-                                            <select class="form-control" name="product_id" id="product_id" required>
-                                                <option value="">Pilih Product</option>
+                                            <select class="form-control select2-products" name="product_id" id="product_id"
+                                                required>
+                                                <option value="">{{ __('messages.select_product') }}</option>
                                                 @foreach (\Modules\Product\Entities\Product::all() as $product)
                                                     <option value="{{ $product->id }}">{{ $product->product_name }}
                                                     </option>
@@ -69,9 +70,9 @@
                                 <div class="col-lg-4">
                                     <div class="from-group">
                                         <div class="form-group">
-                                            <label for="branch_id">Cabang Toko <span class="text-danger">*</span></label>
+                                            <label for="branch_id">{{ __('messages.branches') }} <span class="text-danger">*</span></label>
                                             <select class="form-control" name="branch_id" id="branch_id" required>
-                                                <option value="">Pilih Cabang Toko</option>
+                                                <option value="">{{ __('messages.select_branch') }}</option>
                                                 @foreach (\Modules\Branch\Entities\Branch::all() as $branch)
                                                     <option value="{{ $branch->id }}">{{ $branch->name }}
                                                     </option>
@@ -83,7 +84,7 @@
                                 <div class="col-lg-4">
                                     <div class="from-group">
                                         <div class="form-group">
-                                            <label for="quantity">Quantity <span class="text-danger">*</span></label>
+                                            <label for="quantity">{{ __('messages.quantity') }} <span class="text-danger">*</span></label>
                                             <input type="number" class="form-control" name="quantity" required
                                                 value="{{ old('quantity') }}">
                                         </div>
@@ -101,6 +102,29 @@
             </div>
         </form>
     </div>
-
-
 @endsection
+@push('scripts')
+    {{-- Tambahkan di head --}}
+
+    <!-- Select2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Select2 JS (setelah jQuery) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pastikan jQuery sudah dimuat
+            if (typeof jQuery != 'undefined') {
+                // Inisialisasi Select2
+                $('.select2-products').select2({
+                    placeholder: 'Cari produk...',
+                    allowClear: true,
+                    width: '100%'
+                });
+            } else {
+                console.error('jQuery tidak dimuat dengan benar');
+            }
+        });
+    </script>
+@endpush

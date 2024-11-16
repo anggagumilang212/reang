@@ -476,7 +476,7 @@
                             <div class="flex items-center justify-between mb-2">
                                 <h6 class="font-semibold text-base leading-7 text-black ">{{ $item->product_name }}</h6>
                                 <h6 class="font-semibold text-base leading-7 text-indigo-600 text-right">
-                                    Rp. {{ format_currency($item->product_price) }}</h6>
+                                    {{ format_currency($item->product_price) }}</h6>
                             </div>
                             {{-- <p class="text-xs leading-5 text-gray-500">{{ $item->product_note }}</p> --}}
                         </div>

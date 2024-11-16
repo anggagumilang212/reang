@@ -19,8 +19,7 @@ class ProductStockController extends Controller
 
     public function index(ProductStockDataTable $dataTable)
     {
-        abort_if(Gate::denies('access_productstocks'), 403);
-
+        abort_if(Gate::denies('access_product_stock'), 403);
         $productstock = ProductStock::get();
         return $dataTable->render('Productstock::productstocks.index', compact('productstock'));
     }
@@ -28,15 +27,16 @@ class ProductStockController extends Controller
 
     public function create()
     {
-        abort_if(Gate::denies('create_productstocks'), 403);
-
+        abort_if(Gate::denies('access_product_stock'), 403);
         return view('Productstock::productstocks.create');
     }
 
 
     public function store(StoreProductStockRequest $request)
     {
-     Productstock::create($request->validated());
+        abort_if(Gate::denies('access_product_stock'), 403);
+
+        Productstock::create($request->validated());
 
         toast('Productstock Created Successfully!', 'success');
 
@@ -46,15 +46,12 @@ class ProductStockController extends Controller
 
     public function show(ProductStock $Productstock)
     {
-        abort_if(Gate::denies('show_productstocks'), 403);
-
         return view('Productstock::productstocks.show', compact('Productstock'));
     }
 
 
     public function edit(ProductStock $Productstock)
     {
-        abort_if(Gate::denies('edit_productstocks'), 403);
 
         return view('Productstock::productstocks.edit', compact('Productstock'));
     }
@@ -73,7 +70,6 @@ class ProductStockController extends Controller
 
             toast('Productstock Updated Successfully!', 'success');
             return redirect()->route('productstocks.index');
-
         } catch (\Exception $e) {
             DB::rollBack();
             toast('Failed to update productstock. ' . $e->getMessage(), 'error');
@@ -86,7 +82,6 @@ class ProductStockController extends Controller
 
     public function destroy(ProductStock $Productstock)
     {
-        abort_if(Gate::denies('delete_productstocks'), 403);
 
         $Productstock->delete();
 

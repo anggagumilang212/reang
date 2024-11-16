@@ -29,6 +29,6 @@ class StoreProductStockRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('create_productstocks');
+        return Gate::allows('access_product_stock');
     }
 }

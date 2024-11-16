@@ -1,14 +1,14 @@
-@can('edit_productstocks')
+@can('access_product_stock')
     <a href="{{ route('productstocks.edit', $data->id) }}" class="btn btn-info btn-sm">
         <i class="bi bi-pencil"></i>
     </a>
 @endcan
-@can('show_productstocks')
+@can('access_product_stock')
     {{-- <a href="{{ route('productstocks.show', $data->id) }}" class="btn btn-primary btn-sm">
         <i class="bi bi-eye"></i>
     </a> --}}
 @endcan
-@can('delete_productstocks')
+@can('access_product_stock')
     <button id="delete" class="btn btn-danger btn-sm"
         onclick="
     event.preventDefault();

@@ -36,23 +36,25 @@
                                 <td class="align-middle">{{ $product->product_name }}</td>
                                 <td class="align-middle">{{ $product->product_code }}</td>
                                 <td class="align-middle text-center" style="width: 200px;">
-                                    <input wire:model.live="quantities.{{ $index }}" class="form-control" type="number" min="1"
-                                        max="100" value="{{ $quantities[$index] }}">
+                                    <input wire:model.live="quantities.{{ $index }}" class="form-control"
+                                        type="number" min="1" max="100" value="{{ $quantities[$index] }}">
                                 </td>
                                 <td class="align-middle text-center">
                                     @if ($product->is_barcode_generated)
-                                    <span class="text-success">Barcode Generated</span>
-                                @else
-                                    <button wire:click="removeProduct({{ $index }})" class="btn btn-sm btn-danger">
-                                        Remove
-                                    </button>
+                                        <span class="text-success">Barcode Generated</span>
+                                    @else
+                                        <button wire:click="removeProduct({{ $index }})"
+                                            class="btn btn-sm btn-danger">
+                                            Remove
+                                        </button>
                                     @endif
                                 </td>
                             </tr>
                         @empty
                             <tr>
                                 <td colspan="4" class="text-center">
-                                    <span class="text-danger">No products selected. Please search and select products above!</span>
+                                    <span class="text-danger">No products selected. Please search and select products
+                                        above!</span>
                                 </td>
                             </tr>
                         @endforelse
@@ -60,7 +62,8 @@
                 </table>
             </div>
             <div class="mt-3">
-                <button wire:click="generateBarcodes" type="button" class="btn btn-primary" @if(empty($selectedProducts)) disabled @endif>
+                <button wire:click="generateBarcodes" type="button" class="btn btn-primary"
+                    @if (empty($selectedProducts)) disabled @endif>
                     <i class="bi bi-upc-scan"></i> Generate Barcodes
                 </button>
             </div>
@@ -95,10 +98,11 @@
                                     {{ $product->product_name }}
                                 </p>
                                 <div>
-                                    {!! $barcode !!}
+                                    {{-- {!! $barcode !!} --}}
+                                    <img src="{{ $barcode }}">
                                 </div>
                                 <p style="font-size: 15px;color: #000;">
-                                    Harga: {{ str_replace('Rp', '', format_currency($product->product_price)) }}
+                                    Harga: {{ format_currency($product->product_price) }}
 
                                 </p>
                             </div>

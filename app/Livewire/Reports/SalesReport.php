@@ -16,7 +16,7 @@ class SalesReport extends Component
     public $customers;
     public $start_date;
     public $end_date;
-    public $customer_id;
+    public $branch_id;
     public $sale_status;
     public $payment_status;
 
@@ -29,7 +29,7 @@ class SalesReport extends Component
         $this->customers = $customers;
         $this->start_date = today()->subDays(30)->format('Y-m-d');
         $this->end_date = today()->format('Y-m-d');
-        $this->customer_id = '';
+        $this->branch_id = '';
         $this->sale_status = '';
         $this->payment_status = '';
     }
@@ -37,8 +37,8 @@ class SalesReport extends Component
     public function render() {
         $sales = Sale::whereDate('date', '>=', $this->start_date)
             ->whereDate('date', '<=', $this->end_date)
-            ->when($this->customer_id, function ($query) {
-                return $query->where('customer_id', $this->customer_id);
+            ->when($this->branch_id, function ($query) {
+                return $query->where('branch_id', $this->branch_id);
             })
             ->when($this->sale_status, function ($query) {
                 return $query->where('status', $this->sale_status);

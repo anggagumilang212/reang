@@ -5,8 +5,8 @@
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('sales.index') }}">Sales</a></li>
-        <li class="breadcrumb-item active">Edit</li>
+        <li class="breadcrumb-item"><a href="{{ route('sales.index') }}">{{ __('messages.sales') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.edit') }}</li>
     </ol>
 @endsection
 
@@ -27,16 +27,28 @@
                             @csrf
                             @method('patch')
                             <div class="form-row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="reference">Reference <span class="text-danger">*</span></label>
+                                        <label for="reference">{{{ __('messages.reference') }}} <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="reference" required value="{{ $sale->reference }}" readonly>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="from-group">
                                         <div class="form-group">
-                                            <label for="customer_id">Customer <span class="text-danger">*</span></label>
+                                            <label for="branch_id">{{{ __('messages.branches') }}} <span class="text-danger">*</span></label>
+                                            <select class="form-control" name="branch_id" id="branch_id" required>
+                                                @foreach(\Modules\Branch\Entities\Branch::all() as $branch)
+                                                    <option {{ $sale->branch_id == $branch->id ? 'selected' : '' }} value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="from-group">
+                                        <div class="form-group">
+                                            <label for="customer_id">{{{ __('messages.customer') }}} <span class="text-danger">*</span></label>
                                             <select class="form-control" name="customer_id" id="customer_id" required>
                                                 @foreach(\Modules\People\Entities\Customer::all() as $customer)
                                                     <option {{ $sale->customer_id == $customer->id ? 'selected' : '' }} value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
@@ -45,10 +57,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+
+                                <div class="col-lg-6">
                                     <div class="from-group">
                                         <div class="form-group">
-                                            <label for="date">Date <span class="text-danger">*</span></label>
+                                            <label for="date">{{{ __('messages.date') }}} <span class="text-danger">*</span></label>
                                             <input type="date" class="form-control" name="date" required value="{{ $sale->date }}">
                                         </div>
                                     </div>
@@ -60,7 +73,7 @@
                             <div class="form-row">
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="status">Status <span class="text-danger">*</span></label>
+                                        <label for="status">{{{ __('messages.status') }}} <span class="text-danger">*</span></label>
                                         <select class="form-control" name="status" id="status" required>
                                             <option {{ $sale->status == 'Pending' ? 'selected' : '' }} value="Pending">Pending</option>
                                             <option {{ $sale->status == 'Shipped' ? 'selected' : '' }} value="Shipped">Shipped</option>
@@ -71,27 +84,27 @@
                                 <div class="col-lg-4">
                                     <div class="from-group">
                                         <div class="form-group">
-                                            <label for="payment_method">Payment Method <span class="text-danger">*</span></label>
+                                            <label for="payment_method">{{{ __('messages.paymentmethod') }}} <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" name="payment_method" required value="{{ $sale->payment_method }}" readonly>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label for="paid_amount">Amount Received <span class="text-danger">*</span></label>
+                                        <label for="paid_amount">{{{ __('messages.paidamount') }}} <span class="text-danger">*</span></label>
                                         <input id="paid_amount" type="text" class="form-control" name="paid_amount" required value="{{ $sale->paid_amount }}" readonly>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="note">Note (If Needed)</label>
+                                <label for="note">{{ __('messages.note') }} (If Needed)</label>
                                 <textarea name="note" id="note" rows="5" class="form-control">{{ $sale->note }}</textarea>
                             </div>
 
                             <div class="mt-3">
                                 <button type="submit" class="btn btn-primary">
-                                    Update Sale <i class="bi bi-check"></i>
+                                    {{ __('messages.update') }} {{ __('messages.sales') }} <i class="bi bi-check"></i>
                                 </button>
                             </div>
                         </form>

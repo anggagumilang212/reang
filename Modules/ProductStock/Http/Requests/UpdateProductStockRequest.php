@@ -28,6 +28,6 @@ class UpdateProductStockRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('edit_productstocks');
+        return Gate::allows('access_product_stock');
     }
 }

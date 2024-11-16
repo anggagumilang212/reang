@@ -1,5 +1,8 @@
 <!doctype html>
 <html>
+{{-- @php
+    $blog = Modules\Blog\Entities\Post::first();
+@endphp --}}
 
 <head>
     <meta charset="UTF-8">
@@ -17,6 +20,13 @@
     <meta property="og:image" content="https://reang.net/images/og-image.jpg">
     <meta property="og:url" content="https://reang.net">
     <meta property="og:type" content="website">
+
+    {{-- Add OpenGraph Meta Tags for Rich Social Sharing --}}
+    {{-- <meta property="og:title" content="{{ $blog->title }}" />
+    <meta property="og:description" content="{{ $blog->description }}" />
+    <meta property="og:image" content="{{ $blog->getFirstMediaUrl('images') }}" />
+    <meta property="og:url" content="{{ url('blog-detail', $blog->slug) }}" />
+    <meta property="og:type" content="website" /> --}}
 
     <!-- Meta tags untuk Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
@@ -75,12 +85,18 @@
 
     <!-- Optional: Tambahkan Sweet Alert untuk notifikasi yang lebih baik -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    {{-- WhatsApp specific meta tags --}}
+    <meta property="og:site_name" content="Your Site Name">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 </head>
 
 <body class="bg-[#F1F4F5] font-['Poppins'] overflow-x-hidden">
     <nav class="navbar max-w-6xl mx-auto py-10 px-5 md:px-8 xl:px-0">
         <div class="flex flex-row items-center justify-between">
-           <a href="/"> <img src="/images/logo-dark.png" class="h-[42px]" alt=""></a>
+            <a href="/"> <img src="/images/logo-dark.png" class="h-[42px]" alt=""></a>
             <ul class=" flex-row gap-x-8 lg:flex hidden">
                 <li><a href="/" class="text-indigo-950 hover:text-amber-300">Home</a></li>
                 <li><a href="#product" class="text-indigo-950 hover:text-amber-300">Products</a></li>

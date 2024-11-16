@@ -25,28 +25,28 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="form-group">
                                         <label for="customer_name">Customer Name <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="customer_name" required>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="customer_email">Email <span class="text-danger">*</span></label>
                                         <input type="email" class="form-control" name="customer_email" >
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
 
                             <div class="form-row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-12">
                                     <div class="form-group">
                                         <label for="customer_phone">Phone <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="customer_phone" >
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                {{-- <div class="col-lg-4">
                                     <div class="form-group">
                                         <label for="city">City <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="city" >
@@ -57,7 +57,7 @@
                                         <label for="country">Country <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="country" >
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
 
                             <div class="form-row">

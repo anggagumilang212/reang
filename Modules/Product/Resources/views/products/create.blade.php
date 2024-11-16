@@ -80,6 +80,7 @@
                                             <option value="UPCE">UPC-E</option>
                                             <option selected value="EAN13">EAN-13</option>
                                             <option value="EAN8">EAN-8</option>
+
                                         </select>
                                     </div>
                                 </div>

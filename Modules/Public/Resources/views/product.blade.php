@@ -2,6 +2,7 @@
 @section('content')
     <!-- Search Input with Filter -->
     <div class="max-w-[700px] mx-auto mb-5 p-4">
+
         <div class="relative">
             <!-- Search Input -->
             <div class="relative w-full">
@@ -74,21 +75,49 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-20 md:px-12">
             <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
                 @foreach ($products as $item)
+
                     <a href="{{ route('products.detail', $item) }}"
                         class="relative bg-cover group rounded-3xl bg-center overflow-hidden mx-auto sm:mr-0 xl:mx-auto cursor-pointer">
+
+                        <!-- Cek apakah produk ini ada dalam daftar flash sales -->
+                        @if (in_array($item->id, $flashSales))
+                            <!-- Badge Flash Sale -->
+                            <span
+                                class="absolute top-3 left-3 bg-red-600 text-white px-2 py-1 rounded-lg font-semibold text-xs">
+                                Flash Sale
+                            </span>
+                        @endif
+
                         <img class="rounded-2xl object-cover" src="{{ $item->getFirstMediaUrl('images') }}"
                             alt="Product image">
+
                         <div
                             class="absolute z-10 bottom-3 left-0 mx-3 p-3 bg-white w-[calc(100%-24px)] rounded-xl shadow-sm shadow-transparent transition-all duration-500 group-hover:shadow-indigo-200 group-hover:bg-indigo-50">
                             <div class="flex items-center justify-between mb-2">
                                 <h6 class="font-semibold text-base leading-7 text-black">{{ $item->product_name }}</h6>
                                 <h6 class="font-semibold text-base leading-7 text-indigo-600 text-right">
-                                    {{ format_currency($item->product_price) }}</h6>
+                                    {{ format_currency($item->product_price) }}
+                                </h6>
                             </div>
                         </div>
                     </a>
                 @endforeach
+
+                <div class="flex justify-center ">
+                    <a href="/#product"
+                        class="flex items-center py-3  bg-gradient-to-r from-amber-400 to-amber-600  text-white text-base px-5 text-center w-60 text-center justify-center rounded-full">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 448 512">
+                            <path
+                                d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
+                        </svg>
+                        Kembali Ke Beranda
+
+                    </a>
+                </div>
             </div>
+
+            <p class="mt-5">{{ $products->links() }}</p>
         </div>
     </section>
 
@@ -167,7 +196,7 @@
                         <img class="rounded-2xl object-cover" src="${product.image}" alt="${product.product_name}">
                         <div class="absolute z-10 bottom-3 left-0 mx-3 p-3 bg-white w-[calc(100%-24px)] rounded-xl shadow-sm shadow-transparent transition-all duration-500 group-hover:shadow-indigo-200 group-hover:bg-indigo-50">
                             <div class="flex items-center justify-between mb-2">
-                                <h6 class="font-semibold text-base leading-7 text-black">${product.product_name}</h6>
+                                <h6 class="font-semibold text-base leading-7 text-black">${product.product_name} ${product.id}</h6>
                                 <h6 class="font-semibold text-base leading-7 text-indigo-600 text-right">Rp. ${product.product_price}</h6>
                             </div>
                         </div>

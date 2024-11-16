@@ -22,6 +22,9 @@
                         <a href="{{ route('products.create') }}" class="btn btn-primary">
                             Add Product <i class="bi bi-plus"></i>
                         </a>
+                        <a href="{{ route('products.importForm') }}" class="btn btn-success">
+                            Import Excel <i class="bi bi-upload"></i>
+                        </a>
 
                         <hr>
 

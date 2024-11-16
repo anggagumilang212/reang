@@ -19,5 +19,5 @@ Route::group([], function () {
     Route::resource('branchs', BranchController::class)->names('branchs');
 });
 
-Route::get('/select-branch', 'BranchController@selector')->name('branch.selector');
+Route::get('/select-branch', 'BranchController@selector')->name('branch.selector')->middleware('auth');
 Route::post('/set-branch', 'BranchController@setBranch')->name('branch.set');

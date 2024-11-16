@@ -2,8 +2,9 @@
 
 namespace App\Livewire\Pos;
 
-use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use Modules\ProductStock\Entities\ProductStock;
 
 class Checkout extends Component
 {
@@ -34,32 +35,57 @@ class Checkout extends Component
         $this->discount_type = [];
         $this->item_discount = [];
         $this->total_amount = 0;
+        $this->total_amount = $this->calculateTotal(); // Initialize with correct total
     }
 
     public function hydrate() {
         $this->total_amount = $this->calculateTotal();
     }
 
-    public function render() {
-        $cart_items = Cart::instance($this->cart_instance)->content();
+    // public function calculateTotal() {
+    //     $cart_total = Cart::instance($this->cart_instance)->total();
+    //     $total = is_string($cart_total) ? floatval(str_replace(',', '', $cart_total)) : $cart_total;
+    //     return $total + $this->shipping;
+    // }
+    public function calculateTotal() {
+        $cart_total = Cart::instance($this->cart_instance)->total();
+        // Remove any currency symbols and thousand separators
+        $clean_total = preg_replace('/[^\d.-]/', '', $cart_total);
+        return (float) $clean_total + $this->shipping;
+    }
 
-        return view('livewire.pos.checkout', [
-            'cart_items' => $cart_items
-        ]);
+    public function formatNumber($number) {
+        // Ensure the number is treated as float
+        return number_format((float) $number, 2, '.', '');
     }
 
     public function proceed() {
         if ($this->customer_id != null) {
+            // Update total_amount before showing modal
+            $this->total_amount = $this->calculateTotal();
             $this->dispatch('showCheckoutModal');
         } else {
             session()->flash('message', 'Please Select Customer!');
         }
     }
 
-    public function calculateTotal() {
-        return Cart::instance($this->cart_instance)->total() + $this->shipping;
+    public function render() {
+        $cart_items = Cart::instance($this->cart_instance)->content();
+
+        // Always ensure total_amount is updated before rendering
+        $this->total_amount = $this->calculateTotal();
+
+        return view('livewire.pos.checkout', [
+            'cart_items' => $cart_items
+        ]);
     }
 
+    // Add a method to handle cart updates
+    public function updated($name, $value) {
+        if (in_array($name, ['global_tax', 'global_discount', 'shipping'])) {
+            $this->total_amount = $this->calculateTotal();
+        }
+    }
     public function resetCart() {
         Cart::instance($this->cart_instance)->destroy();
     }
@@ -73,7 +99,20 @@ class Checkout extends Component
 
         if ($exists->isNotEmpty()) {
             session()->flash('message', 'Product exists in the cart!');
+            return;
+        }
 
+        // Cek stock di ProductStock
+        $branch_id = session('selected_branch');
+        $stock = ProductStock::where([
+            'product_id' => $product['id'],
+            'branch_id' => $branch_id
+        ])->first();
+
+        $available_stock = $stock ? $stock->quantity : 0;
+
+        if ($available_stock <= 0) {
+            session()->flash('message', 'Product is out of stock!');
             return;
         }
 
@@ -88,19 +127,20 @@ class Checkout extends Component
                 'product_discount_type' => 'fixed',
                 'sub_total'             => $this->calculate($product)['sub_total'],
                 'code'                  => $product['product_code'],
-                'stock'                 => $product['product_quantity'],
+                'stock'                 => $available_stock, // Gunakan stock dari ProductStock
                 'unit'                  => $product['product_unit'],
                 'product_tax'           => $this->calculate($product)['product_tax'],
                 'unit_price'            => $this->calculate($product)['unit_price']
             ]
         ]);
 
-        $this->check_quantity[$product['id']] = $product['product_quantity'];
+        $this->check_quantity[$product['id']] = $available_stock; // Gunakan stock dari ProductStock
         $this->quantity[$product['id']] = 1;
         $this->discount_type[$product['id']] = 'fixed';
         $this->item_discount[$product['id']] = 0;
         $this->total_amount = $this->calculateTotal();
     }
+
 
     public function removeItem($row_id) {
         Cart::instance($this->cart_instance)->remove($row_id);
@@ -115,9 +155,17 @@ class Checkout extends Component
     }
 
     public function updateQuantity($row_id, $product_id) {
-        if ($this->check_quantity[$product_id] < $this->quantity[$product_id]) {
-            session()->flash('message', 'The requested quantity is not available in stock.');
+        // Cek stock di ProductStock
+        $branch_id = session('selected_branch');
+        $stock = ProductStock::where([
+            'product_id' => $product_id,
+            'branch_id' => $branch_id
+        ])->first();
 
+        $available_stock = $stock ? $stock->quantity : 0;
+
+        if ($available_stock < $this->quantity[$product_id]) {
+            session()->flash('message', 'The requested quantity is not available in stock.');
             return;
         }
 
@@ -129,7 +177,7 @@ class Checkout extends Component
             'options' => [
                 'sub_total'             => $cart_item->price * $cart_item->qty,
                 'code'                  => $cart_item->options->code,
-                'stock'                 => $cart_item->options->stock,
+                'stock'                 => $available_stock, // Update stock dari ProductStock
                 'unit'                  => $cart_item->options->unit,
                 'product_tax'           => $cart_item->options->product_tax,
                 'unit_price'            => $cart_item->options->unit_price,
@@ -138,6 +186,7 @@ class Checkout extends Component
             ]
         ]);
     }
+
 
     public function updatedDiscountType($value, $name) {
         $this->item_discount[$name] = 0;

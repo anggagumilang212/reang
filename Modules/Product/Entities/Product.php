@@ -13,7 +13,6 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Product extends Model implements HasMedia
 {
-
     use HasFactory, InteractsWithMedia;
 
     protected $guarded = [];
@@ -24,7 +23,6 @@ class Product extends Model implements HasMedia
     {
         return $this->hasOne(ProductStock::class);
     }
-
 
     public function stocks()
     {
@@ -56,7 +54,8 @@ class Product extends Model implements HasMedia
 
     public function setProductCostAttribute($value)
     {
-        $this->attributes['product_cost'] = ($value * 100);
+        $numericValue = is_numeric($value) ? floatval($value) : 0;
+        $this->attributes['product_cost'] = ($numericValue * 100);
     }
 
     public function getProductCostAttribute($value)
@@ -66,7 +65,8 @@ class Product extends Model implements HasMedia
 
     public function setProductPriceAttribute($value)
     {
-        $this->attributes['product_price'] = ($value * 100);
+        $numericValue = is_numeric($value) ? floatval($value) : 0;
+        $this->attributes['product_price'] = ($numericValue * 100);
     }
 
     public function getProductPriceAttribute($value)
@@ -78,4 +78,6 @@ class Product extends Model implements HasMedia
     {
         return $query->where('product_name', 'LIKE', "%{$product_name}%");
     }
+
+
 }

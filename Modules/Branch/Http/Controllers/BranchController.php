@@ -31,7 +31,7 @@ class BranchController extends Controller
 
     public function index(BranchDataTable $dataTable)
     {
-        abort_if(Gate::denies('access_branchs'), 403);
+        abort_if(Gate::denies('access_branch_management'), 403);
 
         $branch = Branch::get();
         return $dataTable->render('Branch::branchs.index', compact('branch'));

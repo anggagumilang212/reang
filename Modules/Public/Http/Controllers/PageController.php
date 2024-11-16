@@ -2,6 +2,7 @@
 
 namespace Modules\Public\Http\Controllers;
 
+use Carbon\Carbon;
 use Midtrans\Snap;
 use Illuminate\Http\Request;
 use Modules\Blog\Entities\Tag;
@@ -10,6 +11,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\Category;
+use Modules\Public\Entities\FlashSale;
 use Modules\Blog\Entities\PostCategory;
 use Modules\Testimoni\Entities\Testimoni;
 use Illuminate\Contracts\Support\Renderable;
@@ -37,17 +39,31 @@ class PageController extends Controller
 
     public function detailProduct(Product $product)
     {
+        $flashSale = FlashSale::where('product_id', $product->id)
+            ->where('status', 'active')
+            ->where('start_time', '<=', Carbon::now()->addDay())
+            ->where('end_time', '>=', Carbon::now())
+            ->first();
+
+        if ($flashSale) {
+            // Format waktu ke ISO 8601 untuk JavaScript
+            $flashSale = $flashSale->toArray();
+            $flashSale['start_time'] = Carbon::parse($flashSale['start_time'])->format('c');
+            $flashSale['end_time'] = Carbon::parse($flashSale['end_time'])->format('c');
+        }
+
         $mediaReviews = $product->mediaReviews()
-        ->where('is_active', true)
-        ->get()
-        ->map(function($media) {
-            return [
-                'type' => $media->type,
-                'src' => asset('storage/' . $media->media_path),
-               'thumbnail' => $media->thumbnail_path ? asset('storage/' . $media->thumbnail_path) : null,
-            ];
-        });
-        return view('public::productDetail', compact('product', 'mediaReviews'));
+            ->where('is_active', true)
+            ->get()
+            ->map(function ($media) {
+                return [
+                    'type' => $media->type,
+                    'src' => asset('storage/' . $media->media_path),
+                    'thumbnail' => $media->thumbnail_path ? asset('storage/' . $media->thumbnail_path) : null,
+                ];
+            });
+
+        return view('public::productDetail', compact('product', 'mediaReviews', 'flashSale'));
     }
     public function BlogDetail($slug)
     {
@@ -98,41 +114,81 @@ class PageController extends Controller
     }
 
     // product page
-public function ProductPage()
-{
-    $products = Product::latest()->get();
-    $categories = Category::all();
-    return view('public::product', compact('products', 'categories'));
-}
+    public function ProductPage()
+    {
+        $products = Product::latest()->paginate(12);
+        $categories = Category::all();
 
-public function search(Request $request)
-{
-    $query = $request->input('query');
-    $categories = $request->input('categories', []);
+        // Mengambil ID produk yang sedang dalam flash sale
+        $flashSales = FlashSale::where('status', 'active')->pluck('product_id')->toArray();
 
-    $products = Product::query()
-        ->when($query, function($q) use ($query) {
-            return $q->where('product_name', 'like', "%{$query}%")
+        return view('public::product', compact('products', 'categories', 'flashSales'));
+    }
+
+
+    public function loadMore(Request $request)
+    {
+        $page = $request->input('page', 1);
+        $perPage = 8;
+        $skip = ($page - 1) * $perPage;
+
+        $query = Product::query();
+
+        // Apply category filter if any
+        if ($request->has('categories') && !empty($request->categories)) {
+            $query->whereIn('category_id', $request->categories);
+        }
+
+        // Apply search filter if any
+        if ($request->has('query') && !empty($request->query)) {
+            $searchQuery = $request->query;
+            $query->where('product_name', 'LIKE', "%{$searchQuery}%");
+        }
+
+        $products = $query->skip($skip)
+            ->take($perPage)
+            ->get()
+            ->map(function ($product) {
+                return [
+                    'id' => $product->id,
+                    'product_name' => $product->product_name,
+                    'product_price' => format_currency($product->product_price),
+                    'image' => $product->getFirstMediaUrl('images')
+                ];
+            });
+
+        return response()->json([
+            'products' => $products
+        ]);
+    }
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $categories = $request->input('categories', []);
+
+        $products = Product::query()
+            ->when($query, function ($q) use ($query) {
+                return $q->where('product_name', 'like', "%{$query}%")
                     ->orWhere('product_note', 'like', "%{$query}%");
-        })
-        ->when($categories, function($q) use ($categories) {
-            return $q->whereIn('category_id', $categories);
-        })
-        ->latest()
-        ->get();
+            })
+            ->when($categories, function ($q) use ($categories) {
+                return $q->whereIn('category_id', $categories);
+            })
+            ->latest()
+            ->get();
 
-    return response()->json([
-        'products' => $products->map(function($product) {
-            return [
-                'id' => $product->id,
-                'product_name' => $product->product_name,
-                'product_price' => $product->product_price,
-                'product_note' => $product->product_note,
-                'image' => $product->getFirstMediaUrl('images')
-            ];
-        })
-    ]);
-}
+        return response()->json([
+            'products' => $products->map(function ($product) {
+                return [
+                    'id' => $product->id,
+                    'product_name' => $product->product_name,
+                    'product_price' => $product->product_price,
+                    'product_note' => $product->product_note,
+                    'image' => $product->getFirstMediaUrl('images')
+                ];
+            })
+        ]);
+    }
 
     public function detailBlog(Post $post)
     {
