@@ -8,7 +8,7 @@
                             <i class="bi bi-search text-primary"></i>
                         </div>
                     </div>
-                    <input wire:keydown.escape="resetQuery" wire:model.live.debounce.500ms="query" type="text" class="form-control" placeholder="Type product name or code....">
+                    <input wire:keydown.escape="resetQuery" wire:model.live.debounce.500ms="query" type="text" class="form-control" placeholder="{{ __('messages.search_product')}}....">
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
                         @if($search_results->count() >= $how_many)
                              <li class="list-group-item list-group-item-action text-center">
                                  <a wire:click.prevent="loadMore" class="btn btn-primary btn-sm" href="#">
-                                     Load More <i class="bi bi-arrow-down-circle"></i>
+                                     {{ __('messages.load_more')}} <i class="bi bi-arrow-down-circle"></i>
                                  </a>
                              </li>
                         @endif
