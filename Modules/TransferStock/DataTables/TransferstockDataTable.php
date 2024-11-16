@@ -71,11 +71,11 @@ class TransferstockDataTable extends DataTable
             //     ->className('text-center align-middle')
             //     ->format(fn($value) => $value->format('d/m/Y')),
             Column::computed('From Branch') // Gunakan nama custom dari kolom di addColumn
-                ->title('From Branch')
+                ->title(__('messages.frombranch'))
                 ->searchable(true)
                 ->className('text-center align-middle'),
             Column::computed('To Branch') // Gunakan nama custom dari kolom di addColumn
-                ->title('To Branch')
+                ->title(__('messages.tobranch'))
                 ->searchable(true)
                 ->className('text-center align-middle'),
             Column::make('product.product_name') // Ini tetap bisa seperti sebelumnya

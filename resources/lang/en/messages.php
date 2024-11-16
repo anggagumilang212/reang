@@ -101,5 +101,20 @@ return [
     'product_count' => 'Product Count',
     'optional' => 'If Needed',
     'load_more' => 'Load More',
+    'home' => 'Home',
+    'address' => 'Address',
+    'phone' => 'Phone',
+    'print' => 'Print',
+    'storename' => 'Store Name',
+    'categorycode' => 'Category Code',
+    'categoryname' => 'Category Name',
+    'createproduct' => 'Create Product',
+    'barcodesymbology' => 'Barcode Symbology',
+    'tax' => 'Tax',
+    'taxtype' => 'Tax Type',
+    'productimage' => 'Product Image',
+    'frombranch' => 'From Branch',
+    'tobranch' => 'To Branch',
+
 ];
 

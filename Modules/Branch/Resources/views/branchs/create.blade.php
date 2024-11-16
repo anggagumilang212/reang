@@ -4,9 +4,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('branchs.index') }}">Branch</a></li>
-        <li class="breadcrumb-item active">Add</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('branchs.index') }}">{{ __('messages.branches') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.create') }}</li>
     </ol>
 @endsection
 <style>
@@ -44,24 +44,24 @@
                 <div class="col-lg-12">
                     @include('utils.alerts')
                     <div class="form-group">
-                        <button class="btn btn-primary">Create Cabang Toko <i class="bi bi-check"></i></button>
+                        <button class="btn btn-primary">{{ __('messages.create') }} {{ __('messages.branches') }} <i class="bi bi-check"></i></button>
                     </div>
                 </div>
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
                               <div class="form-group">
-                                    <label for="name">Nama Toko <span class="text-danger">*</span></label>
+                                    <label for="name">{{ __('messages.storename') }} <span class="text-danger">*</span></label>
                                     <input id="name" type="text" class="form-control" name="name" required
                                         value="{{ old('name') }}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="phone">No Telpon <span class="text-danger">*</span></label>
+                                    <label for="phone">{{ __('messages.phone') }} <span class="text-danger">*</span></label>
                                     <input id="phone" type="text" class="form-control" name="phone" required
                                         value="{{ old('phone') }}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="address">Alamat<span class="text-danger">*</span></label>
+                                    <label for="address">{{ __('messages.address') }} <span class="text-danger">*</span></label>
                                     <textarea name="address" id="address" rows="4 " class="form-control"></textarea>
                                 </div>
                         </div>
