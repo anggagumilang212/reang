@@ -8,8 +8,8 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Cabang Toko</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.branches') }}</li>
     </ol>
 @endsection
 
@@ -20,7 +20,7 @@
                 <div class="card">
                     <div class="card-body">
                         <a href="{{ route('branchs.create') }}" class="btn btn-primary">
-                            Add Cabang Toko <i class="bi bi-plus"></i>
+                            {{ __('messages.add') }} {{ __('messages.branches') }} <i class="bi bi-plus"></i>
                         </a>
 
                         <hr>

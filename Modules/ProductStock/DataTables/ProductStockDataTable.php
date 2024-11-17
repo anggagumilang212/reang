@@ -93,15 +93,16 @@ class ProductStockDataTable extends DataTable
         return [
             Column::make('id')->title('ID'),
             Column::make('product.product_name')
-                ->title('Product')
+                ->title(__('messages.productname'))
                 ->className('text-center align-middle'),
             Column::make('branch.name')
                 ->title('Cabang Toko')
                 ->className('text-center align-middle'),
             Column::computed('quantity')
-                ->title('Quantity')
+                ->title(__('messages.quantity'))
                 ->className('text-center align-middle'),
             Column::computed('action')
+                ->title(__('messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),

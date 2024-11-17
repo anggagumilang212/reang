@@ -63,15 +63,16 @@ class BranchDataTable extends DataTable
         return [
             Column::make('id')->title('ID'),
             Column::make('name')
-                ->title('Name')
+                ->title(__('messages.branches'))
                 ->className('text-center align-middle'),
             Column::make('address')
-                ->title('Address')
+                ->title(__('messages.address'))
                 ->className('text-center align-middle'),
             Column::computed('phone')
-            ->title('Phone')
+            ->title(__('messages.phone'))
             ->className('text-center align-middle'),
             Column::computed('action')
+            ->title(__('messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),

@@ -21,13 +21,13 @@
                 <table class="table table-bordered mb-0">
                     <thead>
                         <tr class="align-middle">
-                            <th class="align-middle">Product Name</th>
-                            <th class="align-middle">Code</th>
+                            <th class="align-middle">{{ __('messages.productname') }}</th>
+                            <th class="align-middle">{{ __('messages.code') }}</th>
                             <th class="align-middle">
-                                Quantity <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip"
+                                {{ __('messages.quantity') }} <i class="bi bi-question-circle-fill text-info" data-toggle="tooltip"
                                     data-placement="top" title="Max Quantity: 100"></i>
                             </th>
-                            <th class="align-middle">Action</th>
+                            <th class="align-middle">{{ __('messages.action') }}</th>
                         </tr>
                     </thead>
                     <tbody>
