@@ -126,6 +126,7 @@ return [
     'management' => 'Management',
     'stock' => 'Stock',
     'all_sales' => 'All Sales',
+    'quotations' => 'Quotations',
 
 ];
 

@@ -126,4 +126,5 @@ return [
     'stock' => 'Stok',
     'all_sales' => 'Semua Penjualan',
 
+    'quotations' => 'Penawaran',
 ];
