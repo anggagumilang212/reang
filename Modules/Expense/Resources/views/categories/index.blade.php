@@ -8,9 +8,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('expenses.index') }}">Expenses</a></li>
-        <li class="breadcrumb-item active">Categories</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('expenses.index') }}">{{ __('messages.expenses') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.category') }}</li>
     </ol>
 @endsection
 
@@ -23,7 +23,7 @@
                     <div class="card-body">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoryCreateModal">
-                            Add Category <i class="bi bi-plus"></i>
+                            {{ __('messages.add') }} {{ __('messages.category') }} <i class="bi bi-plus"></i>
                         </button>
 
                         <hr>

@@ -146,4 +146,10 @@ return [
     'details' => 'Rincian',
     'purchase_returns' => 'Pembatalan Pembelian',
     'sales_returns' => 'Pembatalan Penjualan',
+    'expenses' => 'Pengeluaran',
+    'amount' => 'Jumlah',
+    'category_description' => 'Keterangan Kategori',
+    'expenses_count' => 'Jumlah Pengeluaran',
+    'city' => 'Kota',
+    'country' => 'Negara',
 ];

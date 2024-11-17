@@ -132,7 +132,6 @@ return [
     'guidebook' => 'Guidebook',
     'unit' => 'Unit',
     'available_stock' => 'Available Stock',
-
     'adjustments' => 'Adjustments',
     'purchases' => 'Purchases',
     'supplier' => 'Suppliers',
@@ -148,4 +147,10 @@ return [
     'details' => 'Details',
     'purchase_returns' => 'Purchase Returns',
     'sales_returns' => 'Sales Returns',
+    'expenses' => 'Expanses',
+    'amount' => 'Amount',
+    'category_description' => 'Category Description',
+    'expenses_count' => 'Expenses Count',
+    'city' => 'City',
+    'country' => 'Country',
 ];
