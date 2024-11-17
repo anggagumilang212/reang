@@ -429,8 +429,7 @@
     <li class="c-sidebar-nav-item">
         <a class="c-sidebar-nav-link {{ request()->routeIs('transactions*') ? 'c-active' : '' }}"
             href="{{ route('transactions.index') }}">
-            <i class="c-sidebar-nav-icon bi bi-currency-exchange" style="line-height: 1;"></i> Transactions
-        </a>
+            <i class="c-sidebar-nav-icon bi bi-currency-exchange" style="line-height: 1;"></i> {{ __('messages.transactions') }}
     </li>
 @endcan
 
@@ -484,7 +483,7 @@
 
 <li class="c-sidebar-nav-item {{ request()->routeIs('/panduan') ? 'c-active' : '' }}">
     <a class="c-sidebar-nav-link" href="/panduan">
-        <i class="c-sidebar-nav-icon bi bi-question-circle" style="line-height: 1;"></i> Buku Panduan
+        <i class="c-sidebar-nav-icon bi bi-question-circle" style="line-height: 1;"></i> {{ __('messages.guidebook') }}
     </a>
 </li>
 <li class="c-sidebar-nav-item {{ request()->routeIs('/') ? 'c-active' : '' }}">

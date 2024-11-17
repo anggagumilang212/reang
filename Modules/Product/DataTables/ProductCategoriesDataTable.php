@@ -48,15 +48,19 @@ class ProductCategoriesDataTable extends DataTable
     protected function getColumns() {
         return [
             Column::make('category_code')
+               ->title(__('messages.categorycode'))
                 ->addClass('text-center'),
 
             Column::make('category_name')
+            ->title(__('messages.categoryname'))
                 ->addClass('text-center'),
 
             Column::make('products_count')
+            ->title(__('messages.product_count'))
                 ->addClass('text-center'),
 
             Column::computed('action')
+                ->title(__('messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->addClass('text-center'),

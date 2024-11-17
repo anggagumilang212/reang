@@ -127,6 +127,10 @@ return [
     'stock' => 'Stock',
     'all_sales' => 'All Sales',
     'quotations' => 'Quotations',
+    'all_quotations' => 'All Quotations',
+    'transactions' => 'Transactions',
+    'guidebook' => 'Guidebook',
+    'unit' => 'Unit',
+    'available_stock' => 'Available Stock',
 
 ];
-

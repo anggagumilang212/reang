@@ -6,7 +6,7 @@
 @section('title', 'Pilih Cabang Toko')
 @section('content')
     <div class="container mx-auto px-4 py-8">
-        <h2 class="text-2xl font-bold mb-6 text-center">Pilih Cabang Toko</h2>
+        <h2 class="text-2xl font-bold mb-6 text-center">{{ __('messages.select_branch') }}</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($branches as $branch)
@@ -26,7 +26,7 @@
                         <input type="hidden" name="branch_id" value="{{ $branch->id }}">
                         <button type="submit"
                             class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300">
-                            Pilih
+                            {{ __('messages.select') }}
                         </button>
                     </form>
                 </div>

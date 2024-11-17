@@ -38,9 +38,9 @@ class SalesDataTable extends DataTable
             ->addColumn('status', function ($data) {
                 return view('sale::partials.status', compact('data'));
             })
-            ->addColumn('payment_status', function ($data) {
-                return view('sale::partials.payment-status', compact('data'));
-            })
+            // ->addColumn('payment_status', function ($data) {
+            //     return view('sale::partials.payment-status', compact('data'));
+            // })
             ->addColumn('action', function ($data) {
                 return view('sale::partials.actions', compact('data'));
             });
@@ -149,9 +149,9 @@ class SalesDataTable extends DataTable
                 ->title(__('messages.dueamount'))
                 ->className('text-center align-middle'),
 
-            Column::computed('payment_status')
-                ->title(__('messages.paymentstatus'))
-                ->className('text-center align-middle'),
+            // Column::computed('payment_status')
+            //     ->title(__('messages.paymentstatus'))
+            //     ->className('text-center align-middle'),
 
             Column::computed('action')
                 ->title(__('messages.action'))
