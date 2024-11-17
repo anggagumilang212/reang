@@ -101,5 +101,7 @@ return [
     'product_count' => 'Product Count',
     'optional' => 'If Needed',
     'load_more' => 'Load More',
+    'search_products' => 'Search Products by Name or Code',
+    'product_notfound' => 'Product Not Found',
 ];
 

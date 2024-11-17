@@ -204,7 +204,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Branch Permission -->
+                                <!-- Stock Permission -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
                                         <div class="card-header">
@@ -398,7 +398,7 @@
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">
                                         <div class="card-header">
-                                            {{__ ('Quotations')}} 
+                                            {{__ ('Quotations')}}
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
@@ -1203,6 +1203,123 @@
                                     </div>
                                 </div>
 
+                                        <!-- Transaction Permission -->
+                                        <div class="col-lg-4 col-md-6 mb-3">
+                                            <div class="card h-100 border-0 shadow">
+                                                <div class="card-header">
+                                                    Transactions
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="custom-control custom-switch">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="access_transactions" name="permissions[]"
+                                                                    value="access_transactions"
+                                                                    {{ $role->hasPermissionTo('access_transactions') ? 'checked' : '' }}>
+                                                                <label class="custom-control-label"
+                                                                    for="access_transactions">Access</label>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="col-6">
+                                                            <div class="custom-control custom-switch">
+                                                                <input type="checkbox" class="custom-control-input"
+                                                                    id="delete_transactions" name="permissions[]"
+                                                                    value="delete_transactions"
+                                                                    {{ $role->hasPermissionTo('delete_transactions') ? 'checked' : '' }}>
+                                                                <label class="custom-control-label"
+                                                                    for="delete_transactions">Delete</label>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+         <!-- Product media review Permission -->
+         <div class="col-lg-4 col-md-6 mb-3">
+            <div class="card h-100 border-0 shadow">
+                <div class="card-header">
+                   Product Media Review
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input"
+                                    id="access_media_reviews" name="permissions[]"
+                                    value="access_media_reviews"
+                                    {{ $role->hasPermissionTo('access_media_reviews') ? 'checked' : '' }}>
+                                <label class="custom-control-label"
+                                    for="access_media_reviews">Access</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+                                <!-- Testimoni Permission -->
+                                <div class="col-lg-4 col-md-6 mb-3">
+                                    <div class="card h-100 border-0 shadow">
+                                        <div class="card-header">
+                                      Testimoni Management
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="access_testimonis" name="permissions[]" value="access_testimonis"
+                                                            {{ $role->hasPermissionTo('access_testimonis') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label"
+                                                            for="access_testimonis">Access</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="show_testimonis" name="permissions[]" value="show_testimonis"
+                                                            {{ $role->hasPermissionTo('show_testimonis') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label"
+                                                            for="show_testimonis">Detail</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="create_testimonis" name="permissions[]" value="create_testimonis"
+                                                            {{ $role->hasPermissionTo('create_testimonis') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label"
+                                                            for="create_testimonis">Create</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="edit_testimonis" name="permissions[]" value="edit_testimonis"
+                                                            {{ $role->hasPermissionTo('edit_testimonis') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="edit_testimonis">Edit</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="custom-control custom-switch">
+                                                        <input type="checkbox" class="custom-control-input"
+                                                            id="delete_testimonis" name="permissions[]" value="delete_testimonis"
+                                                            {{ $role->hasPermissionTo('delete_testimonis') ? 'checked' : '' }}>
+                                                        <label class="custom-control-label"
+                                                            for="delete_testimonis">Delete</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <!-- Settings -->
                                 <div class="col-lg-4 col-md-6 mb-3">
                                     <div class="card h-100 border-0 shadow">

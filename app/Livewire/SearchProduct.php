@@ -15,7 +15,7 @@ class SearchProduct extends Component
 
     public function mount() {
         $this->query = '';
-        $this->how_many = 5;
+        $this->how_many = 20;
         $this->search_results = Collection::empty();
     }
 
@@ -30,13 +30,13 @@ class SearchProduct extends Component
     }
 
     public function loadMore() {
-        $this->how_many += 5;
+        $this->how_many += 20;
         $this->updatedQuery();
     }
 
     public function resetQuery() {
         $this->query = '';
-        $this->how_many = 5;
+        $this->how_many = 20;
         $this->search_results = Collection::empty();
     }
 

@@ -5,11 +5,12 @@ namespace Modules\MediaReview\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\RedirectResponse;
+use Intervention\Image\Facades\Image;
 use Modules\Product\Entities\Product;
 use Illuminate\Support\Facades\Storage;
 use ProtoneMedia\LaravelFFMpeg\Facades\FFMpeg;
-use Intervention\Image\Facades\Image;
 
 class MediaReviewController extends Controller
 {
@@ -18,6 +19,8 @@ class MediaReviewController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('access_media_reviews'), 403);
+
         $mediaReviews = Product::with('mediaReviews')->get();
         return view('mediareview::index', compact('mediaReviews'));
     }

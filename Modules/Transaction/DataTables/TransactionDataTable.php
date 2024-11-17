@@ -101,12 +101,12 @@ class TransactionDataTable extends DataTable
             Column::make('customer_phone')
                 ->title('Customer Phone')
                 ->className('text-center align-middle'),
-            // Column::computed('action')
-            //     ->exportable(false)
-            //     ->printable(false)
-            //     ->className('text-center align-middle'),
-            // Column::make('created_at')
-            //     ->visible(false)
+            Column::computed('action')
+                ->exportable(false)
+                ->printable(false)
+                ->className('text-center align-middle'),
+            Column::make('created_at')
+                ->visible(false)
         ];
     }
 

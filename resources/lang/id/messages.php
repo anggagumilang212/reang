@@ -100,4 +100,6 @@ return [
     'product_count' => 'Jumlah Produk',
     'optional' => 'Jika Diperlukan',
     'load_more' => 'Muat Lebih Banyak',
+    'search_product' => 'Cari Nama Produk atau Kode Produk',
+    'product_notfound' => 'Produk Tidak Ditemukan',
 ];

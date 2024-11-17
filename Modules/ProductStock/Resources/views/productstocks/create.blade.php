@@ -44,7 +44,8 @@
                 <div class="col-lg-12">
                     @include('utils.alerts')
                     <div class="form-group">
-                        <button class="btn btn-primary">{{ __('messages.create') }} Productstock <i class="bi bi-check"></i></button>
+                        <button class="btn btn-primary">{{ __('messages.create') }} Productstock <i
+                                class="bi bi-check"></i></button>
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -60,7 +61,8 @@
                                                 required>
                                                 <option value="">{{ __('messages.select_product') }}</option>
                                                 @foreach (\Modules\Product\Entities\Product::all() as $product)
-                                                    <option value="{{ $product->id }}">{{ $product->product_name }}
+                                                    <option value="{{ $product->id }}"> {{ $product->product_name }} |
+                                                        {{ format_currency($product->product_price) }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -70,7 +72,8 @@
                                 <div class="col-lg-4">
                                     <div class="from-group">
                                         <div class="form-group">
-                                            <label for="branch_id">{{ __('messages.branches') }} <span class="text-danger">*</span></label>
+                                            <label for="branch_id">{{ __('messages.branches') }} <span
+                                                    class="text-danger">*</span></label>
                                             <select class="form-control" name="branch_id" id="branch_id" required>
                                                 <option value="">{{ __('messages.select_branch') }}</option>
                                                 @foreach (\Modules\Branch\Entities\Branch::all() as $branch)
@@ -84,7 +87,8 @@
                                 <div class="col-lg-4">
                                     <div class="from-group">
                                         <div class="form-group">
-                                            <label for="quantity">{{ __('messages.quantity') }} <span class="text-danger">*</span></label>
+                                            <label for="quantity">{{ __('messages.quantity') }} <span
+                                                    class="text-danger">*</span></label>
                                             <input type="number" class="form-control" name="quantity" required
                                                 value="{{ old('quantity') }}">
                                         </div>

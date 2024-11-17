@@ -11,7 +11,7 @@
         <ul class="c-sidebar-nav-dropdown-items">
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->routeIs('branchs.index') ? 'c-active' : '' }}"
-                href="{{ route('branchs.index') }}">
+                    href="{{ route('branchs.index') }}">
                     <i class="c-sidebar-nav-icon bi bi-shop-window" style="line-height: 1;"></i>Cabang Toko
                 </a>
             </li>
@@ -65,20 +65,20 @@
         </a>
         <ul class="c-sidebar-nav-dropdown-items">
             @can('access_transfer_stock')
-            <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link {{ request()->routeIs('transferstock.index') ? 'c-active' : '' }}"
-                href="{{ route('transferstock.index') }}">
-                    <i class="c-sidebar-nav-icon bi bi-folder-minus" style="line-height: 1;"></i>Transfer Stock
-                </a>
-            </li>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link {{ request()->routeIs('transferstock.index') ? 'c-active' : '' }}"
+                        href="{{ route('transferstock.index') }}">
+                        <i class="c-sidebar-nav-icon bi bi-folder-minus" style="line-height: 1;"></i>Transfer Stock
+                    </a>
+                </li>
             @endcan
             @can('access_product_stock')
-            <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link {{ request()->routeIs('productstocks.index') ? 'c-active' : '' }}"
-                    href="{{ route('productstocks.index') }}">
-                    <i class="c-sidebar-nav-icon bi bi-clipboard-check" style="line-height: 1;"></i> Product Stock
-                </a>
-            </li>
+                <li class="c-sidebar-nav-item">
+                    <a class="c-sidebar-nav-link {{ request()->routeIs('productstocks.index') ? 'c-active' : '' }}"
+                        href="{{ route('productstocks.index') }}">
+                        <i class="c-sidebar-nav-icon bi bi-clipboard-check" style="line-height: 1;"></i> Product Stock
+                    </a>
+                </li>
             @endcan
         </ul>
     </li>
@@ -405,28 +405,33 @@
     </li>
 @endcan
 
-
-{{-- Testimoni --}}
-<li class="c-sidebar-nav-item">
-    <a class="c-sidebar-nav-link {{ request()->routeIs('testimonis*') ? 'c-active' : '' }}"
-        href="{{ route('testimonis.index') }}">
-        <i class="c-sidebar-nav-icon bi bi-chat" style="line-height: 1;"></i> Testimoni Management
-    </a>
-</li>
-{{-- Media Product Review --}}
-<li class="c-sidebar-nav-item">
-    <a class="c-sidebar-nav-link {{ request()->routeIs('mediareview*') ? 'c-active' : '' }}"
-        href="{{ route('mediareview.create') }}">
-        <i class="c-sidebar-nav-icon bi bi-image" style="line-height: 1;"></i> Add Media Product Review
-    </a>
-</li>
-{{-- transaction --}}
-<li class="c-sidebar-nav-item">
-    <a class="c-sidebar-nav-link {{ request()->routeIs('transactions*') ? 'c-active' : '' }}"
-        href="{{ route('transactions.index') }}">
-        <i class="c-sidebar-nav-icon bi bi-currency-exchange" style="line-height: 1;"></i> Transactions
-    </a>
-</li>
+@can('access_testimonis')
+    {{-- Testimoni --}}
+    <li class="c-sidebar-nav-item">
+        <a class="c-sidebar-nav-link {{ request()->routeIs('testimonis*') ? 'c-active' : '' }}"
+            href="{{ route('testimonis.index') }}">
+            <i class="c-sidebar-nav-icon bi bi-chat" style="line-height: 1;"></i> Testimoni Management
+        </a>
+    </li>
+@endcan
+@can('access_media_reviews')
+    {{-- Media Product Review --}}
+    <li class="c-sidebar-nav-item">
+        <a class="c-sidebar-nav-link {{ request()->routeIs('mediareview*') ? 'c-active' : '' }}"
+            href="{{ route('mediareview.create') }}">
+            <i class="c-sidebar-nav-icon bi bi-image" style="line-height: 1;"></i> Add Media Product Review
+        </a>
+    </li>
+@endcan
+@can('access_transactions')
+    {{-- transaction --}}
+    <li class="c-sidebar-nav-item">
+        <a class="c-sidebar-nav-link {{ request()->routeIs('transactions*') ? 'c-active' : '' }}"
+            href="{{ route('transactions.index') }}">
+            <i class="c-sidebar-nav-icon bi bi-currency-exchange" style="line-height: 1;"></i> Transactions
+        </a>
+    </li>
+@endcan
 
 
 @can('access_currencies|access_settings')

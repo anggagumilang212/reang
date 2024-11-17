@@ -24,6 +24,7 @@ class ProductController extends Controller
 
         return $dataTable->render('product::products.index');
     }
+    
 
 
     public function create()
