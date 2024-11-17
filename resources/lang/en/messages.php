@@ -115,6 +115,10 @@ return [
     'productimage' => 'Product Image',
     'frombranch' => 'From Branch',
     'tobranch' => 'To Branch',
+    'cost' => 'Cost',
+    'loading' => 'Loading...',
+    'net_unit_price' => 'Net Unit Price',
+    'cost_unit_price' => 'Cost Unit Price',
 
 ];
 

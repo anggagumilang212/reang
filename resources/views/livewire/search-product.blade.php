@@ -18,7 +18,7 @@
         <div class="card-body shadow">
             <div class="d-flex justify-content-center">
                 <div class="spinner-border text-primary" role="status">
-                    <span class="sr-only">Loading...</span>
+                    <span class="sr-only">{{ __('messages.loading')}}</span>
                 </div>
             </div>
         </div>

@@ -114,4 +114,8 @@ return [
     'productimage' => 'Gambar Produk',
     'frombranch' => 'Dari Cabang Toko',
     'tobranch' => 'Ke Cabang Toko',
+    'cost' => 'Biaya',
+    'loading' => 'Sedang memproses...',
+    'net_unit_price' => 'Harga Satuan Bersih',
+    'cost_unit_price' => 'Biaya Satuan Bersih',
 ];

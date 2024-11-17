@@ -84,7 +84,7 @@ class ProductDataTable extends DataTable
                 ->className('text-center align-middle'),
 
             Column::computed('product_cost')
-            ->title(__('messages.costs'))
+            ->title(__('messages.cost'))
                 ->className('text-center align-middle'),
 
             Column::computed('product_price')

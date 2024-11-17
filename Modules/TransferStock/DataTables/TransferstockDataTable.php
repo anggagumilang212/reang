@@ -79,11 +79,11 @@ class TransferstockDataTable extends DataTable
                 ->searchable(true)
                 ->className('text-center align-middle'),
             Column::make('product.product_name') // Ini tetap bisa seperti sebelumnya
-                ->title('Product')
+                ->title(__('messages.productname'))
                 ->searchable(true)
                 ->className('text-center align-middle'),
             Column::computed('quantity')
-                ->title('Quantity')
+                ->title(__('messages.quantity'))
                 ->searchable(true)
                 ->className('text-center align-middle'),
             Column::computed('status')
@@ -93,7 +93,7 @@ class TransferstockDataTable extends DataTable
                 ->printable(false)
                 ->searchable(true),
             Column::computed('action')
-                ->title('Action')
+                ->title((__('messages.action')))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle')

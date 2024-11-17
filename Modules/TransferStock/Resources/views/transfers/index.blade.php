@@ -8,8 +8,8 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Transferstocks</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.transfer_stock') }}</li>
     </ol>
 @endsection
 
@@ -20,7 +20,7 @@
                 <div class="card">
                     <div class="card-body">
                         <a href="{{ route('transferstock.create') }}" class="btn btn-primary">
-                            Add Transferstock <i class="bi bi-plus"></i>
+                            {{ __('messages.add') }} {{ __('messages.transfer_stock') }} <i class="bi bi-plus"></i>
                         </a>
 
                         <hr>

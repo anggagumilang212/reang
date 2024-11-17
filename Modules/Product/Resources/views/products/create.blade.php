@@ -54,7 +54,7 @@
                                     <label for="category_id">{{ __('messages.category') }} <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <select class="form-control" name="category_id" id="category_id" required>
-                                            <option value="" selected disabled>Select Category</option>
+                                            <option value="" selected disabled>{{ __('messages.select') }} {{ __('messages.category') }}</option>
                                             @foreach (\Modules\Product\Entities\Category::all() as $category)
                                                 <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                             @endforeach
@@ -89,14 +89,14 @@
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="product_cost">Cost <span class="text-danger">*</span></label>
+                                        <label for="product_cost">{{ __('messages.cost') }} <span class="text-danger">*</span></label>
                                         <input id="product_cost" type="text" class="form-control" name="product_cost"
                                             required value="{{ old('product_cost') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="product_price">Price <span class="text-danger">*</span></label>
+                                        <label for="product_price">{{ __('messages.price') }} <span class="text-danger">*</span></label>
                                         <input id="product_price" type="text" class="form-control" name="product_price"
                                             required value="{{ old('product_price') }}">
                                     </div>
