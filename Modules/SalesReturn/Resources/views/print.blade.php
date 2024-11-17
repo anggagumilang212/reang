@@ -55,12 +55,12 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th class="align-middle">Product</th>
-                                <th class="align-middle">Net Unit Price</th>
-                                <th class="align-middle">Quantity</th>
-                                <th class="align-middle">Discount</th>
-                                <th class="align-middle">Tax</th>
-                                <th class="align-middle">Sub Total</th>
+                                <th class="align-middle">{{ __('messages.product') }}</th>
+                                <th class="align-middle">{{ __('messages.net_unit_price') }}</th>
+                                <th class="align-middle">{{ __('messages.quantity') }}</th>
+                                <th class="align-middle">{{ __('messages.discount') }}</th>
+                                <th class="align-middle">{{ __('messages.tax') }}</th>
+                                <th class="align-middle">{{ __('messages.sub_total') }}</th>
                             </tr>
                             </thead>
                             <tbody>

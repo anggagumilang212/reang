@@ -51,6 +51,7 @@ class SaleReturnPaymentsDataTable extends DataTable
     protected function getColumns() {
         return [
             Column::make('date')
+                ->title(__('messages.date'))
                 ->className('align-middle text-center'),
 
             Column::make('reference')
