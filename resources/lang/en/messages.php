@@ -127,6 +127,20 @@ return [
     'stock' => 'Stock',
     'all_sales' => 'All Sales',
     'quotations' => 'Quotations',
-
+    'adjustments' => 'Adjustments',
+    'purchases' => 'Purchases',
+    'supplier' => 'Suppliers',
+    'cash' => 'Cash',
+    'credit_card' => 'Credit Card',
+    'bank_transfer' => 'Bank Transfer',
+    'cheque' => 'Cheque',
+    'other' => 'Other',
+    'pending' => 'Pending',
+    'ordered' => 'Ordered',
+    'completed' => 'Completed',
+    'shipped' => 'Shipped',
+    'details' => 'Details',
+    'purchase_returns' => 'Purchase Returns',
+    'sales_returns' => 'Sales Returns',
 ];
 

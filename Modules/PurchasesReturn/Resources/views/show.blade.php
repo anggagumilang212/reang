@@ -4,9 +4,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('purchase-returns.index') }}">Purchase Returns</a></li>
-        <li class="breadcrumb-item active">Details</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('purchase-returns.index') }}">{{ __('messages.purchase_returns') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.details') }}</li>
     </ol>
 @endsection
 
@@ -17,7 +17,7 @@
                 <div class="card">
                     <div class="card-header d-flex flex-wrap align-items-center">
                         <div>
-                            Reference: <strong>{{ $purchase_return->reference }}</strong>
+                            {{ __('messages.reference') }}: <strong>{{ $purchase_return->reference }}</strong>
                         </div>
                         <a target="_blank" class="btn btn-sm btn-secondary mfs-auto mfe-1 d-print-none" href="{{ route('purchase-returns.pdf', $purchase_return->id) }}">
                             <i class="bi bi-printer"></i> Print
@@ -62,12 +62,12 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th class="align-middle">Product</th>
-                                    <th class="align-middle">Net Unit Price</th>
-                                    <th class="align-middle">Quantity</th>
-                                    <th class="align-middle">Discount</th>
-                                    <th class="align-middle">Tax</th>
-                                    <th class="align-middle">Sub Total</th>
+                                    <th class="align-middle">{{ __('messages.product') }}</th>
+                                    <th class="align-middle">{{ __('messages.net_unit_price') }}</th>
+                                    <th class="align-middle">{{ __('messages.quantity') }}</th>
+                                    <th class="align-middle">{{ __('messages.discount') }}</th>
+                                    <th class="align-middle">{{ __('messages.tax') }}</th>
+                                    <th class="align-middle">{{ __('messages.sub_total') }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -107,19 +107,19 @@
                                 <table class="table">
                                     <tbody>
                                     <tr>
-                                        <td class="left"><strong>Discount ({{ $purchase_return->discount_percentage }}%)</strong></td>
+                                        <td class="left"><strong>{{ __('messages.discount') }} ({{ $purchase_return->discount_percentage }}%)</strong></td>
                                         <td class="right">{{ format_currency($purchase_return->discount_amount) }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="left"><strong>Tax ({{ $purchase_return->tax_percentage }}%)</strong></td>
+                                        <td class="left"><strong>{{ __('messages.tax') }} ({{ $purchase_return->tax_percentage }}%)</strong></td>
                                         <td class="right">{{ format_currency($purchase_return->tax_amount) }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="left"><strong>Shipping)</strong></td>
+                                        <td class="left"><strong>{{ __('messages.shipping') }}</strong></td>
                                         <td class="right">{{ format_currency($purchase_return->shipping_amount) }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="left"><strong>Grand Total</strong></td>
+                                        <td class="left"><strong>{{ __('messages.grand_total') }}</strong></td>
                                         <td class="right"><strong>{{ format_currency($purchase_return->total_amount) }}</strong></td>
                                     </tr>
                                     </tbody>

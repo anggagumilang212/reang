@@ -4,9 +4,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('sale-returns.index') }}">Sale Returns</a></li>
-        <li class="breadcrumb-item active">Details</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('sale-returns.index') }}">{{ __('messages.sales_returns') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.details') }}</li>
     </ol>
 @endsection
 
@@ -17,13 +17,13 @@
                 <div class="card">
                     <div class="card-header d-flex flex-wrap align-items-center">
                         <div>
-                            Reference: <strong>{{ $sale_return->reference }}</strong>
+                            {{ __('messages.reference') }}: <strong>{{ $sale_return->reference }}</strong>
                         </div>
                         <a target="_blank" class="btn btn-sm btn-secondary mfs-auto mfe-1 d-print-none" href="{{ route('sale-returns.pdf', $sale_return->id) }}">
-                            <i class="bi bi-printer"></i> Print
+                            <i class="bi bi-printer"></i> {{ __('messages.print') }}
                         </a>
                         <a target="_blank" class="btn btn-sm btn-info mfe-1 d-print-none" href="{{ route('sale-returns.pdf', $sale_return->id) }}">
-                            <i class="bi bi-save"></i> Save
+                            <i class="bi bi-save"></i> {{ __('messages.save') }}
                         </a>
                     </div>
                     <div class="card-body">
@@ -62,12 +62,12 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th class="align-middle">Product</th>
-                                    <th class="align-middle">Net Unit Price</th>
-                                    <th class="align-middle">Quantity</th>
-                                    <th class="align-middle">Discount</th>
-                                    <th class="align-middle">Tax</th>
-                                    <th class="align-middle">Sub Total</th>
+                                    <th class="align-middle">{{ __('messages.product') }}</th>
+                                    <th class="align-middle">{{ __('messages.net_unit_price') }}</th>
+                                    <th class="align-middle">{{ __('messages.quantity') }}</th>
+                                    <th class="align-middle">{{ __('messages.discount') }}</th>
+                                    <th class="align-middle">{{ __('messages.tax') }}</th>
+                                    <th class="align-middle">{{ __('messages.sub_total') }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>

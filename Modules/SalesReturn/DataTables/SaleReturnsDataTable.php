@@ -63,33 +63,41 @@ class SaleReturnsDataTable extends DataTable
     protected function getColumns() {
         return [
             Column::make('reference')
+              ->title(__('messages.reference'))
                 ->className('text-center align-middle'),
 
             Column::make('customer_name')
-                ->title('Customer')
+                ->title(__('messages.customername'))
                 ->className('text-center align-middle'),
 
             Column::computed('status')
+                ->title(__('messages.status'))
                 ->className('text-center align-middle'),
 
             Column::computed('total_amount')
+                ->title(__('messages.totalamount'))
                 ->className('text-center align-middle'),
 
             Column::computed('paid_amount')
+                ->title(__('messages.paidamount'))
                 ->className('text-center align-middle'),
 
             Column::computed('due_amount')
+                ->title(__('messages.dueamount'))
                 ->className('text-center align-middle'),
 
             Column::computed('payment_status')
+                ->title(__('messages.paymentstatus'))
                 ->className('text-center align-middle'),
 
             Column::computed('action')
+                ->title(__('messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),
 
             Column::make('created_at')
+                ->title(__('messages.createdat'))
                 ->visible(false)
         ];
     }
