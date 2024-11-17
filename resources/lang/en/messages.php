@@ -121,6 +121,7 @@ return [
     'loading' => 'Loading...',
     'net_unit_price' => 'Net Unit Price',
     'cost_unit_price' => 'Cost Unit Price',
+    'quotations' => 'Quotations',
 
 ];
 
