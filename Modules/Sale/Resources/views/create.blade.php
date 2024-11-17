@@ -4,7 +4,7 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
         <li class="breadcrumb-item"><a href="{{ route('sales.index') }}">{{ __('messages.sales') }}</a></li>
         <li class="breadcrumb-item active">{{ __('messages.create') }}</li>
     </ol>
@@ -111,13 +111,13 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="note">{{ __('messages.note') }} (If Needed)</label>
+                                <label for="note">{{ __('messages.note') }} {{__('messages.optional')}}</label>
                                 <textarea name="note" id="note" rows="5" class="form-control"></textarea>
                             </div>
 
                             <div class="mt-3">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('messages.create') }} Sale <i class="bi bi-check"></i>
+                                    {{ __('messages.create') }} {{ __('messages.sales') }} <i class="bi bi-check"></i>
                                 </button>
                             </div>
                         </form>

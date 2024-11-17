@@ -121,6 +121,11 @@ return [
     'loading' => 'Loading...',
     'net_unit_price' => 'Net Unit Price',
     'cost_unit_price' => 'Cost Unit Price',
+    'sub_total' => 'Sub Total',
+    'kritik_saran' => 'Kritik and Saran',
+    'management' => 'Management',
+    'stock' => 'Stock',
+    'all_sales' => 'All Sales',
 
 ];
 

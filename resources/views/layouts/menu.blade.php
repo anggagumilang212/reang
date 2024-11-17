@@ -1,18 +1,18 @@
 <li class="c-sidebar-nav-item {{ request()->routeIs('home') ? 'c-active' : '' }}">
     <a class="c-sidebar-nav-link" href="{{ route('home') }}">
-        <i class="c-sidebar-nav-icon bi bi-speedometer2" style="line-height: 1;"></i> Home
+        <i class="c-sidebar-nav-icon bi bi-speedometer2" style="line-height: 1;"></i> {{__('messages.home')}}
     </a>
 </li>
 @can('access_branch_management')
     <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('roles*') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-            <i class="c-sidebar-nav-icon bi  bi-shop-window" style="line-height: 1;"></i> Toko Management
+            <i class="c-sidebar-nav-icon bi  bi-shop-window" style="line-height: 1;"></i> {{__('messages.branches')}} {{__('messages.management')}}
         </a>
         <ul class="c-sidebar-nav-dropdown-items">
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->routeIs('branchs.index') ? 'c-active' : '' }}"
                     href="{{ route('branchs.index') }}">
-                    <i class="c-sidebar-nav-icon bi bi-shop-window" style="line-height: 1;"></i>Cabang Toko
+                    <i class="c-sidebar-nav-icon bi bi-shop-window" style="line-height: 1;"></i>{{__('messages.branches')}}
                 </a>
             </li>
         </ul>
@@ -22,14 +22,15 @@
     <li
         class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('products.*') || request()->routeIs('product-categories.*') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-            <i class="c-sidebar-nav-icon bi bi-journal-bookmark" style="line-height: 1;"></i> Products
+            <i class="c-sidebar-nav-icon bi bi-journal-bookmark" style="line-height: 1;"></i> {{__('messages.products')}}
         </a>
         <ul class="c-sidebar-nav-dropdown-items">
             @can('access_product_categories')
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link {{ request()->routeIs('product-categories.*') ? 'c-active' : '' }}"
                         href="{{ route('product-categories.index') }}">
-                        <i class="c-sidebar-nav-icon bi bi-collection" style="line-height: 1;"></i> Categories
+                        <i class="c-sidebar-nav-icon bi bi-collection" style="line-height: 1;"></i>
+                        {{__('messages.category')}}
                     </a>
                 </li>
             @endcan
@@ -37,21 +38,21 @@
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link {{ request()->routeIs('products.create') ? 'c-active' : '' }}"
                         href="{{ route('products.create') }}">
-                        <i class="c-sidebar-nav-icon bi bi-journal-plus" style="line-height: 1;"></i> Create Product
+                        <i class="c-sidebar-nav-icon bi bi-journal-plus" style="line-height: 1;"></i> {{__('messages.createproduct')}}
                     </a>
                 </li>
             @endcan
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->routeIs('products.index') ? 'c-active' : '' }}"
                     href="{{ route('products.index') }}">
-                    <i class="c-sidebar-nav-icon bi bi-journals" style="line-height: 1;"></i> All Products
+                    <i class="c-sidebar-nav-icon bi bi-journals" style="line-height: 1;"></i> {{__('messages.all_products')}}
                 </a>
             </li>
             @can('print_barcodes')
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link {{ request()->routeIs('barcode.print') ? 'c-active' : '' }}"
                         href="{{ route('barcode.print') }}">
-                        <i class="c-sidebar-nav-icon bi bi-printer" style="line-height: 1;"></i> Print Barcode
+                        <i class="c-sidebar-nav-icon bi bi-printer" style="line-height: 1;"></i> {{__('messages.print')}} Barcode
                     </a>
                 </li>
             @endcan
@@ -61,14 +62,14 @@
 @can('access_stock_management')
     <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('roles*') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-            <i class="c-sidebar-nav-icon bi  bi-archive" style="line-height: 1;"></i> Stock Management
+            <i class="c-sidebar-nav-icon bi  bi-archive" style="line-height: 1;"></i> {{__('messages.stock')}} {{__('messages.management')}}
         </a>
         <ul class="c-sidebar-nav-dropdown-items">
             @can('access_transfer_stock')
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link {{ request()->routeIs('transferstock.index') ? 'c-active' : '' }}"
                         href="{{ route('transferstock.index') }}">
-                        <i class="c-sidebar-nav-icon bi bi-folder-minus" style="line-height: 1;"></i>Transfer Stock
+                        <i class="c-sidebar-nav-icon bi bi-folder-minus" style="line-height: 1;"></i>{{__('messages.transfer_stock')}}
                     </a>
                 </li>
             @endcan
@@ -76,7 +77,7 @@
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link {{ request()->routeIs('productstocks.index') ? 'c-active' : '' }}"
                         href="{{ route('productstocks.index') }}">
-                        <i class="c-sidebar-nav-icon bi bi-clipboard-check" style="line-height: 1;"></i> Product Stock
+                        <i class="c-sidebar-nav-icon bi bi-clipboard-check" style="line-height: 1;"></i> {{__('messages.product_stock')}}
                     </a>
                 </li>
             @endcan
@@ -112,21 +113,21 @@
 @can('access_quotations')
     <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('quotations.*') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-            <i class="c-sidebar-nav-icon bi bi-cart-check" style="line-height: 1;"></i> Quotations
+            <i class="c-sidebar-nav-icon bi bi-cart-check" style="line-height: 1;"></i> {{__('messages.quotations')}}
         </a>
         <ul class="c-sidebar-nav-dropdown-items">
             @can('create_adjustments')
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link {{ request()->routeIs('quotations.create') ? 'c-active' : '' }}"
                         href="{{ route('quotations.create') }}">
-                        <i class="c-sidebar-nav-icon bi bi-journal-plus" style="line-height: 1;"></i> Create Quotation
+                        <i class="c-sidebar-nav-icon bi bi-journal-plus" style="line-height: 1;"></i> {{__('messages.create')}} {{__('messages.quotations')}}
                     </a>
                 </li>
             @endcan
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->routeIs('quotations.index') ? 'c-active' : '' }}"
                     href="{{ route('quotations.index') }}">
-                    <i class="c-sidebar-nav-icon bi bi-journals" style="line-height: 1;"></i> All Quotations
+                    <i class="c-sidebar-nav-icon bi bi-journals" style="line-height: 1;"></i> {{__('messages.all_quotations')}}
                 </a>
             </li>
         </ul>
@@ -191,14 +192,14 @@
     <li
         class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('sales.*') || request()->routeIs('sale-payments*') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-            <i class="c-sidebar-nav-icon bi bi-receipt" style="line-height: 1;"></i> Sales
+            <i class="c-sidebar-nav-icon bi bi-receipt" style="line-height: 1;"></i> {{ __('messages.sales') }}
         </a>
         @can('create_sales')
             <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link {{ request()->routeIs('sales.create') ? 'c-active' : '' }}"
                         href="{{ route('sales.create') }}">
-                        <i class="c-sidebar-nav-icon bi bi-journal-plus" style="line-height: 1;"></i> Create Sale
+                        <i class="c-sidebar-nav-icon bi bi-journal-plus" style="line-height: 1;"></i> {{ __('messages.create') }} {{ __('messages.sales') }}
                     </a>
                 </li>
             </ul>
@@ -207,7 +208,7 @@
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->routeIs('sales.index') ? 'c-active' : '' }}"
                     href="{{ route('sales.index') }}">
-                    <i class="c-sidebar-nav-icon bi bi-journals" style="line-height: 1;"></i> All Sales
+                    <i class="c-sidebar-nav-icon bi bi-journals" style="line-height: 1;"></i> {{ __('messages.all_sales') }}
                 </a>
             </li>
         </ul>

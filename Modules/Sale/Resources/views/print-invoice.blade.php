@@ -141,19 +141,19 @@
 
         <div class="summary">
             <div class="summary-item">
-                <div>Sub Total</div>
+                <div>{{ __('messages.sub_total') }}</div>
                 <div>{{ format_currency($saleDetail->sub_total) }}</div>
             </div>
             <div class="summary-item">
-                <div>Total</div>
+                <div>{{ __('messages.totalamount') }}</div>
                 <div>{{ format_currency($sale->total_amount) }}</div>
             </div>
             <div class="summary-item">
-                <div>Bayar {{ $sale->payment_method }}</div>
+                <div>{{ __('messages.paidamount')}} {{ $sale->payment_method }}</div>
                 <div>{{ format_currency($sale->paid_amount) }}</div>
             </div>
             <div class="summary-item">
-                <div>Kembali</div>
+                <div>{{ __('messages.dueamount') }}</div>
                 <div>{{ format_currency($sale->due_amount) }}</div>
             </div>
         </div>
@@ -161,7 +161,7 @@
         <div class="divider"></div>
 
         <div class="footer">
-            Link Kritik dan Saran:<br>
+            Link {{ __('messages.kritik_saran')}}:<br>
             reang.net
         </div>
     </div>

@@ -120,4 +120,10 @@ return [
     'loading' => 'Sedang memproses...',
     'net_unit_price' => 'Harga Satuan Bersih',
     'cost_unit_price' => 'Biaya Satuan Bersih',
+    'sub_total' => 'Sub Total',
+    'kritik_saran' => 'Kritik dan Saran',
+    'management' => 'Manajemen',
+    'stock' => 'Stok',
+    'all_sales' => 'Semua Penjualan',
+
 ];
