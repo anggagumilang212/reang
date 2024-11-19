@@ -17,7 +17,7 @@
                 <div class="card">
                     <div class="card-header d-flex flex-wrap align-items-center">
                         <div>
-                            Reference: <strong>{{ $purchase->reference }}</strong>
+                            {{ __('messages.reference') }}: <strong>{{ $purchase->reference }}</strong>
                         </div>
                         <a target="_blank" class="btn btn-sm btn-secondary mfs-auto mfe-1 d-print-none" href="{{ route('purchases.pdf', $purchase->id) }}">
                             <i class="bi bi-printer"></i> {{ __('messages.print') }}
@@ -107,19 +107,19 @@
                                 <table class="table">
                                     <tbody>
                                     <tr>
-                                        <td class="left"><strong>Discount ({{ $purchase->discount_percentage }}%)</strong></td>
+                                        <td class="left"><strong> {{ __('messages.discount') }} ({{ $purchase->discount_percentage }}%)</strong></td>
                                         <td class="right">{{ format_currency($purchase->discount_amount) }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="left"><strong>Tax ({{ $purchase->tax_percentage }}%)</strong></td>
+                                        <td class="left"><strong>{{ __('messages.tax') }} ({{ $purchase->tax_percentage }}%)</strong></td>
                                         <td class="right">{{ format_currency($purchase->tax_amount) }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="left"><strong>Shipping</strong></td>
+                                        <td class="left"><strong>{{ __('messages.shipping') }}</strong></td>
                                         <td class="right">{{ format_currency($purchase->shipping_amount) }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="left"><strong>Grand Total</strong></td>
+                                        <td class="left"><strong>{{ __('messages.totalamount') }}</strong></td>
                                         <td class="right"><strong>{{ format_currency($purchase->total_amount) }}</strong></td>
                                     </tr>
                                     </tbody>

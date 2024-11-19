@@ -146,4 +146,7 @@ return [
     'details' => 'Rincian',
     'purchase_returns' => 'Pembatalan Pembelian',
     'sales_returns' => 'Pembatalan Penjualan',
+    'suppliername' => 'Nama Pemasok',
+    'all_purchase_returns' => 'Semua Pembatalan Pembelian',
+    'all_sales_returns' => 'Semua Pembatalan Penjualan',
 ];

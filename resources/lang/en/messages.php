@@ -132,7 +132,6 @@ return [
     'guidebook' => 'Guidebook',
     'unit' => 'Unit',
     'available_stock' => 'Available Stock',
-
     'adjustments' => 'Adjustments',
     'purchases' => 'Purchases',
     'supplier' => 'Suppliers',
@@ -148,4 +147,7 @@ return [
     'details' => 'Details',
     'purchase_returns' => 'Purchase Returns',
     'sales_returns' => 'Sales Returns',
+    'suppliername' => 'Supplier Name',
+    'all_purchase_returns' => 'All Purchase Returns',
+    'all_sales_returns' => 'All Sales Returns',
 ];

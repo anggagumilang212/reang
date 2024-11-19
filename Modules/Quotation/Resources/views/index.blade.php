@@ -20,7 +20,7 @@
                 <div class="card">
                     <div class="card-body">
                         <a href="{{ route('quotations.create') }}" class="btn btn-primary">
-                            Add Quotation <i class="bi bi-plus"></i>
+                           {{ __('messages.add')}} {{ __('messages.quotation')}} <i class="bi bi-plus"></i>
                         </a>
 
                         <hr>

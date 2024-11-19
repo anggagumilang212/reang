@@ -107,19 +107,19 @@
                                 <table class="table">
                                     <tbody>
                                     <tr>
-                                        <td class="left"><strong>Discount ({{ $quotation->discount_percentage }}%)</strong></td>
+                                        <td class="left"><strong>{{ __('messages.discount') }} ({{ $quotation->discount_percentage }}%)</strong></td>
                                         <td class="right">{{ format_currency($quotation->discount_amount) }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="left"><strong>Tax ({{ $quotation->tax_percentage }}%)</strong></td>
+                                        <td class="left"><strong>{{ __('messages.tax') }} ({{ $quotation->tax_percentage }}%)</strong></td>
                                         <td class="right">{{ format_currency($quotation->tax_amount) }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="left"><strong>Shipping</strong></td>
+                                        <td class="left"><strong>{{ __('messages.shipping') }}</strong></td>
                                         <td class="right">{{ format_currency($quotation->shipping_amount) }}</td>
                                     </tr>
                                     <tr>
-                                        <td class="left"><strong>Grand Total</strong></td>
+                                        <td class="left"><strong>{{ __('messages.grand_total') }}</strong></td>
                                         <td class="right"><strong>{{ format_currency($quotation->total_amount) }}</strong></td>
                                     </tr>
                                     </tbody>
