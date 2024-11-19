@@ -149,4 +149,10 @@ return [
     'suppliername' => 'Nama Pemasok',
     'all_purchase_returns' => 'Semua Pembatalan Pembelian',
     'all_sales_returns' => 'Semua Pembatalan Penjualan',
+    'expenses' => 'Pengeluaran',
+    'amount' => 'Jumlah',
+    'category_description' => 'Keterangan Kategori',
+    'expenses_count' => 'Jumlah Pengeluaran',
+    'city' => 'Kota',
+    'country' => 'Negara',
 ];

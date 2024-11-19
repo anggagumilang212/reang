@@ -53,6 +53,7 @@ class CustomersDataTable extends DataTable
     {
         return [
             Column::make('customer_name')
+                ->title(('messages.customername'))
                 ->className('text-center align-middle'),
 
 

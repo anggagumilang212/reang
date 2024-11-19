@@ -150,4 +150,10 @@ return [
     'suppliername' => 'Supplier Name',
     'all_purchase_returns' => 'All Purchase Returns',
     'all_sales_returns' => 'All Sales Returns',
+    'expenses' => 'Expanses',
+    'amount' => 'Amount',
+    'category_description' => 'Category Description',
+    'expenses_count' => 'Expenses Count',
+    'city' => 'City',
+    'country' => 'Country',
 ];
