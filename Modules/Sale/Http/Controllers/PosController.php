@@ -164,7 +164,8 @@ class PosController extends Controller
             }
 
             toast('POS Sale Created!', 'success');
-            return redirect()->route('sales.index');
+            return redirect()->back();
+            // return redirect()->route('sales.index');
 
         } catch (\Exception $e) {
             if (str_contains($e->getMessage(), 'Insufficient stock')) {

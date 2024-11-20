@@ -12,14 +12,16 @@ class ProductTable extends Component
     public $selectedProducts = [];
     public $barcodes = [];
     public $quantities = [];
-
+    public $availableProducts = [];
     protected $listeners = ['productSelected'];
+
 
     public function mount()
     {
         $this->selectedProducts = [];
         $this->barcodes = [];
         $this->quantities = [];
+        $this->availableProducts = Product::all();
     }
 
     public function render()
@@ -27,12 +29,26 @@ class ProductTable extends Component
         return view('livewire.barcode.product-table');
     }
 
-    public function productSelected(Product $product)
+    // public function productSelected(Product $product)
+    // {
+    //     if (!$this->isProductSelected($product->id)) {
+    //         $this->selectedProducts[] = $product;
+    //         $this->quantities[] = 1;
+    //     }
+    // }
+    public function updatedSelectAll($value)
     {
-        if (!$this->isProductSelected($product->id)) {
-            $this->selectedProducts[] = $product;
-            $this->quantities[] = 1;
+        if ($value) {
+            // Select all products
+            $this->selectedProducts = $this->availableProducts->toArray();
+            // Initialize quantities for all selected products
+            $this->quantities = array_fill(0, count($this->selectedProducts), 1);
+        } else {
+            // Deselect all products
+            $this->selectedProducts = [];
+            $this->quantities = [];
         }
+        $this->barcodes = [];
     }
 
     public function removeProduct($index)
@@ -154,7 +170,7 @@ class ProductTable extends Component
         // Simpan PDF ke dalam buffer dan kirim sebagai respons untuk di-download
         return response()->streamDownload(function () use ($mpdf) {
             echo $mpdf->Output('', 'S'); // 'S' untuk menyimpan PDF dalam string buffer
-        }, 'barcodes-' . now()->format('Y-m-d-H-i-s') . '.pdf');
+        }, 'barcodes-' . $product->product_name .'.pdf');
     }
 
 

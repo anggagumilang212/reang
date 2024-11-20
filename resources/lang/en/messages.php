@@ -101,7 +101,7 @@ return [
     'product_count' => 'Product Count',
     'optional' => 'If Needed',
     'load_more' => 'Load More',
-    'search_products' => 'Search Products by Name or Code',
+    'search_product' => 'Search Products by Name or Code',
     'product_notfound' => 'Product Not Found',
     'home' => 'Home',
     'address' => 'Address',
@@ -156,4 +156,5 @@ return [
     'expenses_count' => 'Expenses Count',
     'city' => 'City',
     'country' => 'Country',
+    'all_expenses' => 'All Expenses',
 ];

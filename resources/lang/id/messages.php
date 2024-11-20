@@ -155,4 +155,5 @@ return [
     'expenses_count' => 'Jumlah Pengeluaran',
     'city' => 'Kota',
     'country' => 'Negara',
+    'all_expenses' => 'Semua Pengeluaran',
 ];
