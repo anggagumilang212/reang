@@ -176,4 +176,5 @@ return [
     'unpaid' => 'Unpaid',
     'partial' => 'Partial',
     'due' => 'Due',
+    'all_expenses' => 'All Expenses',
 ];
