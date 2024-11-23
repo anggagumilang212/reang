@@ -36,8 +36,7 @@
                             <li class="list-group-item list-group-item-action">
                                 <a wire:click="resetQuery" wire:click.prevent="selectProduct({{ $result }})"
                                     href="#">
-                                    <img  src="{{ $result->getFirstMediaUrl('images') }}"
-                                        alt="Product image" width="50" height="50"> {{ $result->product_name }} | {{ $result->product_code }} |
+                                {{ $result->product_name }} | {{ $result->product_code }} |
                                     {{ format_currency($result->product_price) }}
                                 </a>
                             </li>

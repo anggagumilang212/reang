@@ -175,4 +175,5 @@ return [
     'unpaid' => 'Belum Dibayar',
     'partial' => 'Sebagian',
     'due' => 'Kembali',
+    'all_expenses' => 'Semua Pengeluaran',
 ];

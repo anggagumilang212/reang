@@ -95,14 +95,14 @@
                             <div class="col-lg-3 col-md-4 col-sm-6"
                                 style="border: 1px solid #ffffff;border-style: dashed;background-color: #48FCFE;">
                                 <p class="mt-3 mb-1" style="font-size: 15px;color: #000;">
-                                    {{ $product->product_name }}
+                                    {{ $product->product_name ?? "" }}
                                 </p>
                                 <div>
                                     {{-- {!! $barcode !!} --}}
                                     <img src="{{ $barcode }}">
                                 </div>
                                 <p style="font-size: 15px;color: #000;">
-                                    Harga: {{ format_currency($product->product_price) }}
+                                    Harga: {{ format_currency($product->product_price ?? 0) }}
 
                                 </p>
                             </div>
