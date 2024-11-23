@@ -49,15 +49,19 @@ class SuppliersDataTable extends DataTable
     protected function getColumns() {
         return [
             Column::make('supplier_name')
+                ->title( __('messages.suppliername'))
                 ->className('text-center align-middle'),
 
             Column::make('supplier_email')
+                ->title( __('messages.email'))
                 ->className('text-center align-middle'),
 
             Column::make('supplier_phone')
+                ->title( __('messages.supplierphone'))
                 ->className('text-center align-middle'),
 
             Column::computed('action')
+                ->title( __('messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),

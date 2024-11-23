@@ -23,7 +23,7 @@
                                     <td>{{ $customer->customer_name }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Customer Email</th>
+                                    <th>{{ __('messages.customeremail') }}</th>
                                     <td>{{ $customer->customer_email }}</td>
                                 </tr>
                                 <tr>
