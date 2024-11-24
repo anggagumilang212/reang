@@ -19,7 +19,7 @@
                 <div class="col-lg-12">
                     @include('utils.alerts')
                     <div class="form-group">
-                        <button class="btn btn-primary">{{ __('messages.update') }} {{ __('messages.expense') }} <i class="bi bi-check"></i></button>
+                        <button class="btn btn-primary">{{ __('messages.update') }} {{ __('messages.expenses') }} <i class="bi bi-check"></i></button>
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -41,6 +41,16 @@
                             </div>
 
                             <div class="form-row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="branch_id">{{ __('messages.branches') }} <span class="text-danger">*</span></label>
+                                        <select name="branch_id" id="branch_id" class="form-control" required>
+                                            @foreach(\Modules\Branch\Entities\Branch::all() as $branch)
+                                                <option {{ $branch->id == $expense->branch_id ? 'selected' : '' }} value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="category_id">{{ __('messages.category') }} <span class="text-danger">*</span></label>

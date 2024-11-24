@@ -18,7 +18,8 @@
                 <div class="col-lg-12">
                     @include('utils.alerts')
                     <div class="form-group">
-                        <button class="btn btn-primary">{{ __('messages.create') }} {{ __('messages.expenses') }} <i class="bi bi-check"></i></button>
+                        <button class="btn btn-primary">{{ __('messages.create') }} {{ __('messages.expenses') }} <i
+                                class="bi bi-check"></i></button>
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -27,14 +28,18 @@
                             <div class="form-row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="reference">{{ __('messages.reference') }} <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="reference" required readonly value="EXP">
+                                        <label for="reference">{{ __('messages.reference') }} <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="reference" required readonly
+                                            value="EXP">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="date">{{ __('messages.date') }} <span class="text-danger">*</span></label>
-                                        <input type="date" class="form-control" name="date" required value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
+                                        <label for="date">{{ __('messages.date') }} <span
+                                                class="text-danger">*</span></label>
+                                        <input type="date" class="form-control" name="date" required
+                                            value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
                                     </div>
                                 </div>
                             </div>
@@ -42,18 +47,33 @@
                             <div class="form-row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="category_id">{{ __('messages.category') }} <span class="text-danger">*</span></label>
-                                        <select name="category_id" id="category_id" class="form-control" required>
-                                            <option value="" selected>{{ __('messages.select_category') }}</option>
-                                            @foreach(\Modules\Expense\Entities\ExpenseCategory::all() as $category)
-                                                <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                        <label for="branch_id">{{ __('messages.branches') }} <span
+                                                class="text-danger">*</span></label>
+                                        <select name="branch_id" id="branch_id" class="form-control" required>
+                                            <option value="" selected>{{ __('messages.select_branch') }}</option>
+                                            @foreach (\Modules\Branch\Entities\Branch::all() as $branch)
+                                                <option value="{{ $branch->id }}">{{ $branch->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="amount">{{ __('messages.amount') }} <span class="text-danger">*</span></label>
+                                        <label for="category_id">{{ __('messages.category') }} <span
+                                                class="text-danger">*</span></label>
+                                        <select name="category_id" id="category_id" class="form-control" required>
+                                            <option value="" selected>{{ __('messages.select_category') }}</option>
+                                            @foreach (\Modules\Expense\Entities\ExpenseCategory::all() as $category)
+                                                <option value="{{ $category->id }}">{{ $category->category_name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="amount">{{ __('messages.amount') }} <span
+                                                class="text-danger">*</span></label>
                                         <input id="amount" type="text" class="form-control" name="amount" required>
                                     </div>
                                 </div>
@@ -74,18 +94,17 @@
 @push('page_scripts')
     <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#amount').maskMoney({
-                prefix:'{{ settings()->currency->symbol }}',
-                thousands:'{{ settings()->currency->thousand_separator }}',
-                decimal:'{{ settings()->currency->decimal_separator }}',
+                prefix: '{{ settings()->currency->symbol }}',
+                thousands: '{{ settings()->currency->thousand_separator }}',
+                decimal: '{{ settings()->currency->decimal_separator }}',
             });
 
-            $('#expense-form').submit(function () {
+            $('#expense-form').submit(function() {
                 var amount = $('#amount').maskMoney('unmasked')[0];
                 $('#amount').val(amount);
             });
         });
     </script>
 @endpush
-

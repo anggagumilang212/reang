@@ -18,7 +18,7 @@ class ProductStockDataTable extends DataTable
                 return view('productstock::productstocks.partials.actions', compact('data'));
             })
             ->addColumn('Product', function ($data) {
-                return $data->product->product_name;
+                return $data->product->product_name ?? '-';
             })
             ->addColumn('Cabang Toko', function ($data) {
                 return $data->branch->name;

@@ -16,11 +16,13 @@ class CreateExpensesTable extends Migration
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('branch_id');
             $table->date('date');
             $table->string('reference');
             $table->text('details')->nullable();
             $table->integer('amount');
             $table->foreign('category_id')->references('id')->on('expense_categories')->restrictOnDelete();
+            $table->foreign('branch_id')->references('id')->on('branch')->restrictOnDelete();
             $table->timestamps();
         });
     }

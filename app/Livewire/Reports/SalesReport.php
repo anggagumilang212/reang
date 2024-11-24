@@ -8,7 +8,6 @@ use Modules\Sale\Entities\Sale;
 
 class SalesReport extends Component
 {
-
     use WithPagination;
 
     protected $paginationTheme = 'bootstrap';
@@ -19,6 +18,8 @@ class SalesReport extends Component
     public $branch_id;
     public $sale_status;
     public $payment_status;
+    public $totalProfit = 0;
+    public $totalSales = 0;
 
     protected $rules = [
         'start_date' => 'required|date|before:end_date',
@@ -35,7 +36,8 @@ class SalesReport extends Component
     }
 
     public function render() {
-        $sales = Sale::whereDate('date', '>=', $this->start_date)
+        $query = Sale::with('saleDetails')
+            ->whereDate('date', '>=', $this->start_date)
             ->whereDate('date', '<=', $this->end_date)
             ->when($this->branch_id, function ($query) {
                 return $query->where('branch_id', $this->branch_id);
@@ -46,7 +48,19 @@ class SalesReport extends Component
             ->when($this->payment_status, function ($query) {
                 return $query->where('payment_status', $this->payment_status);
             })
-            ->orderBy('date', 'desc')->paginate(10);
+            ->orderBy('date', 'desc');
+
+        // Calculate totals from the full dataset
+        $totals = (clone $query)->get();
+        $this->totalSales = $totals->sum('total_amount');
+        $this->totalProfit = $totals->sum(function ($sale) {
+            return $sale->saleDetails->sum(function ($detail) {
+                return ($detail->price - $detail->product->cost) * $detail->quantity;
+            });
+        });
+
+        // Get paginated results for display
+        $sales = $query->paginate(10);
 
         return view('livewire.reports.sales-report', [
             'sales' => $sales
@@ -54,7 +68,34 @@ class SalesReport extends Component
     }
 
     public function generateReport() {
-        $this->validate();
+        // $this->validate();
         $this->render();
+    }
+
+    public function printReport() {
+        // $this->validate();
+
+        $sales = Sale::with('saleDetails', 'branch')
+            ->whereDate('date', '>=', $this->start_date)
+            ->whereDate('date', '<=', $this->end_date)
+            ->when($this->branch_id, function ($query) {
+                return $query->where('branch_id', $this->branch_id);
+            })
+            ->when($this->sale_status, function ($query) {
+                return $query->where('status', $this->sale_status);
+            })
+            ->when($this->payment_status, function ($query) {
+                return $query->where('payment_status', $this->payment_status);
+            })
+            ->orderBy('date', 'desc')
+            ->get();
+
+        return redirect()->route('sales.print.report', [
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date,
+            'branch_id' => $this->branch_id,
+            'sale_status' => $this->sale_status,
+            'payment_status' => $this->payment_status
+        ]);
     }
 }

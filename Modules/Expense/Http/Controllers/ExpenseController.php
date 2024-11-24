@@ -35,14 +35,16 @@ class ExpenseController extends Controller
             'reference' => 'required|string|max:255',
             'category_id' => 'required',
             'amount' => 'required|numeric|max:2147483647',
-            'details' => 'nullable|string|max:1000'
+            'details' => 'nullable|string|max:1000',
+            'branch_id' => 'required'
         ]);
 
         Expense::create([
             'date' => $request->date,
             'category_id' => $request->category_id,
             'amount' => $request->amount,
-            'details' => $request->details
+            'details' => $request->details,
+            'branch_id' => $request->branch_id
         ]);
 
         toast('Expense Created!', 'success');
@@ -66,7 +68,8 @@ class ExpenseController extends Controller
             'reference' => 'required|string|max:255',
             'category_id' => 'required',
             'amount' => 'required|numeric|max:2147483647',
-            'details' => 'nullable|string|max:1000'
+            'details' => 'nullable|string|max:1000',
+            'branch_id' => 'required'
         ]);
 
         $expense->update([
@@ -74,7 +77,8 @@ class ExpenseController extends Controller
             'reference' => $request->reference,
             'category_id' => $request->category_id,
             'amount' => $request->amount,
-            'details' => $request->details
+            'details' => $request->details,
+            'branch_id' => $request->branch_id
         ]);
 
         toast('Expense Updated!', 'info');

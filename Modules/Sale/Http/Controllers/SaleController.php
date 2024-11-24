@@ -2,6 +2,7 @@
 
 namespace Modules\Sale\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Modules\Sale\Entities\Sale;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
@@ -42,14 +43,16 @@ class SaleController extends Controller
         $this->whatsappService = new WhatsAppService();
     }
 
-    public function index(SalesDataTable $dataTable) {
+    public function index(SalesDataTable $dataTable)
+    {
         abort_if(Gate::denies('access_sales'), 403);
 
         return $dataTable->render('sale::index');
     }
 
 
-    public function create() {
+    public function create()
+    {
         abort_if(Gate::denies('create_sales'), 403);
 
         Cart::instance('sale')->destroy();
@@ -135,7 +138,7 @@ class SaleController extends Controller
                 if ($sale->paid_amount > 0) {
                     SalePayment::create([
                         'date' => $request->date,
-                        'reference' => 'INV/'.$sale->reference,
+                        'reference' => 'INV/' . $sale->reference,
                         'amount' => $sale->paid_amount,
                         'sale_id' => $sale->id,
                         'payment_method' => $request->payment_method,
@@ -162,7 +165,6 @@ class SaleController extends Controller
 
             toast('Sale Created!', 'success');
             return redirect()->route('sales.index');
-
         } catch (\Exception $e) {
             if (str_contains($e->getMessage(), 'Insufficient stock')) {
                 toast('Maaf, stok produk tidak mencukupi!', 'error');
@@ -172,7 +174,8 @@ class SaleController extends Controller
         }
     }
 
-    public function show(Sale $sale) {
+    public function show(Sale $sale)
+    {
         // abort_if(Gate::denies('show_sales'), 403);
 
         $customer = Customer::findOrFail($sale->customer_id);
@@ -306,7 +309,7 @@ class SaleController extends Controller
                         ['sale_id' => $sale->id],
                         [
                             'date' => $request->date,
-                            'reference' => 'INV/'.$sale->reference,
+                            'reference' => 'INV/' . $sale->reference,
                             'amount' => $sale->paid_amount,
                             'payment_method' => $request->payment_method,
                             'branch_id' => $request->branch_id
@@ -317,7 +320,6 @@ class SaleController extends Controller
 
             toast('Sale Updated!', 'info');
             return redirect()->route('sales.index');
-
         } catch (\Exception $e) {
             if (str_contains($e->getMessage(), 'Insufficient stock')) {
                 toast('Maaf, stok produk tidak mencukupi!', 'error');
@@ -327,7 +329,8 @@ class SaleController extends Controller
         }
     }
 
-    public function destroy(Sale $sale) {
+    public function destroy(Sale $sale)
+    {
         abort_if(Gate::denies('delete_sales'), 403);
 
         $sale->delete();
@@ -336,4 +339,39 @@ class SaleController extends Controller
 
         return redirect()->route('sales.index');
     }
+
+    public function printreport(Request $request)
+    {
+        $query = Sale::with('saleDetails', 'branch')
+            ->whereDate('date', '>=', $request->start_date)
+            ->whereDate('date', '<=', $request->end_date)
+            ->when($request->branch_id, function ($query) use ($request) {
+                return $query->where('branch_id', $request->branch_id);
+            })
+            ->when($request->sale_status, function ($query) use ($request) {
+                return $query->where('status', $request->sale_status);
+            })
+            ->when($request->payment_status, function ($query) use ($request) {
+                return $query->where('payment_status', $request->payment_status);
+            })
+            ->orderBy('date', 'desc');
+
+        $sales = $query->get();
+
+        $totalSales = $sales->sum('total_amount');
+        $totalProfit = $sales->sum(function ($sale) {
+            return $sale->saleDetails->sum(function ($detail) {
+                return ($detail->price - $detail->product->cost) * $detail->quantity;
+            });
+        });
+
+        return view('sale::sales-print', [
+            'sales' => $sales,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'totalSales' => $totalSales,
+            'totalProfit' => $totalProfit
+        ]);
+    }
+
 }

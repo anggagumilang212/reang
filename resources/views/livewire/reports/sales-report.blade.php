@@ -7,7 +7,7 @@
                         <div class="form-row">
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label>Start Date <span class="text-danger">*</span></label>
+                                    <label>{{ __('messages.start_date')}} <span class="text-danger">*</span></label>
                                     <input wire:model="start_date" type="date" class="form-control" name="start_date">
                                     @error('start_date')
                                     <span class="text-danger mt-1">{{ $message }}</span>
@@ -16,7 +16,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label>End Date <span class="text-danger">*</span></label>
+                                    <label>{{ __('messages.end_date')}} <span class="text-danger">*</span></label>
                                     <input wire:model="end_date" type="date" class="form-control" name="end_date">
                                     @error('end_date')
                                     <span class="text-danger mt-1">{{ $message }}</span>
@@ -25,9 +25,9 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label>Cabang Toko</label>
+                                    <label>{{ __('messages.branches')}}</label>
                                     <select wire:model="branch_id" class="form-control" name="branch_id">
-                                        <option value="">Select Cabang</option>
+                                        <option value="">{{ __('messages.select_branch') }}</option>
                                         @foreach($customers as $customer)
                                             <option value="{{ $customer->id }}">{{ $customer->name }}</option>
                                         @endforeach
@@ -38,9 +38,9 @@
                         <div class="form-row">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label>Status</label>
+                                    <label>{{ __('messages.status')}}</label>
                                     <select wire:model="sale_status" class="form-control" name="sale_status">
-                                        <option value="">Select Status</option>
+                                        <option value="">{{ __('messages.select_status') }}</option>
                                         <option value="Pending">Pending</option>
                                         <option value="Shipped">Shipped</option>
                                         <option value="Completed">Completed</option>
@@ -49,9 +49,9 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label>Payment Status</label>
+                                    <label>{{ __('messages.paymentstatus')}}</label>
                                     <select wire:model="payment_status" class="form-control" name="payment_status">
-                                        <option value="">Select Payment Status</option>
+                                        <option value="">{{ __('messages.select_payment_status') }}</option>
                                         <option value="Paid">Paid</option>
                                         <option value="Unpaid">Unpaid</option>
                                         <option value="Partial">Partial</option>
@@ -64,6 +64,9 @@
                                 <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 <i wire:target="generateReport" wire:loading.remove class="bi bi-shuffle"></i>
                                 Filter Report
+                            </button>
+                            <button type="button" wire:click="printReport" class="btn btn-success">
+                                <i class="bi bi-printer"></i> Print Report
                             </button>
                         </div>
                     </form>
@@ -84,14 +87,14 @@
                         </div>
                         <thead>
                         <tr>
-                            <th>Date</th>
-                            <th>Reference</th>
-                            <th>Customer</th>
-                            <th>Status</th>
-                            <th>Total</th>
-                            <th>Paid</th>
-                            <th>Due</th>
-                            <th>Payment Status</th>
+                            <th>{{ __('messages.date') }}</th>
+                            <th>{{ __('messages.reference') }}</th>
+                            <th>{{ __('messages.supplier') }}</th>
+                            <th>{{ __('messages.status') }}</th>
+                            <th>{{ __('messages.total') }}</th>
+                            <th>{{ __('messages.paidamount') }}</th>
+                            <th>{{ __('messages.dueamount') }}</th>
+                            <th>{{ __('messages.paymentstatus') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -152,3 +155,29 @@
         </div>
     </div>
 </div>
+<script>
+    function printReport() {
+        let reportContent = document.querySelector('.card-body').innerHTML; // Ambil bagian tabel
+        let printWindow = window.open('', '_blank');
+        printWindow.document.open();
+        printWindow.document.write(`
+            <html>
+                <head>
+                    <title>Sales Report</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; }
+                        table { width: 100%; border-collapse: collapse; }
+                        th, td { padding: 10px; text-align: center; border: 1px solid #ddd; }
+                        th { background-color: #f4f4f4; }
+                    </style>
+                </head>
+                <body>
+                    <h1>Sales Report</h1>
+                    ${reportContent}
+                </body>
+            </html>
+        `);
+        printWindow.document.close();
+        printWindow.print();
+    }
+</script>

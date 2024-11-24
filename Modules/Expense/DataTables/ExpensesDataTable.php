@@ -12,7 +12,8 @@ use Yajra\DataTables\Services\DataTable;
 class ExpensesDataTable extends DataTable
 {
 
-    public function dataTable($query) {
+    public function dataTable($query)
+    {
         return datatables()
             ->eloquent($query)
             ->addColumn('amount', function ($data) {
@@ -23,11 +24,13 @@ class ExpensesDataTable extends DataTable
             });
     }
 
-    public function query(Expense $model) {
-        return $model->newQuery()->with('category');
+    public function query(Expense $model)
+    {
+        return $model->newQuery()->with('category', 'branch')->orderBy('created_at', 'desc');
     }
 
-    public function html() {
+    public function html()
+    {
         return $this->builder()
             ->setTableId('expenses-table')
             ->columns($this->getColumns())
@@ -48,41 +51,46 @@ class ExpensesDataTable extends DataTable
             );
     }
 
-    protected function getColumns() {
+    protected function getColumns()
+    {
         return [
             Column::make('date')
-                ->title( __('messages.date'))
+                ->title(__('messages.date'))
                 ->className('text-center align-middle'),
 
             Column::make('reference')
-                ->title( __('messages.reference'))
+                ->title(__('messages.reference'))
                 ->className('text-center align-middle'),
 
+            Column::make('branch.name')
+                ->title(__('messages.branches'))
+                ->className('text-center align-middle'),
             Column::make('category.category_name')
-                ->title( __('messages.category'))
+                ->title(__('messages.category'))
                 ->className('text-center align-middle'),
 
             Column::computed('amount')
-                ->title( __('messages.amount'))
+                ->title(__('messages.amount'))
                 ->className('text-center align-middle'),
 
             Column::make('details')
-                ->title( __('messages.details'))
+                ->title(__('messages.details'))
                 ->className('text-center align-middle'),
 
             Column::computed('action')
-                ->title( __('messages.action'))
+                ->title(__('messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),
 
             Column::make('created_at')
-                ->title( __('messages.created_at'))
+                ->title(__('messages.created_at'))
                 ->visible(false)
         ];
     }
 
-    protected function filename(): string {
+    protected function filename(): string
+    {
         return 'Expenses_' . date('YmdHis');
     }
 }
