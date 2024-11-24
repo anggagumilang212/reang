@@ -27,7 +27,7 @@
                                 <div class="form-group">
                                     <label>{{ __('messages.supplier')}}</label>
                                     <select wire:model="supplier_id" class="form-control" name="supplier_id">
-                                        <option value="">Select Supplier</option>
+                                        <option value="">{{ __('messages.select') }} {{ __('messages.supplier') }}</option>
                                         @foreach($suppliers as $supplier)
                                             <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
                                         @endforeach
@@ -51,10 +51,10 @@
                                 <div class="form-group">
                                     <label>{{ __('messages.paymentstatus')}}</label>
                                     <select wire:model="payment_status" class="form-control" name="payment_status">
-                                        <option value="">Select Payment Status</option>
-                                        <option value="Paid">Paid</option>
-                                        <option value="Unpaid">Unpaid</option>
-                                        <option value="Partial">Partial</option>
+                                        <option value="">{{ __('messages.select') }} {{ __('messages.paymentstatus') }}</option>
+                                        <option value="Paid">{{ __('messages.paid') }}</option>
+                                        <option value="Unpaid">{{ __('messages.unpaid') }}</option>
+                                        <option value="Partial">{{ __('messages.partial') }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                             <button type="submit" class="btn btn-primary">
                                 <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 <i wire:target="generateReport" wire:loading.remove class="bi bi-shuffle"></i>
-                                Filter Report
+                                {{ __('messages.filter_report') }}
                             </button>
                         </div>
                     </form>
@@ -79,7 +79,7 @@
                     <table class="table table-bordered table-striped text-center mb-0">
                         <div wire:loading.flex class="col-12 position-absolute justify-content-center align-items-center" style="top:0;right:0;left:0;bottom:0;background-color: rgba(255,255,255,0.5);z-index: 99;">
                             <div class="spinner-border text-primary" role="status">
-                                <span class="sr-only">Loading...</span>
+                                <span class="sr-only">{{ __('messages.loading') }}</span>
                             </div>
                         </div>
                         <thead>

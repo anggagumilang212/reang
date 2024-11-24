@@ -58,7 +58,7 @@
                             <button type="submit" class="btn btn-primary">
                                 <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 <i wire:target="generateReport" wire:loading.remove class="bi bi-shuffle"></i>
-                                Filter Report
+                                {{ __('messages.filter_report') }}
                             </button>
                         </div>
                     </form>
@@ -75,7 +75,7 @@
                         <table class="table table-bordered table-striped text-center mb-0">
                             <div wire:loading.flex class="col-12 position-absolute justify-content-center align-items-center" style="top:0;right:0;left:0;bottom:0;background-color: rgba(255,255,255,0.5);z-index: 99;">
                                 <div class="spinner-border text-primary" role="status">
-                                    <span class="sr-only">Loading...</span>
+                                    <span class="sr-only">{{ __('messages.loading') }}</span>
                                 </div>
                             </div>
                             <thead>

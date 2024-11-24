@@ -7,7 +7,7 @@
                         <div class="form-row">
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label>{{ __('messages.start_date')}} <span class="text-danger">*</span></label>
+                                    <label>Start Date <span class="text-danger">*</span></label>
                                     <input wire:model="start_date" type="date" class="form-control" name="start_date">
                                     @error('start_date')
                                     <span class="text-danger mt-1">{{ $message }}</span>
@@ -16,7 +16,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label>{{ __('messages.end_date')}} <span class="text-danger">*</span></label>
+                                    <label>End Date <span class="text-danger">*</span></label>
                                     <input wire:model="end_date" type="date" class="form-control" name="end_date">
                                     @error('end_date')
                                     <span class="text-danger mt-1">{{ $message }}</span>
@@ -25,7 +25,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label>{{ __('messages.branches')}}</label>
+                                    <label>Cabang Toko</label>
                                     <select wire:model="branch_id" class="form-control" name="branch_id">
                                         <option value="">{{ __('messages.select_branch') }}</option>
                                         @foreach($customers as $customer)
@@ -40,7 +40,7 @@
                                 <div class="form-group">
                                     <label>{{ __('messages.status')}}</label>
                                     <select wire:model="sale_status" class="form-control" name="sale_status">
-                                        <option value="">{{ __('messages.select_status') }}</option>
+                                        <option value="">Select Status</option>
                                         <option value="Pending">Pending</option>
                                         <option value="Shipped">Shipped</option>
                                         <option value="Completed">Completed</option>
@@ -49,9 +49,9 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label>{{ __('messages.paymentstatus')}}</label>
+                                    <label>Payment Status</label>
                                     <select wire:model="payment_status" class="form-control" name="payment_status">
-                                        <option value="">{{ __('messages.select_payment_status') }}</option>
+                                        <option value="">Select Payment Status</option>
                                         <option value="Paid">Paid</option>
                                         <option value="Unpaid">Unpaid</option>
                                         <option value="Partial">Partial</option>
@@ -63,7 +63,7 @@
                             <button type="submit" class="btn btn-primary">
                                 <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 <i wire:target="generateReport" wire:loading.remove class="bi bi-shuffle"></i>
-                                Filter Report
+                                {{ __('messages.filter_report') }}
                             </button>
                             <button type="button" wire:click="printReport" class="btn btn-success">
                                 <i class="bi bi-printer"></i> Print Report
@@ -82,19 +82,19 @@
                     <table class="table table-bordered table-striped text-center mb-0">
                         <div wire:loading.flex class="col-12 position-absolute justify-content-center align-items-center" style="top:0;right:0;left:0;bottom:0;background-color: rgba(255,255,255,0.5);z-index: 99;">
                             <div class="spinner-border text-primary" role="status">
-                                <span class="sr-only">Loading...</span>
+                                <span class="sr-only">{{ __('messages.loading') }}</span>
                             </div>
                         </div>
                         <thead>
                         <tr>
-                            <th>{{ __('messages.date') }}</th>
-                            <th>{{ __('messages.reference') }}</th>
-                            <th>{{ __('messages.supplier') }}</th>
-                            <th>{{ __('messages.status') }}</th>
-                            <th>{{ __('messages.total') }}</th>
-                            <th>{{ __('messages.paidamount') }}</th>
-                            <th>{{ __('messages.dueamount') }}</th>
-                            <th>{{ __('messages.paymentstatus') }}</th>
+                            <th>Date</th>
+                            <th>Reference</th>
+                            <th>Customer</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th>Paid</th>
+                            <th>Due</th>
+                            <th>Payment Status</th>
                         </tr>
                         </thead>
                         <tbody>

@@ -53,17 +53,20 @@ class CustomersDataTable extends DataTable
     {
         return [
             Column::make('customer_name')
-                ->title(('messages.customername'))
+                ->title( __('messages.customername'))
                 ->className('text-center align-middle'),
 
 
             Column::make('customer_phone')
+                ->title( __('messages.customerphone'))
                 ->className('text-center align-middle'),
                 
             Column::make('address')
+                ->title( __('messages.address'))
                 ->className('text-center align-middle'),
 
             Column::computed('action')
+                ->title( __('messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),
