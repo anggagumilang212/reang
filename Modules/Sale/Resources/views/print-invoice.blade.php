@@ -26,7 +26,7 @@
             line-height: 1.2;
             display: block; /* Mengubah ke block dari flex */
             color: #000; /* Hitam pekat */
-            font-weight: 700; /* Tebalkan teks */
+            font-weight: 550; /* Tebalkan teks */
 
         }
 
@@ -45,14 +45,14 @@
             margin: 0 5mm; /* Margin kiri-kanan otomatis untuk centering */
             padding: 2mm 0;
             color: #000; /* Hitam pekat */
-            font-weight: 700; /* Tebalkan teks */
+            font-weight: 550; /* Tebalkan teks */
         }
 
         .header {
             text-align: center;
             margin-bottom: 3mm;
             color: #000; /* Hitam pekat */
-            font-weight: 700; /* Tebalkan teks */
+            font-weight: 550; /* Tebalkan teks */
         }
 
         .shop-name {
@@ -61,7 +61,7 @@
             margin-bottom: 1mm;
             text-align: center;
             color: #000; /* Hitam pekat */
-            font-weight: 700; /* Tebalkan teks */
+            font-weight: 550; /* Tebalkan teks */
         }
 
         .divider {
@@ -187,6 +187,10 @@
 
             <div class="divider"></div>
 
+            <div class="footer">
+               Terimakasih telah berbelanja di
+                {{ settings()->company_name }}
+            </div>
             <div class="footer">
                 Link {{ __('messages.kritik_saran') }}:<br>
                 reang.net

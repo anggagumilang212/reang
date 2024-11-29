@@ -182,4 +182,10 @@ return [
      'profit_and_loss_report' => 'Profit and Loss Report',
      'select_payment' => 'Select Payment',
      'profit' => 'Profit',
+     'person' => 'Person',
+     'revenue' => 'Revenue',
+     'weekly_sales_purchases' => ' Sales & Purchases of Last 7 Days',
+     'monthly_cashflow' => '  Monthly Cash Flow (Payment Sent & Received)',
+     'month_overview' => 'Month Overview',
+     'expenses_report' => 'Expenses Report',
 ];

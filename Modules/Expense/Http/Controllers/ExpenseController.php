@@ -96,4 +96,26 @@ class ExpenseController extends Controller
 
         return redirect()->route('expenses.index');
     }
+
+    public function printreport(Request $request)
+    {
+        $query = Expense::with( 'branch')
+            ->whereDate('date', '>=', $request->start_date)
+            ->whereDate('date', '<=', $request->end_date)
+            ->when($request->branch_id, function ($query) use ($request) {
+                return $query->where('branch_id', $request->branch_id);
+            })
+            ->orderBy('date', 'desc');
+
+        $expenses = $query->get();
+
+        $totalExpenses = $expenses->sum('amount');
+
+        return view('expense::expenses.expenses-print', [
+            'expenses' => $expenses,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'totalExpenses' => $totalExpenses,
+        ]);
+    }
 }

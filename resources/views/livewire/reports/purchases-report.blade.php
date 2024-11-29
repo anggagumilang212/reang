@@ -41,9 +41,9 @@
                                     <label>{{ __('messages.status')}}</label>
                                     <select wire:model="purchase_status" class="form-control" name="purchase_status">
                                         <option value="">{{ __('messages.select_status') }}</option>
-                                        <option value="Pending">Pending</option>
-                                        <option value="Ordered">Ordered</option>
-                                        <option value="Completed">Completed</option>
+                                        <option value="Pending">{{ __('messages.pending') }}</option>
+                                        <option value="Ordered">{{ __('messages.ordered') }}</option>
+                                        <option value="Completed">{{ __('messages.completed') }}</option>
                                     </select>
                                 </div>
                             </div>

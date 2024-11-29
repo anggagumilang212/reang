@@ -342,7 +342,7 @@ class SaleController extends Controller
 
     public function printreport(Request $request)
     {
-        $query = Sale::with('saleDetails', 'branch')
+        $query = Sale::with( 'branch')
             ->whereDate('date', '>=', $request->start_date)
             ->whereDate('date', '<=', $request->end_date)
             ->when($request->branch_id, function ($query) use ($request) {

@@ -35,31 +35,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>{{ __('messages.status') }}</label>
-                                    <select wire:model="sale_status" class="form-control" name="sale_status">
-                                        <option value="">{{ __('messages.select') }} {{ __('messages.status') }}
-                                        </option>
-                                        <option value="Pending">{{ __('messages.pending') }}</option>
-                                        <option value="Shipped">{{ __('messages.shipped') }}</option>
-                                        <option value="Completed">{{ __('messages.completed') }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>{{ __('messages.paymentstatus') }}</label>
-                                    <select wire:model="payment_status" class="form-control" name="payment_status">
-                                        <option value="">{{ __('messages.select_payment_status') }}</option>
-                                        <option value="Paid">{{ __('messages.paid') }}</option>
-                                        <option value="Unpaid">{{ __('messages.unpaid') }}</option>
-                                        <option value="Partial">{{ __('messages.partial') }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+
                         <div class="form-group mb-0">
                             <button type="submit" class="btn btn-primary">
                                 <span wire:target="generateReport" wire:loading class="spinner-border spinner-border-sm"
@@ -68,7 +44,7 @@
                                 {{ __('messages.filter_report') }}
                             </button>
                             <button type="button" wire:click="printReport" class="btn btn-success">
-                                <i class="bi bi-printer"></i> {{ __('messages.print') }}   {{ __('messages.reports') }}
+                                <i class="bi bi-printer"></i> {{ __('messages.print') }} {{ __('messages.reports') }}
                             </button>
                         </div>
                     </form>
@@ -92,67 +68,32 @@
                         <thead>
                             <tr>
                                 <th>{{ __('messages.date') }}</th>
-                                <th>{{ __('messages.reference') }}</th>
-                                <th>{{ __('messages.customername') }}</th>
-                                <th>{{ __('messages.status') }}</th>
-                                <th>{{ __('messages.total') }}</th>
-                                <th>{{ __('messages.paidamount') }}</th>
-                                <th>{{ __('messages.dueamount') }}</th>
-                                <th>{{ __('messages.paymentstatus') }}</th>
+                                <th>{{ __('messages.details') }}</th>
+                                <th>{{ __('messages.branches') }}</th>
+                                <th>{{ __('messages.amount') }}</th>
+
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($sales as $sale)
+                            @forelse($expenses as $expense)
                                 <tr>
-                                    <td>{{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}</td>
-                                    <td>{{ $sale->reference }}</td>
-                                    <td>{{ $sale->customer_name }}</td>
-                                    <td>
-                                        @if ($sale->status == 'Pending')
-                                            <span class="badge badge-info">
-                                                {{ $sale->status }}
-                                            </span>
-                                        @elseif ($sale->status == 'Shipped')
-                                            <span class="badge badge-primary">
-                                                {{ $sale->status }}
-                                            </span>
-                                        @else
-                                            <span class="badge badge-success">
-                                                {{ $sale->status }}
-                                            </span>
-                                        @endif
-                                    </td>
-                                    <td>{{ format_currency($sale->total_amount) }}</td>
-                                    <td>{{ format_currency($sale->paid_amount) }}</td>
-                                    <td>{{ format_currency($sale->due_amount) }}</td>
-                                    <td>
-                                        @if ($sale->payment_status == 'Partial')
-                                            <span class="badge badge-warning">
-                                                {{ $sale->payment_status }}
-                                            </span>
-                                        @elseif ($sale->payment_status == 'Paid')
-                                            <span class="badge badge-success">
-                                                {{ $sale->payment_status }}
-                                            </span>
-                                        @else
-                                            <span class="badge badge-danger">
-                                                {{ $sale->payment_status }}
-                                            </span>
-                                        @endif
+                                    <td>{{ \Carbon\Carbon::parse($expense->date)->format('d M, Y') }}</td>
+                                    <td>{{ $expense->details }}</td>
+                                    <td>{{ $expense->branch->name }}</td>
 
-                                    </td>
+                                    <td>{{ format_currency($expense->amount) }}</td>
                                 </tr>
                             @empty
                                 <tr>
                                     <td colspan="8">
-                                        <span class="text-danger">No Sales Data Available!</span>
+                                        <span class="text-danger">No Expenses Data Available!</span>
                                     </td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
-                    <div @class(['mt-3' => $sales->hasPages()])>
-                        {{ $sales->links() }}
+                    <div @class(['mt-3' => $expenses->hasPages()])>
+                        {{ $expenses->links() }}
                     </div>
                 </div>
             </div>
@@ -167,7 +108,7 @@
         printWindow.document.write(`
             <html>
                 <head>
-                    <title>Sales Report</title>
+                    <title>Expenses Report</title>
                     <style>
                         body { font-family: Arial, sans-serif; }
                         table { width: 100%; border-collapse: collapse; }
@@ -176,7 +117,7 @@
                     </style>
                 </head>
                 <body>
-                    <h1>Sales Report</h1>
+                    <h1>Expenses Report</h1>
                     ${reportContent}
                 </body>
             </html>

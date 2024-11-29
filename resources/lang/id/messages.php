@@ -181,4 +181,10 @@ return [
     'profit_and_loss_report' => 'Laporan Laba dan Rugi',
     'select_payment' => 'Select Payment',
     'profit' => 'Laba',
+    'person' => 'Orang',
+    'revenue' => 'Pendapatan',
+    'weekly_sales_purchases' => 'Penjualan & Pembelian Mingguan',
+    'monthly_cashflow' => 'Cash Flow Perbulan',
+    'month_overview' => 'Ringkasan Bulan',
+    'expenses_report' => 'Laporan Pengeluaran',
 ];
