@@ -72,21 +72,27 @@ class UsersDataTable extends DataTable
     protected function getColumns() {
         return [
             Column::computed('image')
+                ->title(__('messages.image'))
                 ->className('text-center align-middle'),
 
             Column::make('name')
+            ->title(__('messages.name'))
                 ->className('text-center align-middle'),
 
             Column::make('email')
+            ->title(__('messages.email'))
                 ->className('text-center align-middle'),
 
             Column::computed('role')
+            ->title(__('messages.roles'))
                 ->className('text-center align-middle'),
 
             Column::computed('status')
+                ->title(__('messages.status'))
                 ->className('text-center align-middle'),
 
             Column::computed('action')
+                ->title(__('messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),

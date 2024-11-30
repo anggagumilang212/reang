@@ -10,9 +10,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('users.index') }}">Users</a></li>
-        <li class="breadcrumb-item active">Create</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('users.index') }}">{{ __('messages.users') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.add') }}</li>
     </ol>
 @endsection
 
@@ -24,7 +24,7 @@
                 <div class="col-lg-12">
                     @include('utils.alerts')
                     <div class="form-group">
-                        <button class="btn btn-primary">Create User <i class="bi bi-check"></i></button>
+                        <button class="btn btn-primary">{{ __('messages.add') }} {{ __('messages.users') }}<i class="bi bi-check"></i></button>
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -33,13 +33,13 @@
                             <div class="form-row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="name">Name <span class="text-danger">*</span></label>
+                                        <label for="name">{{__('messages.name')}} <span class="text-danger">*</span></label>
                                         <input class="form-control" type="text" name="name" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="email">Email <span class="text-danger">*</span></label>
+                                        <label for="email">{{__('messages.email')}} <span class="text-danger">*</span></label>
                                         <input class="form-control" type="email" name="email" required>
                                     </div>
                                 </div>
@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="password_confirmation">Confirm Password <span
+                                        <label for="password_confirmation">{{__('messages.confirm')}} Password <span
                                                 class="text-danger">*</span></label>
                                         <input class="form-control" type="password" name="password_confirmation"
                                                required>
@@ -61,9 +61,9 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="role">Role <span class="text-danger">*</span></label>
+                                <label for="role">{{__('messages.roles')}} <span class="text-danger">*</span></label>
                                 <select class="form-control" name="role" id="role" required>
-                                    <option value="" selected disabled>Select Role</option>
+                                    <option value="" selected disabled>{{__('messages.select')}} {{__('messages.roles')}}</option>
                                     @foreach(\Spatie\Permission\Models\Role::where('name', '!=', 'Super Admin')->get() as $role)
                                         <option value="{{ $role->name }}">{{ $role->name }}</option>
                                     @endforeach
@@ -71,9 +71,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="is_active">Status <span class="text-danger">*</span></label>
+                                <label for="is_active">{{__('messages.status')}} <span class="text-danger">*</span></label>
                                 <select class="form-control" name="is_active" id="is_active" required>
-                                    <option value="" selected disabled>Select Status</option>
+                                    <option value="" selected disabled>{{__('messages.select')}} {{__('messages.status')}}</option>
                                     <option value="1">Active</option>
                                     <option value="2">Deactive</option>
                                 </select>
@@ -85,7 +85,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="image">Profile Image <span class="text-danger">*</span></label>
+                                <label for="image">{{__('messages.image')}} <span class="text-danger">*</span></label>
                                 <input id="image" type="file" name="image" data-max-file-size="500KB">
                             </div>
                         </div>

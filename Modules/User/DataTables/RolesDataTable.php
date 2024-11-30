@@ -56,19 +56,23 @@ class RolesDataTable extends DataTable
     protected function getColumns() {
         return [
             Column::make('id')
+                ->title('#')
                 ->addClass('text-center')
                 ->addClass('align-middle'),
 
             Column::make('name')
+                ->title(__('messages.name'))
                 ->addClass('text-center')
                 ->addClass('align-middle'),
 
             Column::computed('permissions')
+            ->title(__('messages.permissions'))
                 ->addClass('text-center')
                 ->addClass('align-middle')
                 ->width('700px'),
 
             Column::computed('action')
+                ->title(__('messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->addClass('text-center')
