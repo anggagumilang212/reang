@@ -444,14 +444,14 @@
     <li
         class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('currencies*') || request()->routeIs('units*') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-            <i class="c-sidebar-nav-icon bi bi-gear" style="line-height: 1;"></i> Settings
+            <i class="c-sidebar-nav-icon bi bi-gear" style="line-height: 1;"></i> {{ __('messages.settings') }}
         </a>
         @can('access_units')
             <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link {{ request()->routeIs('units*') ? 'c-active' : '' }}"
                         href="{{ route('units.index') }}">
-                        <i class="c-sidebar-nav-icon bi bi-calculator" style="line-height: 1;"></i> Units
+                        <i class="c-sidebar-nav-icon bi bi-calculator" style="line-height: 1;"></i> {{__('messages.unit')}}
                     </a>
                 </li>
             </ul>
@@ -461,7 +461,7 @@
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link {{ request()->routeIs('currencies*') ? 'c-active' : '' }}"
                         href="{{ route('currencies.index') }}">
-                        <i class="c-sidebar-nav-icon bi bi-cash-stack" style="line-height: 1;"></i> Currencies
+                        <i class="c-sidebar-nav-icon bi bi-cash-stack" style="line-height: 1;"></i> {{__('messages.currency')}}
                     </a>
                 </li>
             </ul>
@@ -471,7 +471,7 @@
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link {{ request()->routeIs('settings*') ? 'c-active' : '' }}"
                         href="{{ route('settings.index') }}">
-                        <i class="c-sidebar-nav-icon bi bi-sliders" style="line-height: 1;"></i> System Settings
+                        <i class="c-sidebar-nav-icon bi bi-sliders" style="line-height: 1;"></i> {{__('messages.system_settings')}}
                     </a>
                 </li>
             </ul>
@@ -480,7 +480,7 @@
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->routeIs('banners*') ? 'c-active' : '' }}"
                     href="{{ route('banners.index') }}">
-                    <i class="c-sidebar-nav-icon bi bi-images" style="line-height: 1;"></i> Banner Management
+                    <i class="c-sidebar-nav-icon bi bi-images" style="line-height: 1;"></i> {{__('messages.banner_manajemen')}}
                 </a>
             </li>
         </ul>

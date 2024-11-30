@@ -12,7 +12,8 @@ use Yajra\DataTables\Services\DataTable;
 class CurrencyDataTable extends DataTable
 {
 
-    public function dataTable($query) {
+    public function dataTable($query)
+    {
         return datatables()
             ->eloquent($query)
             ->addColumn('action', function ($data) {
@@ -20,11 +21,13 @@ class CurrencyDataTable extends DataTable
             });
     }
 
-    public function query(Currency $model) {
+    public function query(Currency $model)
+    {
         return $model->newQuery();
     }
 
-    public function html() {
+    public function html()
+    {
         return $this->builder()
             ->setTableId('currency-table')
             ->columns($this->getColumns())
@@ -45,24 +48,31 @@ class CurrencyDataTable extends DataTable
             );
     }
 
-    protected function getColumns() {
+    protected function getColumns()
+    {
         return [
             Column::make('currency_name')
+                ->title(__('messages.currency'))
                 ->className('text-center align-middle'),
 
             Column::make('code')
+                ->title(__('messages.code'))
                 ->className('text-center align-middle'),
 
             Column::make('symbol')
+                ->title(__('messages.symbol'))
                 ->className('text-center align-middle'),
 
             Column::make('thousand_separator')
+                ->title(__('messages.thousand_separator'))
                 ->className('text-center align-middle'),
 
             Column::make('decimal_separator')
+                ->title(__('messages.decimal_separator'))
                 ->className('text-center align-middle'),
 
             Column::computed('action')
+                ->title(__('messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),
@@ -72,7 +82,8 @@ class CurrencyDataTable extends DataTable
         ];
     }
 
-    protected function filename(): string {
+    protected function filename(): string
+    {
         return 'Currency_' . date('YmdHis');
     }
 }
