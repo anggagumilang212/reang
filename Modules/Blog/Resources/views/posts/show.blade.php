@@ -8,9 +8,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">Posts</a></li>
-        <li class="breadcrumb-item active">Details</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">{{ __('messages.post') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.details') }}</li>
     </ol>
 @endsection
 
@@ -35,7 +35,7 @@
                     <div class="card-body">
                         <h3>{{ $post->title }}</h3>
 
-                        <p>Dibuat oleh {{ $post->user->name }} pada
+                        <p>{{ __('messages.created_by') }}   {{ $post->user->name }} {{ __('messages.on') }}
                             {{ \Carbon\Carbon::parse($post->created_at)->format('d F Y') }}
                         </p>
 
@@ -43,7 +43,7 @@
                             {{ $post->description }}
                         </p>
 
-                        Categories : <br>
+                        {{ __('messages.category') }} : <br>
                         @foreach ($categories as $category)
                             <span class="badge badge-primary">
                                 {{ $category->title }}
@@ -55,7 +55,7 @@
                             {!! $post->content !!}
                         </div><br>
 
-                        Tags : <br>
+                        {{ __('messages.post_tag') }} : <br>
                         @foreach ($tags as $tag)
                             <span class="badge badge-info">
                                 #{{ $tag->title }}

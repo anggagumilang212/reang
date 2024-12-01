@@ -4,9 +4,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('testimonis.index') }}">Testimoni</a></li>
-        <li class="breadcrumb-item active">Details</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('testimonis.index') }}">{{ __('messages.testimoni') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.details') }}</li>
     </ol>
 @endsection
 
@@ -20,11 +20,11 @@
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped mb-0">
                                 <tr>
-                                    <th>Name</th>
+                                    <th>{{ __('messages.name') }}</th>
                                     <td>{{ $Testimoni->name }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Rating</th>
+                                    <th>{{ __('messages.rating') }}</th>
                                     <td> @for($i = 1; $i <= 5; $i++)
                                         @if($i <= $Testimoni->rating)
                                              <i class="fas fa-star text-warning"></i>
@@ -35,7 +35,7 @@
                                 </tr>
 
                                 <tr>
-                                    <th>Content</th>
+                                    <th>{{ __('messages.content') }}</th>
                                     <td>{{ $Testimoni->content }}</td>
                                 </tr>
                             </table>

@@ -4,9 +4,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('testimonis.index') }}">Testimoni</a></li>
-        <li class="breadcrumb-item active">Add</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('testimonis.index') }}">{{ __('messages.testimoni') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.create') }}</li>
     </ol>
 @endsection
 <style>
@@ -44,23 +44,23 @@
                 <div class="col-lg-12">
                     @include('utils.alerts')
                     <div class="form-group">
-                        <button class="btn btn-primary">Create Testimoni <i class="bi bi-check"></i></button>
+                        <button class="btn btn-primary">{{ __('messages.create') }} {{ __('messages.testimoni') }} <i class="bi bi-check"></i></button>
                     </div>
                 </div>
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="name">Nama <span class="text-danger">*</span></label>
+                                <label for="name">{{ __('messages.name') }} <span class="text-danger">*</span></label>
                                 <input id="name" type="text" class="form-control" name="name" required
                                     value="{{ old('name') }}">
                             </div>
                             <div class="form-group">
-                                <label for="content">Konten <span class="text-danger">*</span></label>
+                                <label for="content">{{ __('messages.content') }} <span class="text-danger">*</span></label>
                                 <textarea name="content" id="content" rows="4 " class="form-control"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="" class="form-label">Rating <span class="text-danger">*</span></label>
+                                <label for="" class="form-label">{{ __('messages.rating') }} <span class="text-danger">*</span></label>
                                 <div class="rating">
                                     @for ($i = 5; $i >= 1; $i--)
                                         <input type="radio" id="star{{ $i }}" name="rating"
@@ -79,7 +79,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="image">Images <i class="bi bi-question-circle-fill text-info"
+                                <label for="image">{{ __('messages.image') }} <i class="bi bi-question-circle-fill text-info"
                                         data-toggle="tooltip" data-placement="top"
                                         title="Max Files: 3, Max File Size: 1MB, Image Size: 400x400"></i></label>
                                 <div class="dropzone d-flex flex-wrap align-items-center justify-content-center"

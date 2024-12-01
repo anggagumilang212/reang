@@ -57,14 +57,15 @@ class TagsDataTable extends DataTable
                 ->className('text-center align-middle'),
 
             Column::make('title')
-                ->title('Title')
+            ->title(__('messages.title'))
                 ->className('text-center align-middle'),
 
             Column::make('slug')
-                ->title('Slug')
+            ->title(__('messages.slug'))
                 ->className('text-center align-middle'),
 
             Column::computed('action')
+            ->title(__('messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),

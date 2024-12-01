@@ -75,18 +75,19 @@ class TestimoniDataTable extends DataTable
         return [
             Column::make('id')->title('ID'),
             Column::computed('testimoni_image')
-                ->title('Image')
+                ->title(__('messages.image'))
                 ->className('text-center align-middle'),
             Column::make('name')
-                ->title('Name')
+                ->title(__('messages.name'))
                 ->className('text-center align-middle'),
             Column::make('content')
-                ->title('Content')
+                ->title(__('messages.content'))
                 ->className('text-center align-middle'),
             Column::computed('rating')
-                ->title('Rating')
+                ->title(__('messages.rating'))
                 ->className('text-center align-middle'),
             Column::computed('action')
+                ->title(__('messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),

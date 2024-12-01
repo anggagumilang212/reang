@@ -8,8 +8,8 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Posts</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.post') }}</li>
     </ol>
 @endsection
 
@@ -22,15 +22,15 @@
                         <div class="row">
                             <div class="col">
                                 <a href="{{ route('posts.create') }}" class="btn btn-primary">
-                                    Add Post <i class="bi bi-plus"></i>
+                                    {{ __('messages.add') }} {{ __('messages.post') }} <i class="bi bi-plus"></i>
                                 </a>
                             </div>
                             <div class="col-sm-4">
                                 <form action="" method="GET">
                                     <div class="input-group mx-1">
-                                        <label class="font-weight-bold mr-3 mt-1">Status</label>
+                                        <label class="font-weight-bold mr-3 mt-1">{{ __('messages.status') }}</label>
                                         <select name="status" class="custom-select">
-                                            <option value="">All</option>
+                                            <option value="">{{ __('messages.all') }}</option>
                                             @foreach ($statuses as $value => $label)
                                                 <option value="{{ $value }}"
                                                     {{ $statusSelected == $value ? 'selected' : null }}>
@@ -39,7 +39,7 @@
                                             @endforeach
                                         </select>
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary" type="submit">Apply</button>
+                                            <button class="btn btn-primary" type="submit">{{ __('messages.apply') }}</button>
                                         </div>
                                     </div>
                                 </form>

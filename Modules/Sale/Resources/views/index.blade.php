@@ -28,7 +28,7 @@
                                     style="background: linear-gradient(45deg, #dc3545, #ff4d4d); border: none; color: white; box-shadow: 0 2px 5px rgba(220, 53, 69, 0.3);">
                                     <i class="bi bi-info-circle me-2"></i>
                                     <div class="text-center">
-                                        Untuk mengambilan laporan penjualan silahkan klik di sini!
+                                        Untuk pengambilan laporan penjualan silahkan klik di sini!
                                     </div>
                                 </div>
                             </a>

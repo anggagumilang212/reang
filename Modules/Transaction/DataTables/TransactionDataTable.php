@@ -78,30 +78,31 @@ class TransactionDataTable extends DataTable
         return [
             Column::make('id')->title('ID'),
             Column::make('transaction_code')
-                ->title('Transaction Code')
+                ->title(__('messages.transaction_code'))
                 ->className('text-center align-middle'),
             Column::make('product.product_name')
-                ->title('Product')
+                ->title(__('messages.productname'))
                 ->className('text-center align-middle'),
             Column::make('branch.name')
-                ->title('Cabang Toko')
+                ->title(__('messages.branches'))
                 ->className('text-center align-middle'),
             Column::make('amount')
-                ->title('Amount')
+                ->title(__('messages.amount'))
                 ->className('text-center align-middle'),
             Column::make('payment_method')
-                ->title('Payment Method')
+                ->title(__('messages.payment_method'))
                 ->className('text-center align-middle'),
             Column::make('payment_status')
-                ->title('Payment Status')
+                ->title(__('messages.paymentstatus'))
                 ->className('text-center align-middle'),
             Column::make('customer_name')
-                ->title('Customer Name')
+                ->title(__('messages.customername'))
                 ->className('text-center align-middle'),
             Column::make('customer_phone')
-                ->title('Customer Phone')
+                ->title(__('messages.customerphone'))
                 ->className('text-center align-middle'),
             Column::computed('action')
+                ->title(__('messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),

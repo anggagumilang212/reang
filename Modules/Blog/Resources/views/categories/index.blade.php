@@ -8,9 +8,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">Posts</a></li>
-        <li class="breadcrumb-item active">Categories</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">{{ __('messages.post') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.category') }}</li>
     </ol>
 @endsection
 
@@ -21,7 +21,7 @@
                 <div class="card">
                     <div class="card-body">
                         <a href="{{ route('post-categories.create') }}" class="btn btn-primary">
-                            Add Category <i class="bi bi-plus"></i>
+                            {{ __('messages.add') }} {{ __('messages.category') }} <i class="bi bi-plus"></i>
                         </a>
 
                         <hr>

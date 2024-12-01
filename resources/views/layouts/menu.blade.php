@@ -359,25 +359,25 @@
     <li
         class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('posts*', 'tags*', 'post-categories*') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-            <i class="c-sidebar-nav-icon bi bi-layout-text-window" style="line-height: 1;"></i> Blog Management
+            <i class="c-sidebar-nav-icon bi bi-layout-text-window" style="line-height: 1;"></i> {{ __('messages.post') }}
         </a>
         <ul class="c-sidebar-nav-dropdown-items">
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->routeIs('posts*') ? 'c-active' : '' }}"
                     href="{{ route('posts.index') }}">
-                    <i class="c-sidebar-nav-icon bi bi-file-richtext" style="line-height: 1;"></i> All Posts
+                    <i class="c-sidebar-nav-icon bi bi-file-richtext" style="line-height: 1;"></i>{{ __('messages.all_posts') }}
                 </a>
             </li>
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->routeIs('tags*') ? 'c-active' : '' }}"
                     href="{{ route('tags.index') }}">
-                    <i class="c-sidebar-nav-icon bi bi-tags" style="line-height: 1;"></i> All Tags
+                    <i class="c-sidebar-nav-icon bi bi-tags" style="line-height: 1;"></i> {{ __('messages.all_tags') }}
                 </a>
             </li>
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->routeIs('post-categories*') ? 'c-active' : '' }}"
                     href="{{ route('post-categories.index') }}">
-                    <i class="c-sidebar-nav-icon bi bi-grid" style="line-height: 1;"></i> All Categories
+                    <i class="c-sidebar-nav-icon bi bi-grid" style="line-height: 1;"></i> {{ __('messages.post_categories') }}
                 </a>
             </li>
         </ul>
@@ -387,25 +387,25 @@
 @can('access_user_management')
     <li class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('roles*') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-            <i class="c-sidebar-nav-icon bi bi-people" style="line-height: 1;"></i> User Management
+            <i class="c-sidebar-nav-icon bi bi-people" style="line-height: 1;"></i> {{ __('messages.user_management') }}
         </a>
         <ul class="c-sidebar-nav-dropdown-items">
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->routeIs('users.create') ? 'c-active' : '' }}"
                     href="{{ route('users.create') }}">
-                    <i class="c-sidebar-nav-icon bi bi-person-plus" style="line-height: 1;"></i> Create User
+                    <i class="c-sidebar-nav-icon bi bi-person-plus" style="line-height: 1;"></i> {{ __('messages.add') }} {{ __('messages.users') }}
                 </a>
             </li>
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->routeIs('users.index') ? 'c-active' : '' }}"
                     href="{{ route('users.index') }}">
-                    <i class="c-sidebar-nav-icon bi bi-person-lines-fill" style="line-height: 1;"></i> All Users
+                    <i class="c-sidebar-nav-icon bi bi-person-lines-fill" style="line-height: 1;"></i>{{ __('messages.all_users') }}
                 </a>
             </li>
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->routeIs('roles*') ? 'c-active' : '' }}"
                     href="{{ route('roles.index') }}">
-                    <i class="c-sidebar-nav-icon bi bi-key" style="line-height: 1;"></i> Roles & Permissions
+                    <i class="c-sidebar-nav-icon bi bi-key" style="line-height: 1;"></i> {{ __('messages.roles') }} & {{ __('messages.permissions') }}
                 </a>
             </li>
         </ul>
@@ -417,7 +417,7 @@
     <li class="c-sidebar-nav-item">
         <a class="c-sidebar-nav-link {{ request()->routeIs('testimonis*') ? 'c-active' : '' }}"
             href="{{ route('testimonis.index') }}">
-            <i class="c-sidebar-nav-icon bi bi-chat" style="line-height: 1;"></i> Testimoni Management
+            <i class="c-sidebar-nav-icon bi bi-chat" style="line-height: 1;"></i> {{ __('messages.testimoni') }}
         </a>
     </li>
 @endcan
@@ -426,7 +426,7 @@
     <li class="c-sidebar-nav-item">
         <a class="c-sidebar-nav-link {{ request()->routeIs('mediareview*') ? 'c-active' : '' }}"
             href="{{ route('mediareview.create') }}">
-            <i class="c-sidebar-nav-icon bi bi-image" style="line-height: 1;"></i> Add Media Product Review
+            <i class="c-sidebar-nav-icon bi bi-image" style="line-height: 1;"></i>{{ __('messages.add') }} {{ __('messages.product_media_review') }}
         </a>
     </li>
 @endcan
@@ -436,6 +436,7 @@
         <a class="c-sidebar-nav-link {{ request()->routeIs('transactions*') ? 'c-active' : '' }}"
             href="{{ route('transactions.index') }}">
             <i class="c-sidebar-nav-icon bi bi-currency-exchange" style="line-height: 1;"></i> {{ __('messages.transactions') }}
+        </a>
     </li>
 @endcan
 

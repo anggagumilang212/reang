@@ -4,10 +4,10 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">Posts</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('post-categories.index') }}">Categories</a></li>
-        <li class="breadcrumb-item active">Details</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">{{ __('messages.post') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('post-categories.index') }}">{{ __('messages.category') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.details') }}</li>
     </ol>
 @endsection
 
@@ -20,15 +20,15 @@
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped mb-0">
                                 <tr>
-                                    <th>Category Name</th>
+                                    <th>{{ __('messages.title') }}</th>
                                     <td>{{ $post_category->title }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Category Slug</th>
+                                    <th>{{ __('messages.slug') }}</th>
                                     <td>{{ $post_category->slug }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Parent Category</th>
+                                    <th>{{ __('messages.parent_category') }}</th>
                                     @if (!!$post_category->parent)
                                         <td>{{ $post_category->parent->title }}</td>
                                     @else
@@ -36,7 +36,7 @@
                                     @endif
                                 </tr>
                                 <tr>
-                                    <th>Description</th>
+                                    <th>{{ __('messages.description') }}</th>
                                     <td>{{ $post_category->description }}</td>
                                 </tr>
                             </table>

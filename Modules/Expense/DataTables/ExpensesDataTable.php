@@ -83,9 +83,9 @@ class ExpensesDataTable extends DataTable
                 ->printable(false)
                 ->className('text-center align-middle'),
 
-            Column::make('created_at')
-                ->title(__('messages.created_at'))
-                ->visible(false)
+            // Column::make('created_at')
+            //     ->title(__('messages.created_at'))
+            //     ->visible(false)
         ];
     }
 

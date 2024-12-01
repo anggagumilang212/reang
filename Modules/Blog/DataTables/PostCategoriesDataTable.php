@@ -57,21 +57,22 @@ class PostCategoriesDataTable extends DataTable
                 ->className('text-center align-middle'),
 
             Column::make('title')
-                ->title('Title')
+                ->title(__('messages.title'))
                 ->width(10)
                 ->className('text-center align-middle'),
 
             Column::make('slug')
-                ->title('Slug')
+            ->title(__('messages.slug'))
                 ->width(10)
                 ->className('text-center align-middle'),
 
             Column::make('description')
-                ->title('Description')
+            ->title(__('messages.description'))
                 ->width(50)
                 ->className('text-center align-middle'),
 
             Column::computed('action')
+                ->title(__('messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->width(10)

@@ -5,9 +5,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
         {{-- <li class="breadcrumb-item"><a href="{{ route('mediareview.index') }}">Media Reviews</a></li> --}}
-        <li class="breadcrumb-item active">Create</li>
+        <li class="breadcrumb-item active">{{ __('messages.create') }}</li>
     </ol>
 @endsection
 
@@ -23,9 +23,9 @@
                             <div class="form-row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="product_id">Select Product <span class="text-danger">*</span></label>
+                                        <label for="product_id">{{ __('messages.products')}} <span class="text-danger">*</span></label>
                                         <select class="form-control" name="product_id" id="product_id" required>
-                                            <option value="">Select Product</option>
+                                            <option value="">{{ __('messages.select_product')}} </option>
                                             @foreach(\Modules\Product\Entities\Product::all() as $product)
                                                 <option value="{{ $product->id }}">{{ $product->product_name }}</option>
                                             @endforeach
@@ -34,9 +34,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="media_type">Media Type <span class="text-danger">*</span></label>
+                                        <label for="media_type">{{ __('messages.type')}} <span class="text-danger">*</span></label>
                                         <select class="form-control" name="type" id="media_type" required>
-                                            <option value="">Select Type</option>
+                                            <option value="">Select {{ __('messages.type')}} </option>
                                             <option value="image">Image</option>
                                             <option value="video">Video</option>
                                         </select>
@@ -47,7 +47,7 @@
                             <div class="form-row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="media">Upload Media <i class="bi bi-question-circle-fill text-info"
+                                        <label for="media">{{ __('messages.upload_media')}} <i class="bi bi-question-circle-fill text-info"
                                             data-toggle="tooltip" data-placement="top"
                                             title="Supported formats: JPEG, PNG, JPG, GIF, MP4, MOV, AVI. Max size: 10MB"></i></label>
                                         <div class="custom-file">
@@ -65,7 +65,7 @@
                             <div class="form-row">
                                 <div class="col-md-12">
                                     <div id="preview-container" class="mt-3 d-none">
-                                        <h6>Preview:</h6>
+                                        <h6>{{ __('messages.preview')}}:</h6>
                                         <img id="image-preview" class="img-fluid d-none" style="max-height: 300px;">
                                         <video id="video-preview" class="d-none" controls style="max-height: 300px;">
                                             <source src="" type="video/mp4">
@@ -79,7 +79,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary">
-                                            Create Media Review <i class="bi bi-check"></i>
+                                            {{ __('messages.create') }} <i class="bi bi-check"></i>
                                         </button>
                                     </div>
                                 </div>

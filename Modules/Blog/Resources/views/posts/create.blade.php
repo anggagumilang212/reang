@@ -8,9 +8,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">Posts</a></li>
-        <li class="breadcrumb-item active">Add</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">{{ __('messages.post') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.add') }}</li>
     </ol>
 @endsection
 
@@ -22,7 +22,7 @@
                 <div class="col-lg-12">
                     @include('utils.alerts')
                     <div class="form-group">
-                        <button class="btn btn-primary">Create Post <i class="bi bi-check"></i></button>
+                        <button class="btn btn-primary">{{ __('messages.create') }} {{ __('messages.post') }} <i class="bi bi-check"></i></button>
                     </div>
                 </div>
                 <div class="col-lg-9">
@@ -31,14 +31,14 @@
                             <div class="form-row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="title">Title <span class="text-danger">*</span></label>
+                                        <label for="title">{{ __('messages.title') }} <span class="text-danger">*</span></label>
                                         <input id="title" type="text" class="form-control"
                                             value="{{ old('title') }}" name="title" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="slug">Slug</label>
+                                        <label for="slug">{{ __('messages.slug') }} <span class="text-danger">*</span></label>
                                         <input id="slug" type="text" value="{{ old('slug') }}"
                                             class="form-control" name="slug" placeholder="Auto Generated" required
                                             readonly>
@@ -48,9 +48,9 @@
                             <div class="form-row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="select_post_tag">Tag <span class="text-danger">*</span></label>
+                                        <label for="select_post_tag">{{ __('messages.post_tag') }} <span class="text-danger">*</span></label>
                                         <select id="select_post_tag" name="tags[]" class="form-control select2" multiple>
-                                            <option value="">Select Tag</option> {{-- Placeholder option --}}
+                                            <option value="">{{ __('messages.select') }} {{ __('messages.post_tag') }} </option> {{-- Placeholder option --}}
                                             @foreach ($tags as $tag)
                                                 <option value="{{ $tag->id }}">{{ $tag->title }}
                                                 </option>
@@ -60,9 +60,9 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="select_post_status">Status <span class="text-danger">*</span></label>
+                                        <label for="select_post_status">{{ __('messages.status') }} <span class="text-danger">*</span></label>
                                         <select id="select_post_status" name="status" class="form-control select2">
-                                            <option value="">Select Status</option> {{-- Placeholder option --}}
+                                            <option value="">{{ __('messages.select') }} {{ __('messages.status') }}</option> {{-- Placeholder option --}}
                                             @foreach ($statuses as $key => $value)
                                                 <option value="{{ $key }}"
                                                     {{ old('status') == $key ? 'selected' : null }}>
@@ -74,13 +74,13 @@
 
                             </div>
                             <div class="form-group">
-                                <label for="description">Description <i class="bi bi-question-circle-fill text-info"
+                                <label for="description">{{ __('messages.description') }} <i class="bi bi-question-circle-fill text-info"
                                         data-toggle="tooltip" data-placement="top" title="Max 250 Characters"></i> <span
                                         class="text-danger">*</span></label>
                                 <textarea name="description" id="description" rows="4 " class="form-control"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="content">Content <span class="text-danger">*</span></label>
+                                <label for="content">{{ __('messages.content') }} <span class="text-danger">*</span></label>
                                 <textarea id="editor" name="content" id="content" class="form-control">
                                 </textarea>
                             </div>
@@ -92,7 +92,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="input_post_description">Category <span class="text-danger">*</span></label>
+                                <label for="input_post_description">{{ __('messages.category') }} <span class="text-danger">*</span></label>
                                 <div class="form-control overflow-auto @error('category') is-invalid @enderror"
                                     style="height: 460px">
                                     <!-- List category -->
@@ -117,7 +117,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="image">Image <i class="bi bi-question-circle-fill text-info"
+                                <label for="image">{{ __('messages.image') }} <i class="bi bi-question-circle-fill text-info"
                                         data-toggle="tooltip" data-placement="top"
                                         title="Max Files: 3, Max File Size: 2MB, Image Size: 1920x1080"></i></label>
                                 <div class="dropzone d-flex flex-wrap align-items-center justify-content-center"

@@ -4,10 +4,10 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">Posts</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('tags.index') }}">Tags</a></li>
-        <li class="breadcrumb-item active">Add</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('posts.index') }}">{{ __('messages.post') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('tags.index') }}">{{ __('messages.post_tag') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.add') }}</li>
     </ol>
 @endsection
 
@@ -19,7 +19,7 @@
                 <div class="col-lg-12">
                     @include('utils.alerts')
                     <div class="form-group">
-                        <button class="btn btn-primary">Create Tag <i class="bi bi-check"></i></button>
+                        <button class="btn btn-primary">{{ __('messages.create') }} {{ __('messages.post_tag') }} <i class="bi bi-check"></i></button>
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -28,14 +28,14 @@
                             <div class="form-row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="title">Tag Name <span class="text-danger">*</span></label>
+                                        <label for="title">{{ __('messages.name') }} <span class="text-danger">*</span></label>
                                         <input id="title" type="text" class="form-control"
                                             value="{{ old('title') }}" name="title" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="slug">Tag Slug <span class="text-danger">*</span></label>
+                                        <label for="slug">{{ __('messages.slug') }} <span class="text-danger">*</span></label>
                                         <input id="slug" type="text" value="{{ old('slug') }}"
                                             class="form-control" name="slug" placeholder="Auto Generated" required
                                             readonly>

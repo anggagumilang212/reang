@@ -19,9 +19,21 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <a href="{{ route('expenses.create') }}" class="btn btn-primary">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                        <a href="{{ route('expenses.create') }}" class="btn btn-primary"  style="margin-right: 20px">
                             {{ __('messages.add') }} {{ __('messages.expenses') }} <i class="bi bi-plus"></i>
                         </a>
+
+                        <a href="{{ route('expenses-report.index') }}" class="text-decoration-none flex-grow-1">
+                            <div class="alert alert-danger d-flex align-items-center justify-content-center m-0 p-2" role="alert"
+                                style="background: linear-gradient(45deg, #dc3545, #ff4d4d); border: none; color: white; box-shadow: 0 2px 5px rgba(220, 53, 69, 0.3);">
+                                <i class="bi bi-info-circle me-2"></i>
+                                <div class="text-center">
+                                    Untuk pengambilan laporan pengeluaran silahkan klik di sini!
+                                </div>
+                            </div>
+                        </a>
+                        </div>
 
                         <hr>
 

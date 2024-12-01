@@ -70,33 +70,34 @@ class PostsDataTable extends DataTable
     {
         return [
             Column::computed('post_image')
-                ->title('Image')
+            ->title(__('messages.image'))
                 ->width('200px')
                 ->className('text-center align-middle'),
 
             Column::make('title')
-                ->title('Title')
+            ->title(__('messages.title'))
                 ->width('300px')
                 ->className('text-center align-middle'),
 
             Column::make('status')
-                ->title('Status')
+            ->title(__('messages.status'))
                 ->width('100px')
                 ->className('text-center align-middle'),
 
             Column::computed('categories')
-                ->title('Categories')
+            ->title(__('messages.category'))
                 ->width('200px')
                 ->sortable(false)
                 ->className('text-center align-middle'),
 
             Column::computed('description')
-                ->title('Description')
+            ->title(__('messages.description'))
                 ->width('400px')
                 ->sortable(false)
                 ->className('text-center align-middle'),
 
             Column::computed('action')
+            ->title(__('messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),
