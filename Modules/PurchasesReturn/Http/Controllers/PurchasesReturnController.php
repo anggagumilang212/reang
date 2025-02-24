@@ -62,6 +62,7 @@ class PurchasesReturnController extends Controller
                 'note' => $request->note,
                 'tax_amount' => Cart::instance('purchase_return')->tax() * 100,
                 'discount_amount' => Cart::instance('purchase_return')->discount() * 100,
+                'branch_id' => $request->branch_id,
             ]);
 
             foreach (Cart::instance('purchase_return')->content() as $cart_item) {
@@ -186,6 +187,7 @@ class PurchasesReturnController extends Controller
                 'note' => $request->note,
                 'tax_amount' => Cart::instance('purchase_return')->tax() * 100,
                 'discount_amount' => Cart::instance('purchase_return')->discount() * 100,
+                'branch_id' => $request->branch_id,
             ]);
 
             foreach (Cart::instance('purchase_return')->content() as $cart_item) {

@@ -27,16 +27,16 @@
                             @csrf
                             @method('patch')
                             <div class="form-row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="reference">Reference <span class="text-danger">*</span></label>
+                                        <label for="reference">{{ __('messages.reference') }} <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="reference" required value="{{ $sale_return->reference }}" readonly>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="from-group">
                                         <div class="form-group">
-                                            <label for="customer_id">Customer <span class="text-danger">*</span></label>
+                                            <label for="customer_id">{{ __('messages.customer') }} <span class="text-danger">*</span></label>
                                             <select class="form-control" name="customer_id" id="customer_id" required>
                                                 @foreach(\Modules\People\Entities\Customer::all() as $customer)
                                                     <option {{ $sale_return->customer_id == $customer->id ? 'selected' : '' }} value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
@@ -45,11 +45,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="from-group">
                                         <div class="form-group">
                                             <label for="date">{{ __('messages.date') }} <span class="text-danger">*</span></label>
                                             <input type="date" class="form-control" name="date" required value="{{ $sale_return->date }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="from-group">
+                                        <div class="form-group">
+                                            <label for="branch_id">{{ __('messages.branches') }} <span class="text-danger">*</span></label>
+                                            <select class="form-control" name="branch_id" id="branch_id" required>
+                                                @foreach(\Modules\Branch\Entities\Branch::all() as $branch)
+                                                    <option {{ $sale_return->branch_id == $branch->id ? 'selected' : '' }} value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

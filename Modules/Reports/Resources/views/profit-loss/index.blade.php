@@ -11,6 +11,6 @@
 
 @section('content')
     <div class="container-fluid">
-        <livewire:reports.profit-loss-report/>
+        <livewire:reports.profit-loss-report :branches="\Modules\Branch\Entities\Branch::all()"/>
     </div>
 @endsection

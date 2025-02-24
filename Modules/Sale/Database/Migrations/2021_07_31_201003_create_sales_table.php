@@ -17,6 +17,7 @@ class CreateSalesTable extends Migration
             $table->id();
             $table->date('date');
             $table->string('reference');
+            $table->unsignedBigInteger('branch_id')->nullable();
             $table->unsignedBigInteger('customer_id')->nullable();
             $table->string('customer_name');
             $table->integer('tax_percentage')->default(0);

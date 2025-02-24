@@ -19,11 +19,11 @@ class SalesDataTable extends DataTable
             ->addColumn('product_names', function ($data) {
                 // Mengambil nama produk dari sale_details dan menggabungkannya
                 return $data->saleDetails->map(function ($detail) {
-                    return $detail->product->product_name;
+                    return $detail->product->product_name ?? '';
                 })->implode(', ');
             })
             ->addColumn('Cabang Toko', function ($data) {
-                return $data->branch->name;
+                return $data->branch->name ?? '';
             })
             ->addColumn('total_amount', function ($data) {
                 return format_currency($data->total_amount);

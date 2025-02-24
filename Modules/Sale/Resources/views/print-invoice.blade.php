@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Print Struk</title>
@@ -24,9 +25,12 @@
             font-family: 'Courier New', monospace;
             font-size: 9px;
             line-height: 1.2;
-            display: block; /* Mengubah ke block dari flex */
-            color: #000; /* Hitam pekat */
-            font-weight: 550; /* Tebalkan teks */
+            display: block;
+            /* Mengubah ke block dari flex */
+            color: #000;
+            /* Hitam pekat */
+            font-weight: 550;
+            /* Tebalkan teks */
 
         }
 
@@ -34,25 +38,33 @@
             width: 58mm;
             margin: 0;
             padding: 0;
-            text-align: center; /* Mengatur alignment center untuk wrapper */
+            text-align: center;
+            /* Mengatur alignment center untuk wrapper */
 
         }
 
         .receipt {
             width: 48mm;
-            display: inline-block; /* Mengubah ke inline-block */
-            text-align: left; /* Mengembalikan alignment teks ke kiri */
-            margin: 0 5mm; /* Margin kiri-kanan otomatis untuk centering */
+            display: inline-block;
+            /* Mengubah ke inline-block */
+            text-align: left;
+            /* Mengembalikan alignment teks ke kiri */
+            margin: 0 5mm;
+            /* Margin kiri-kanan otomatis untuk centering */
             padding: 2mm 0;
-            color: #000; /* Hitam pekat */
-            font-weight: 550; /* Tebalkan teks */
+            color: #000;
+            /* Hitam pekat */
+            font-weight: 550;
+            /* Tebalkan teks */
         }
 
         .header {
             text-align: center;
             margin-bottom: 3mm;
-            color: #000; /* Hitam pekat */
-            font-weight: 550; /* Tebalkan teks */
+            color: #000;
+            /* Hitam pekat */
+            font-weight: 550;
+            /* Tebalkan teks */
         }
 
         .shop-name {
@@ -60,8 +72,10 @@
             font-weight: bold;
             margin-bottom: 1mm;
             text-align: center;
-            color: #000; /* Hitam pekat */
-            font-weight: 550; /* Tebalkan teks */
+            color: #000;
+            /* Hitam pekat */
+            font-weight: 550;
+            /* Tebalkan teks */
         }
 
         .divider {
@@ -112,7 +126,9 @@
         }
 
         @media print {
-            html, body {
+
+            html,
+            body {
                 width: 58mm !important;
                 margin: 0 !important;
                 padding: 0 !important;
@@ -145,8 +161,12 @@
 
             <div class="transaction-info">
                 <div style="display: flex; justify-content: space-between;">
-                                 <div>{{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }} {{ \Carbon\Carbon::parse($sale->created_at)->format('H:i') }}</div>
-                    <div>{{ $sale->customer_name }}</div>
+                    <div>{{__('messages.date')}}: {{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}
+                        {{ \Carbon\Carbon::parse($sale->created_at)->format('H:i') }}</div>
+                </div>
+                <div class="divider"></div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div>Kasir: {{ auth()->user()->name }}</div>
                 </div>
             </div>
 
@@ -176,7 +196,7 @@
                     <div>{{ format_currency($sale->total_amount) }}</div>
                 </div>
                 <div class="summary-item">
-                    <div>{{ __('messages.paidamount')}} {{ $sale->payment_method }}</div>
+                    <div>{{ __('messages.paidamount') }} {{ $sale->payment_method }}</div>
                     <div>{{ format_currency($sale->paid_amount) }}</div>
                 </div>
                 <div class="summary-item">
@@ -188,7 +208,7 @@
             <div class="divider"></div>
 
             <div class="footer">
-               Terimakasih telah berbelanja di
+                Terimakasih telah berbelanja di
                 {{ settings()->company_name }}
             </div>
             <div class="footer">
@@ -197,8 +217,9 @@
             </div>
         </div>
     </div>
-    <script>
+    {{-- <script>
         window.print();
-    </script>
+    </script> --}}
 </body>
+
 </html>

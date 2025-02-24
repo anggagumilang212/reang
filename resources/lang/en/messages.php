@@ -247,4 +247,8 @@ return [
     'created_by' => 'Created By',
     'on' => 'On',
     'print_struk' => 'Print Struk',
+    'media' => 'Media',
+    'banner' => 'Banner',
+    'make_sales' => 'Make Sales',
+    'manufacturer_barcode' => 'Manufacturer Barcode',
 ];

@@ -8,8 +8,8 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Products</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.product_media_review') }}</li>
     </ol>
 @endsection
 
@@ -19,8 +19,8 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <a href="{{ route('products.create') }}" class="btn btn-primary">
-                            Add Product <i class="bi bi-plus"></i>
+                        <a href="{{ route('mediareview.create') }}" class="btn btn-primary">
+                            {{ __('messages.add') }} {{ __('messages.product_media_review') }} <i class="bi bi-plus"></i>
                         </a>
 
                         <hr>

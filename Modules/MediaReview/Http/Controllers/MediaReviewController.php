@@ -11,18 +11,20 @@ use Intervention\Image\Facades\Image;
 use Modules\Product\Entities\Product;
 use Illuminate\Support\Facades\Storage;
 use ProtoneMedia\LaravelFFMpeg\Facades\FFMpeg;
+use Modules\MediaReview\Entities\ProductMediaReview;
+use Modules\MediaReview\DataTables\MediaReviewDataTable;
 
 class MediaReviewController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(MediaReviewDataTable $dataTable)
     {
         abort_if(Gate::denies('access_media_reviews'), 403);
 
         $mediaReviews = Product::with('mediaReviews')->get();
-        return view('mediareview::index', compact('mediaReviews'));
+    return $dataTable->render('mediareview::mediareviews.index', compact('mediaReviews'));
     }
 
     /**
@@ -162,5 +164,12 @@ class MediaReviewController extends Controller
         }
     }
 
-    // ... rest of your controller methods ...
+   public function destroy(ProductMediaReview $mediaReview): RedirectResponse
+    {
+        $mediaReview->delete();
+        return redirect()
+            ->route('mediareview.index')
+            ->with('success', 'Media review successfully deleted');
+    }
 }
+

@@ -4,9 +4,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('productstocks.index') }}">Productstock</a></li>
-        <li class="breadcrumb-item active">Add</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('productstocks.index') }}">{{ __('messages.product_stock') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.create') }}</li>
     </ol>
 @endsection
 <style>
@@ -44,7 +44,7 @@
                 <div class="col-lg-12">
                     @include('utils.alerts')
                     <div class="form-group">
-                        <button class="btn btn-primary">{{ __('messages.create') }} Productstock <i
+                        <button class="btn btn-primary">{{ __('messages.create') }} {{ __('messages.product_stock') }} <i
                                 class="bi bi-check"></i></button>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                                 <div class="col-lg-4">
                                     <div class="from-group">
                                         <div class="form-group">
-                                            <label for="product_id">Product <span class="text-danger">*</span></label>
+                                            <label for="product_id">{{ __('messages.productname') }} <span class="text-danger">*</span></label>
                                             <select class="form-control select2-products" name="product_id" id="product_id"
                                                 required>
                                                 <option value="">{{ __('messages.select_product') }}</option>

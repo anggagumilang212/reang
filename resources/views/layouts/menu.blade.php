@@ -138,14 +138,14 @@
     <li
         class="c-sidebar-nav-item c-sidebar-nav-dropdown {{ request()->routeIs('purchases.*') || request()->routeIs('purchase-payments*') ? 'c-show' : '' }}">
         <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
-            <i class="c-sidebar-nav-icon bi bi-bag" style="line-height: 1;"></i> Purchases
+            <i class="c-sidebar-nav-icon bi bi-bag" style="line-height: 1;"></i> {{__('messages.purchases')}}
         </a>
         @can('create_purchase')
             <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item">
                     <a class="c-sidebar-nav-link {{ request()->routeIs('purchases.create') ? 'c-active' : '' }}"
                         href="{{ route('purchases.create') }}">
-                        <i class="c-sidebar-nav-icon bi bi-journal-plus" style="line-height: 1;"></i> Create Purchase
+                        <i class="c-sidebar-nav-icon bi bi-journal-plus" style="line-height: 1;"></i> {{__('messages.create')}} {{__('messages.purchases')}}
                     </a>
                 </li>
             </ul>
@@ -154,11 +154,11 @@
             <li class="c-sidebar-nav-item">
                 <a class="c-sidebar-nav-link {{ request()->routeIs('purchases.index') ? 'c-active' : '' }}"
                     href="{{ route('purchases.index') }}">
-                    <i class="c-sidebar-nav-icon bi bi-journals" style="line-height: 1;"></i> All Purchases
+                    <i class="c-sidebar-nav-icon bi bi-journals" style="line-height: 1;"></i> {{__('messages.purchases')}}
                 </a>
             </li>
         </ul>
-    </li>
+    </li> `
 @endcan
 
 @can('access_purchase_returns')
@@ -327,7 +327,7 @@
                 </a>
             </li>
             <li class="c-sidebar-nav-item">
-                <a class="c-sidebar-nav-link {{ request()->routeIs('sales-report.index') ? 'c-active' : '' }}"
+                <a class="c-sidebar-nav-link {{ request()->routeIs('expenses-report.index') ? 'c-active' : '' }}"
                     href="{{ route('expenses-report.index') }}">
                     <i class="c-sidebar-nav-icon bi bi-clipboard-data" style="line-height: 1;"></i> {{ __('messages.expenses_report') }}
                 </a>
@@ -425,8 +425,8 @@
     {{-- Media Product Review --}}
     <li class="c-sidebar-nav-item">
         <a class="c-sidebar-nav-link {{ request()->routeIs('mediareview*') ? 'c-active' : '' }}"
-            href="{{ route('mediareview.create') }}">
-            <i class="c-sidebar-nav-icon bi bi-image" style="line-height: 1;"></i>{{ __('messages.add') }} {{ __('messages.product_media_review') }}
+            href="{{ route('mediareview.index') }}">
+            <i class="c-sidebar-nav-icon bi bi-image" style="line-height: 1;"></i> {{ __('messages.product_media_review') }}
         </a>
     </li>
 @endcan

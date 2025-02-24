@@ -62,7 +62,7 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th class="align-middle">{{ __('messages.product') }}</th>
+                                    <th class="align-middle">{{ __('messages.products') }}</th>
                                     <th class="align-middle">{{ __('messages.net_unit_price') }}</th>
                                     <th class="align-middle">{{ __('messages.quantity') }}</th>
                                     <th class="align-middle">{{ __('messages.discount') }}</th>

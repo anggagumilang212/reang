@@ -9,6 +9,19 @@
         <li class="breadcrumb-item active">{{ __('messages.add') }}</li>
     </ol>
 @endsection
+@php
+    // Ambil nilai maksimum dari kolom 'product_code'
+    $maxProductCode = \Modules\Product\Entities\Product::whereNotNull('product_code')
+                    ->where('product_code', 'REGEXP', '^[0-9]+$')
+                    ->max('product_code');
+
+    // Jika ada nilai maksimum, tambahkan 1. Jika tidak, mulai dari 1000
+    $newProductCode = $maxProductCode ? intval($maxProductCode) + 1 : 1000;
+
+    // Tetapkan nilai baru
+    $product_code = $newProductCode;
+@endphp
+
 
 @section('content')
     <div class="container-fluid">
@@ -44,13 +57,13 @@
                                     <div class="form-group">
                                         <label for="product_code">{{ __('messages.code') }} <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="product_code" required
-                                            value="{{ old('product_code') }}">
+                                            value="{{ $product_code }}">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label for="category_id">{{ __('messages.category') }} <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <select class="form-control" name="category_id" id="category_id" required>
@@ -67,21 +80,28 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="barcode_symbology">{{ __('messages.barcodesymbology') }} <span
                                                 class="text-danger">*</span></label>
                                         <select class="form-control" name="product_barcode_symbology" id="barcode_symbology"
                                             required>
                                             <option value="" selected disabled>{{ __('messages.select') }} {{ __('messages.barcodesymbology') }}</option>
-                                            <option value="C128">Code 128</option>
+                                            <option selected value="C128">Code 128</option>
                                             <option value="C39">Code 39</option>
                                             <option value="UPCA">UPC-A</option>
                                             <option value="UPCE">UPC-E</option>
-                                            <option selected value="EAN13">EAN-13</option>
+                                            <option  value="EAN13">EAN-13</option>
                                             <option value="EAN8">EAN-8</option>
 
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="manufacturer_barcode">{{ __('messages.manufacturer_barcode') }} </label>
+                                        <input type="text" class="form-control" name="manufacturer_barcode"
+                                            >
                                     </div>
                                 </div>
                             </div>

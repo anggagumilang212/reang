@@ -164,7 +164,12 @@ class PosController extends Controller
             }
 
             toast('POS Sale Created!', 'success');
-            return redirect()->back();
+            if ($sale) {
+                return redirect()->back()->with([
+                    'print_sale_id' => $sale->id,
+                    'success' => 'POS Sale Created!'
+                ]);
+            }
             // return redirect()->route('sales.index');
 
         } catch (\Exception $e) {

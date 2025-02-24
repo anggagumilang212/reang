@@ -61,12 +61,13 @@ class BannerDataTable extends DataTable
         return [
             Column::make('id')->title('ID'),
             Column::computed('banner_image')
-                ->title('Image')
+                ->title(__('messages.image'))
                 ->className('text-center align-middle'),
 
             // Column::computed('status')
             //     ->className('text-center align-middle'),
             Column::computed('action')
+            ->title(__('messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),

@@ -52,7 +52,7 @@
                             </div>
 
                             <div class="form-row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="category_id">{{ __('messages.category') }} <span class="text-danger">*</span></label>
                                         <select class="form-control" name="category_id" id="category_id" required>
@@ -63,7 +63,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="barcode_symbology">{{ __('messages.barcodesymbology') }} <span
                                                 class="text-danger">*</span></label>
@@ -84,6 +84,15 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="manufacturer_barcode">{{ __('messages.manufacturer_barcode') }} </label>
+                                        <input type="text" class="form-control" name="manufacturer_barcode"
+                                            value="{{ $product->manufacturer_barcode }}">
+                                    </div>
+                                </div>
+
                             </div>
 
                             <div class="form-row">

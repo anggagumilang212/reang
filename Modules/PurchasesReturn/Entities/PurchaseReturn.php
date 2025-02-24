@@ -2,6 +2,7 @@
 
 namespace Modules\PurchasesReturn\Entities;
 
+use Modules\Branch\Entities\Branch;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -10,6 +11,13 @@ class PurchaseReturn extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+
+    public function branch() {
+        return $this->belongsTo(Branch::class, 'branch_id', 'id');
+
+    }
+
 
     public function purchaseReturnDetails() {
         return $this->hasMany(PurchaseReturnDetail::class, 'purchase_return_id', 'id');

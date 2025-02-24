@@ -2,6 +2,7 @@
 
 namespace Modules\Purchase\Entities;
 
+use Modules\Branch\Entities\Branch;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -10,6 +11,11 @@ class Purchase extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function branch() {
+        return $this->belongsTo(Branch::class, 'branch_id', 'id');
+
+    }
 
     public function purchaseDetails() {
         return $this->hasMany(PurchaseDetail::class, 'purchase_id', 'id');

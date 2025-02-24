@@ -25,6 +25,7 @@
             <img src="{{ asset(config('app.available_locales')[app()->getLocale()]['flag']) }}"
                  class="flag-icon"
                  width="24"
+                 alt="flagicon"
                  height="16">
         </button>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">

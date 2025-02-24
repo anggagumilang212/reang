@@ -17,6 +17,7 @@ class CreatePurchaseReturnsTable extends Migration
             $table->id();
             $table->date('date');
             $table->string('reference');
+            $table->unsignedBigInteger('branch_id')->nullable();
             $table->unsignedBigInteger('supplier_id')->nullable();
             $table->string('supplier_name');
             $table->integer('tax_percentage')->default(0);

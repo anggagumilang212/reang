@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>@yield('title') || {{ config('app.name') }}</title>
     <meta content="ReangNET" name="author">
+    <meta name="description"
+    content="Layanan wifi berkualitas tinggi untuk rumah, toko, dan cafe dengan harga terjangkau, Dapatkan koneksi internet cepat, stabil, dan customer service 24/7.">
+
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 
     <!-- Favicon -->
@@ -15,6 +18,7 @@
     <!-- jQuery 3.7.1 (versi yang kompatibel) -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        
 
 </head>
 

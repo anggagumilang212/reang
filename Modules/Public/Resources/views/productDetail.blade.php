@@ -56,7 +56,6 @@
                             </div>
                         </div>
 
-                    
 
                         <!-- Flash Sale Timer & Badge (if active) -->
                         @if ($flashSale)
@@ -117,6 +116,71 @@
                         </div>
 
                         <!-- Rest of your product details... -->
+
+                        <div class="py-6 border-b" x-data="{ activeMedia: null }">
+                            <h3 class="text-lg font-semibold mb-4">Customer Photos & Videos</h3>
+
+                            <!-- Media Gallery -->
+                            <div class="flex py-6 px-4 gap-4 overflow-x-auto pb-4">
+                                <!-- Media items with active state -->
+                                <template
+                                    x-for="(media, index) in {{ $mediaReviews->toJson() }}"
+                                    :key="index">
+                                    <div class="relative min-w-[150px] cursor-pointer group"
+                                        @click="activeMedia = media">
+                                        <img
+                                            :src="media.type === 'video' ? media.thumbnail : media.src"
+                                            alt="Review"
+                                            class="w-[150px] h-[150px] object-cover rounded-lg transition-all"
+                                            :class="activeMedia === media ? 'ring-2 ring-orange-500' : 'group-hover:ring-2 group-hover:ring-orange-500'"
+                                        >
+                                        <template x-if="media.type === 'video'">
+                                            <div class="absolute bottom-2 right-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white"
+                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </template>
+
+                                @if($mediaReviews->count() > 4)
+                                    <div class="min-w-[150px] relative cursor-pointer group">
+                                        <img :src="$mediaReviews[0].src" alt="Review"
+                                            class="w-[150px] h-[150px] object-cover rounded-lg group-hover:ring-2 group-hover:ring-orange-500 transition-all">
+                                        <div class="absolute inset-0 bg-black bg-opacity-50 rounded-lg flex items-center justify-center">
+                                            <span class="text-white font-semibold">+{{ $mediaReviews->count() - 4 }} more</span>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <!-- Selected Media Preview -->
+                            <div x-show="activeMedia"
+                                x-transition:enter="transition ease-out duration-300"
+                                x-transition:enter-start="opacity-0 transform scale-95"
+                                x-transition:enter-end="opacity-100 transform scale-100"
+                                class="mt-6">
+                                <template x-if="activeMedia?.type === 'video'">
+                                    <div class="aspect-video w-full max-w-3xl mx-auto bg-black rounded-lg">
+                                        <video :src="activeMedia?.src" controls
+                                            class="w-full h-full object-contain rounded-lg"></video>
+                                    </div>
+                                </template>
+
+                                <template x-if="activeMedia?.type === 'image'">
+                                    <div class="aspect-video w-full max-w-3xl mx-auto">
+                                        <img :src="activeMedia?.src"
+                                            class="w-full h-full object-contain rounded-lg"
+                                            alt="Selected review">
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
 
                         <!-- Fixed Bottom Card -->
                         <div class="fixed bottom-0 rounded-xl left-0 right-0 bg-white shadow-lg border-t p-4">

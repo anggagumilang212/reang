@@ -36,7 +36,7 @@
                                 <div class="col-lg-6">
                                     <div class="from-group">
                                         <div class="form-group">
-                                            <label for="branch_id">{{{ __('messages.branches') }}} <span class="text-danger">*</span></label>
+                                            <label for="branch_id">{{ __('messages.branches') }} <span class="text-danger">*</span></label>
                                             <select class="form-control" name="branch_id" id="branch_id" required>
                                                 @foreach(\Modules\Branch\Entities\Branch::all() as $branch)
                                                     <option {{ $sale->branch_id == $branch->id ? 'selected' : '' }} value="{{ $branch->id }}">{{ $branch->name }}</option>

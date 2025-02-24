@@ -2,16 +2,23 @@
 
 namespace Modules\Quotation\Entities;
 
+use Illuminate\Support\Carbon;
+use Modules\Branch\Entities\Branch;
+use Modules\People\Entities\Customer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Carbon;
-use Modules\People\Entities\Customer;
 
 class Quotation extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
+
+
+    public function branch() {
+        return $this->belongsTo(Branch::class, 'branch_id', 'id');
+
+    }
 
     public function quotationDetails() {
         return $this->hasMany(QuotationDetails::class, 'quotation_id', 'id');

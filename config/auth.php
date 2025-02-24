@@ -39,6 +39,9 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+            'remember' => [
+                'minutes' => 43200, // token berlaku selama 30 hari
+            ],
         ],
 
         'api' => [

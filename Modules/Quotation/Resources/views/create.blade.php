@@ -27,13 +27,13 @@
                             @csrf
 
                             <div class="form-row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="reference">{{ __('messages.reference') }} <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="reference" required readonly value="QT">
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="from-group">
                                         <div class="form-group">
                                             <label for="customer_id">{{ __('messages.customer') }} <span class="text-danger">*</span></label>
@@ -45,11 +45,24 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="from-group">
                                         <div class="form-group">
                                             <label for="date">{{ __('messages.date') }} <span class="text-danger">*</span></label>
                                             <input type="date" class="form-control" name="date" required value="{{ now()->format('Y-m-d') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="from-group">
+                                        <div class="form-group">
+                                            <label for="branch_id">{{ __('messages.branches') }} <span
+                                                    class="text-danger">*</span></label>
+                                            <select class="form-control" name="branch_id" id="branch_id" required>
+                                                @foreach (\Modules\Branch\Entities\Branch::all() as $branch)
+                                                    <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

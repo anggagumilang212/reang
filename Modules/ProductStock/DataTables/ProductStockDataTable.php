@@ -18,13 +18,20 @@ class ProductStockDataTable extends DataTable
                 return view('productstock::productstocks.partials.actions', compact('data'));
             })
             ->addColumn('Product', function ($data) {
-                return $data->product->product_name ?? '-';
+                $productName = $data->product->product_name ?? '-';
+                $productPrice = $data->product->product_price ?? 0;
+                return $productName . ' - Rp ' . number_format($productPrice, 2);
             })
             ->addColumn('Cabang Toko', function ($data) {
                 return $data->branch->name;
             })
             ->addColumn('Quantity', function ($data) {
                 return $data->quantity;
+            })
+            ->filterColumn('Product', function($query, $keyword) {
+                $query->whereHas('product', function($q) use ($keyword) {
+                    $q->where('product_name', 'like', "%{$keyword}%");
+                });
             })
             ->rawColumns(['action', 'Product', 'Cabang Toko'])
             ->filterColumn('branch.name', function($query, $keyword) {
@@ -42,6 +49,21 @@ class ProductStockDataTable extends DataTable
             $query->where('branch_id', request('branch_id'));
         }
 
+        if (request()->has('stock_status') && request('stock_status') !== '') {
+            switch(request('stock_status')) {
+                case 'empty':
+                    $query->where('quantity', 0);
+                    break;
+                case 'low':
+                    $query->where('quantity', '>', 0)
+                          ->where('quantity', '<=', 10);
+                    break;
+                case 'normal':
+                    $query->where('quantity', '>', 10);
+                    break;
+            }
+        }
+
         return $query;
     }
 
@@ -55,6 +77,33 @@ class ProductStockDataTable extends DataTable
                 }"
             ];
         });
+
+        $stockFilters = [
+            [
+                'text' => 'Semua Stock',
+                'action' => "function(e, dt, node, config) {
+                    dt.ajax.url(dt.ajax.url().split('?')[0]).load();
+                }"
+            ],
+            [
+                'text' => 'Stock Kosong',
+                'action' => "function(e, dt, node, config) {
+                    dt.ajax.url(dt.ajax.url().split('?')[0] + '?stock_status=empty').load();
+                }"
+            ],
+            [
+                'text' => 'Stock Menipis (1-10)',
+                'action' => "function(e, dt, node, config) {
+                    dt.ajax.url(dt.ajax.url().split('?')[0] + '?stock_status=low').load();
+                }"
+            ],
+            [
+                'text' => 'Stock Normal (>10)',
+                'action' => "function(e, dt, node, config) {
+                    dt.ajax.url(dt.ajax.url().split('?')[0] + '?stock_status=normal').load();
+                }"
+            ]
+        ];
 
         return $this->builder()
             ->setTableId('productstocks-table')
@@ -84,6 +133,12 @@ class ProductStockDataTable extends DataTable
                         ]],
                         $branches->toArray()
                     )
+                ],
+                [
+                    'extend' => 'collection',
+                    'className' => 'btn btn-secondary dropdown-toggle',
+                    'text' => '<i class="bi bi-box-seam"></i> Filter Stock',
+                    'buttons' => $stockFilters
                 ]
             );
     }
@@ -92,7 +147,7 @@ class ProductStockDataTable extends DataTable
     {
         return [
             Column::make('id')->title('ID'),
-            Column::make('product.product_name')
+            Column::make('Product')
                 ->title(__('messages.productname'))
                 ->className('text-center align-middle'),
             Column::make('branch.name')

@@ -5,7 +5,7 @@
                 <div class="card-body">
                     <form wire:submit="generateReport">
                         <div class="form-row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="form-group">
                                     <label>{{ __('messages.start_date')}} <span class="text-danger">*</span></label>
                                     <input wire:model="start_date" type="date" class="form-control" name="start_date">
@@ -14,13 +14,24 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="form-group">
                                     <label>{{ __('messages.end_date')}} <span class="text-danger">*</span></label>
                                     <input wire:model="end_date" type="date" class="form-control" name="end_date">
                                     @error('end_date')
                                     <span class="text-danger mt-1">{{ $message }}</span>
                                     @enderror
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>{{ __('messages.branches') }}</label>
+                                    <select wire:model="branch_id" class="form-control" name="branch_id">
+                                        <option value="">{{ __('messages.select_branch') }}</option>
+                                        @foreach ($branches as $branch)
+                                            <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +72,7 @@
                     </div>
                     <div>
                         <div class="text-value text-primary">{{ format_currency($sale_returns_amount) }}</div>
-                        <div class="text-uppercase font-weight-bold small">{{ $total_sale_returns }} {{__('messages.sale_returns')}}</div>
+                        <div class="text-uppercase font-weight-bold small">{{ $total_sale_returns }} {{__('messages.sales_returns')}}</div>
                     </div>
                 </div>
             </div>

@@ -24,14 +24,28 @@
                                 {{ __('messages.add') }} <i class="bi bi-plus"></i>
                             </a>
                             <a href="{{ route('sales-report.index') }}" class="text-decoration-none flex-grow-1">
-                                <div class="alert alert-danger d-flex align-items-center justify-content-center m-0 p-2" role="alert"
-                                    style="background: linear-gradient(45deg, #dc3545, #ff4d4d); border: none; color: white; box-shadow: 0 2px 5px rgba(220, 53, 69, 0.3);">
+                                <div class="alert blink-alert d-flex align-items-center justify-content-center m-0 p-2" role="alert">
                                     <i class="bi bi-info-circle me-2"></i>
                                     <div class="text-center">
                                         Untuk pengambilan laporan penjualan silahkan klik di sini!
                                     </div>
                                 </div>
                             </a>
+                            <style>
+                            @keyframes blink {
+                                0% { opacity: 1; }
+                                50% { opacity: 0.5; }
+                                100% { opacity: 1; }
+                            }
+
+                            .blink-alert {
+                                background: linear-gradient(45deg, #dc3545, #ff4d4d);
+                                border: none;
+                                color: white;
+                                box-shadow: 0 2px 5px rgba(220, 53, 69, 0.3);
+                                animation: blink 1.5s infinite; /* Animasi berkedip setiap 1.5 detik */
+                            }
+                            </style>
                         </div>
                         <hr>
                         <div class="table-responsive">

@@ -11,6 +11,7 @@ class Sale extends Model
     use HasFactory;
 
     protected $guarded = [];
+    protected $with = ['saleDetails'];
 
     public function branch() {
         return $this->belongsTo(Branch::class, 'branch_id', 'id');

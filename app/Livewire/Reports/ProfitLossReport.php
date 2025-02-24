@@ -12,12 +12,15 @@ use Modules\Sale\Entities\Sale;
 use Modules\Sale\Entities\SalePayment;
 use Modules\SalesReturn\Entities\SaleReturn;
 use Modules\SalesReturn\Entities\SaleReturnPayment;
+use Modules\Branch\Entities\Branch;
 
 class ProfitLossReport extends Component
 {
-
     public $start_date;
     public $end_date;
+    public $branch_id;
+    public $branches;
+
     public $total_sales, $sales_amount;
     public $total_purchases, $purchases_amount;
     public $total_sale_returns, $sale_returns_amount;
@@ -30,12 +33,21 @@ class ProfitLossReport extends Component
 
     protected $rules = [
         'start_date' => 'required|date|before:end_date',
-        'end_date'   => 'required|date|after:start_date'
+        'end_date'   => 'required|date|after:start_date',
+        'branch_id'  => 'nullable|exists:branch,id'
     ];
 
-    public function mount() {
+    public function mount($branches) {
+        $this->branches = $branches;
         $this->start_date = '';
         $this->end_date = '';
+        $this->branch_id = '';
+
+        // Reset all calculation fields
+        $this->resetCalculationFields();
+    }
+
+    protected function resetCalculationFields() {
         $this->total_sales = 0;
         $this->sales_amount = 0;
         $this->total_sale_returns = 0;
@@ -47,123 +59,83 @@ class ProfitLossReport extends Component
         $this->payments_received_amount = 0;
         $this->payments_sent_amount = 0;
         $this->payments_net_amount = 0;
+        $this->expenses_amount = 0;
+        $this->profit_amount = 0;
     }
 
     public function render() {
-        $this->setValues();
-
         return view('livewire.reports.profit-loss-report');
     }
 
     public function generateReport() {
         $this->validate();
+        $this->setValues();
+    }
+
+    protected function applyDateAndBranchFilters($query) {
+        return $query->when($this->start_date, function ($q) {
+                return $q->whereDate('date', '>=', $this->start_date);
+            })
+            ->when($this->end_date, function ($q) {
+                return $q->whereDate('date', '<=', $this->end_date);
+            })
+            ->when($this->branch_id, function ($q) {
+                return $q->where('branch_id', $this->branch_id);
+            });
     }
 
     public function setValues() {
-        $this->total_sales = Sale::completed()
-            ->when($this->start_date, function ($query) {
-                return $query->whereDate('date', '>=', $this->start_date);
-            })
-            ->when($this->end_date, function ($query) {
-                return $query->whereDate('date', '<=', $this->end_date);
-            })
-            ->count();
+        // Reset fields before calculation
+        $this->resetCalculationFields();
 
-        $this->sales_amount = Sale::completed()
-            ->when($this->start_date, function ($query) {
-                return $query->whereDate('date', '>=', $this->start_date);
-            })
-            ->when($this->end_date, function ($query) {
-                return $query->whereDate('date', '<=', $this->end_date);
-            })
-            ->sum('total_amount') / 100;
+        // Sales
+        $this->total_sales = $this->applyDateAndBranchFilters(Sale::completed())->count();
+        $this->sales_amount = $this->applyDateAndBranchFilters(Sale::completed())->sum('total_amount') / 100;
 
-        $this->total_purchases = Purchase::completed()
-            ->when($this->start_date, function ($query) {
-                return $query->whereDate('date', '>=', $this->start_date);
-            })
-            ->when($this->end_date, function ($query) {
-                return $query->whereDate('date', '<=', $this->end_date);
-            })
-            ->count();
+        // Purchases
+        $this->total_purchases = $this->applyDateAndBranchFilters(Purchase::completed())->count();
+        $this->purchases_amount = $this->applyDateAndBranchFilters(Purchase::completed())->sum('total_amount') / 100;
 
-        $this->purchases_amount = Purchase::completed()
-            ->when($this->start_date, function ($query) {
-                return $query->whereDate('date', '>=', $this->start_date);
-            })
-            ->when($this->end_date, function ($query) {
-                return $query->whereDate('date', '<=', $this->end_date);
-            })
-            ->sum('total_amount') / 100;
+        // Sale Returns
+        $this->total_sale_returns = $this->applyDateAndBranchFilters(SaleReturn::completed())->count();
+        $this->sale_returns_amount = $this->applyDateAndBranchFilters(SaleReturn::completed())->sum('total_amount') / 100;
 
-        $this->total_sale_returns = SaleReturn::completed()
-            ->when($this->start_date, function ($query) {
-                return $query->whereDate('date', '>=', $this->start_date);
-            })
-            ->when($this->end_date, function ($query) {
-                return $query->whereDate('date', '<=', $this->end_date);
-            })
-            ->count();
+        // Purchase Returns
+        $this->total_purchase_returns = $this->applyDateAndBranchFilters(PurchaseReturn::completed())->count();
+        $this->purchase_returns_amount = $this->applyDateAndBranchFilters(PurchaseReturn::completed())->sum('total_amount') / 100;
 
-        $this->sale_returns_amount = SaleReturn::completed()
-            ->when($this->start_date, function ($query) {
-                return $query->whereDate('date', '>=', $this->start_date);
-            })
-            ->when($this->end_date, function ($query) {
-                return $query->whereDate('date', '<=', $this->end_date);
-            })
-            ->sum('total_amount') / 100;
-
-        $this->total_purchase_returns = PurchaseReturn::completed()
-            ->when($this->start_date, function ($query) {
-                return $query->whereDate('date', '>=', $this->start_date);
-            })
-            ->when($this->end_date, function ($query) {
-                return $query->whereDate('date', '<=', $this->end_date);
-            })
-            ->count();
-
-        $this->purchase_returns_amount = PurchaseReturn::completed()
-            ->when($this->start_date, function ($query) {
-                return $query->whereDate('date', '>=', $this->start_date);
-            })
-            ->when($this->end_date, function ($query) {
-                return $query->whereDate('date', '<=', $this->end_date);
-            })
-            ->sum('total_amount') / 100;
-
+        // Expenses
         $this->expenses_amount = Expense::when($this->start_date, function ($query) {
                 return $query->whereDate('date', '>=', $this->start_date);
             })
             ->when($this->end_date, function ($query) {
                 return $query->whereDate('date', '<=', $this->end_date);
             })
+            ->when($this->branch_id, function ($query) {
+                return $query->where('branch_id', $this->branch_id);
+            })
             ->sum('amount') / 100;
 
+        // Profit Calculation
         $this->profit_amount = $this->calculateProfit();
 
+        // Payments
         $this->payments_received_amount = $this->calculatePaymentsReceived();
-
         $this->payments_sent_amount = $this->calculatePaymentsSent();
-
         $this->payments_net_amount = $this->payments_received_amount - $this->payments_sent_amount;
     }
 
     public function calculateProfit() {
         $product_costs = 0;
         $revenue = $this->sales_amount - $this->sale_returns_amount;
-        $sales = Sale::completed()
-            ->when($this->start_date, function ($query) {
-                return $query->whereDate('date', '>=', $this->start_date);
-            })
-            ->when($this->end_date, function ($query) {
-                return $query->whereDate('date', '<=', $this->end_date);
-            })
-            ->with('saleDetails')->get();
+
+        $sales = $this->applyDateAndBranchFilters(Sale::completed())
+            ->with('saleDetails')
+            ->get();
 
         foreach ($sales as $sale) {
             foreach ($sale->saleDetails as $saleDetail) {
-                $product_costs += $saleDetail->product->product_cost;
+                $product_costs += $saleDetail->product->product_cost ?? '0';
             }
         }
 
@@ -179,6 +151,9 @@ class ProfitLossReport extends Component
             ->when($this->end_date, function ($query) {
                 return $query->whereDate('date', '<=', $this->end_date);
             })
+            ->when($this->branch_id, function ($query) {
+                return $query->where('branch_id', $this->branch_id);
+            })
             ->sum('amount') / 100;
 
         $purchase_return_payments = PurchaseReturnPayment::when($this->start_date, function ($query) {
@@ -186,6 +161,9 @@ class ProfitLossReport extends Component
             })
             ->when($this->end_date, function ($query) {
                 return $query->whereDate('date', '<=', $this->end_date);
+            })
+            ->when($this->branch_id, function ($query) {
+                return $query->where('branch_id', $this->branch_id);
             })
             ->sum('amount') / 100;
 
@@ -199,6 +177,9 @@ class ProfitLossReport extends Component
             ->when($this->end_date, function ($query) {
                 return $query->whereDate('date', '<=', $this->end_date);
             })
+            ->when($this->branch_id, function ($query) {
+                return $query->where('branch_id', $this->branch_id);
+            })
             ->sum('amount') / 100;
 
         $sale_return_payments = SaleReturnPayment::when($this->start_date, function ($query) {
@@ -206,6 +187,9 @@ class ProfitLossReport extends Component
             })
             ->when($this->end_date, function ($query) {
                 return $query->whereDate('date', '<=', $this->end_date);
+            })
+            ->when($this->branch_id, function ($query) {
+                return $query->where('branch_id', $this->branch_id);
             })
             ->sum('amount') / 100;
 

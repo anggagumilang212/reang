@@ -24,7 +24,7 @@ class ProductController extends Controller
 
         return $dataTable->render('product::products.index');
     }
-    
+
 
 
     public function create()
@@ -80,6 +80,7 @@ class ProductController extends Controller
 
     public function update(UpdateProductRequest $request, Product $product)
     {
+  
         $product->update($request->except('document'));
 
         if ($request->has('document')) {

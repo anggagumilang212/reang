@@ -31,7 +31,7 @@ return [
     'update' => 'Ubah',
     'cancel' => 'Batal',
     'delete' => 'Hapus',
-    'edit' => 'Edit',
+    'edit' => 'Ubah',
     'create' => 'Buat',
     'add' => 'Tambah',
     'save' => 'Simpan',
@@ -246,4 +246,7 @@ return [
     'created_by' => 'Dibuat Oleh',
     'on' => 'Pada',
     'print_struk' => 'Cetak Struk',
+    'banner' => 'Spanduk',
+    'make_sales' => 'Buat Penjualan',
+    'manufacturer_barcode' => 'Barcode Pabrik',
 ];

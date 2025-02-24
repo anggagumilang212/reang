@@ -20,41 +20,56 @@
                 @include('utils.alerts')
             </div>
             <div class="col-lg-7">
-                <livewire:search-product/>
-               <livewire:pos.product-list :categories="$product_categories"/>
+                <livewire:search-product />
+                <livewire:pos.product-list :categories="$product_categories" />
             </div>
             <div class="col-lg-5">
-                <livewire:pos.checkout :cart-instance="'sale'" :customers="$customers"/>
+                <livewire:pos.checkout :cart-instance="'sale'" :customers="$customers" />
             </div>
         </div>
     </div>
+    @if (session('print_sale_id'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Buka halaman print
+                var printWindow = window.open('{{ route('sales.pos.invoice', session('print_sale_id')) }}');
+
+                // Otomatis cetak
+                printWindow.onload = function() {
+                    printWindow.print();
+                    // Opsional: Tutup window setelah print
+                    // printWindow.close();
+                };
+            });
+        </script>
+    @endif
 @endsection
 
 @push('page_scripts')
     <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             window.addEventListener('showCheckoutModal', event => {
                 $('#checkoutModal').modal('show');
 
                 $('#paid_amount').maskMoney({
-                    prefix:'{{ settings()->currency->symbol }}',
-                    thousands:'{{ settings()->currency->thousand_separator }}',
-                    decimal:'{{ settings()->currency->decimal_separator }}',
+                    prefix: '{{ settings()->currency->symbol }}',
+                    thousands: '{{ settings()->currency->thousand_separator }}',
+                    decimal: '{{ settings()->currency->decimal_separator }}',
                     allowZero: false,
                 });
 
                 $('#total_amount').maskMoney({
-                    prefix:'{{ settings()->currency->symbol }}',
-                    thousands:'{{ settings()->currency->thousand_separator }}',
-                    decimal:'{{ settings()->currency->decimal_separator }}',
+                    prefix: '{{ settings()->currency->symbol }}',
+                    thousands: '{{ settings()->currency->thousand_separator }}',
+                    decimal: '{{ settings()->currency->decimal_separator }}',
                     allowZero: true,
                 });
 
                 $('#paid_amount').maskMoney('mask');
                 $('#total_amount').maskMoney('mask');
 
-                $('#checkout-form').submit(function () {
+                $('#checkout-form').submit(function() {
                     var paid_amount = $('#paid_amount').maskMoney('unmasked')[0];
                     $('#paid_amount').val(paid_amount);
                     var total_amount = $('#total_amount').maskMoney('unmasked')[0];
@@ -63,5 +78,4 @@
             });
         });
     </script>
-
 @endpush

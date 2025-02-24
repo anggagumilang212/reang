@@ -61,6 +61,7 @@ class PurchaseController extends Controller
                 'note' => $request->note,
                 'tax_amount' => Cart::instance('purchase')->tax() * 100,
                 'discount_amount' => Cart::instance('purchase')->discount() * 100,
+                'branch_id' => $request->branch_id,
             ]);
 
             foreach (Cart::instance('purchase')->content() as $cart_item) {
@@ -184,6 +185,7 @@ class PurchaseController extends Controller
                 'note' => $request->note,
                 'tax_amount' => Cart::instance('purchase')->tax() * 100,
                 'discount_amount' => Cart::instance('purchase')->discount() * 100,
+                'branch_id' => $request->branch_id,
             ]);
 
             foreach (Cart::instance('purchase')->content() as $cart_item) {

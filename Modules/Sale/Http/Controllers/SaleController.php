@@ -342,7 +342,7 @@ class SaleController extends Controller
 
     public function printreport(Request $request)
     {
-        $query = Sale::with( 'branch')
+        $query = Sale::with('branch')
             ->whereDate('date', '>=', $request->start_date)
             ->whereDate('date', '<=', $request->end_date)
             ->when($request->branch_id, function ($query) use ($request) {
@@ -361,7 +361,8 @@ class SaleController extends Controller
         $totalSales = $sales->sum('total_amount');
         $totalProfit = $sales->sum(function ($sale) {
             return $sale->saleDetails->sum(function ($detail) {
-                return ($detail->price - $detail->product->cost) * $detail->quantity;
+                $cost = $detail->product?->cost ?? 0;
+                return ($detail->price - $cost) * $detail->quantity;
             });
         });
 
@@ -373,5 +374,4 @@ class SaleController extends Controller
             'totalProfit' => $totalProfit
         ]);
     }
-
 }

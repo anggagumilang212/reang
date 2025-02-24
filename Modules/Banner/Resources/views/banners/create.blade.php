@@ -4,9 +4,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('banners.index') }}">Banner</a></li>
-        <li class="breadcrumb-item active">Add</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{__('messages.home')}}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('banners.index') }}">{{__('messages.banner')}}</a></li>
+        <li class="breadcrumb-item active">{{__('messages.add')}}</li>
     </ol>
 @endsection
 
@@ -18,7 +18,7 @@
                 <div class="col-lg-12">
                     @include('utils.alerts')
                     <div class="form-group">
-                        <button class="btn btn-primary">Create Banner <i class="bi bi-check"></i></button>
+                        <button class="btn btn-primary">{{__('messages.create')}} {{__('messages.banner')}} <i class="bi bi-check"></i></button>
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -34,7 +34,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="image">Banner Images <i class="bi bi-question-circle-fill text-info"
+                                <label for="image">{{__('messages.banner')}} {{__('messages.image')}} <i class="bi bi-question-circle-fill text-info"
                                         data-toggle="tooltip" data-placement="top"
                                         title="Max Files: 3, Max File Size: 1MB, Image Size: 400x400"></i></label>
                                 <div class="dropzone d-flex flex-wrap align-items-center justify-content-center"

@@ -119,6 +119,10 @@ class SalePaymentsController extends Controller
                 'payment_status' => $payment_status
             ]);
 
+            $sale->update([
+                'payment_method' => $request->payment_method
+            ]);
+
             $salePayment->update([
                 'date' => $request->date,
                 'reference' => $request->reference,

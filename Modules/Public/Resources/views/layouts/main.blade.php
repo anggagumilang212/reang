@@ -11,12 +11,12 @@
     <!-- Title dan Meta Description untuk SEO -->
     <title>Reang Net | Solusi Internet Terbaik untuk Rumah & Bisnis</title>
     <meta name="description"
-        content="Layanan wifi berkualitas tinggi untuk rumah, toko, dan cafe dengan harga terjangkau. Dapatkan koneksi internet cepat, stabil, dan customer service 24/7.">
+        content="Layanan wifi berkualitas tinggi untuk rumah, toko, dan cafe dengan harga terjangkau, Dapatkan koneksi internet cepat, stabil, dan customer service 24/7.">
 
     <!-- Meta tags untuk Social Media (Open Graph) -->
     <meta property="og:title" content="Reang Net | Solusi Internet Terbaik">
     <meta property="og:description"
-        content="Layanan wifi berkualitas untuk rumah, toko & cafe. Koneksi cepat, harga terjangkau, support 24/7.">
+        content="Layanan wifi berkualitas untuk rumah, toko & cafe, Koneksi cepat, harga terjangkau, support 24/7,">
     <meta property="og:image" content="https://reang.net/images/og-image.jpg">
     <meta property="og:url" content="https://reang.net">
     <meta property="og:type" content="website">
@@ -32,7 +32,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Reang Net | Solusi Internet Terbaik">
     <meta name="twitter:description"
-        content="Layanan wifi berkualitas untuk rumah, toko & cafe. Koneksi cepat, harga terjangkau.">
+        content="Layanan wifi berkualitas untuk rumah, toko & cafe, Koneksi cepat, harga terjangkau,">
     <meta name="twitter:image" content="https://reang.net/images/apple-touch-icon.png">
 
     <!-- Favicon -->

@@ -1,11 +1,12 @@
 <?php
 
+use Modules\Sale\Entities\Sale;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use Modules\Sale\Http\Controllers\SaleController;
 use Modules\Expense\Http\Controllers\ExpenseController;
 use Modules\Public\Http\Controllers\CheckoutController;
-use Modules\Sale\Entities\Sale;
-use Modules\Sale\Http\Controllers\SaleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,3 +65,7 @@ Route::get('/storage-link', function () {
 
 Route::get('/sales/print-report',[SaleController::class, 'printreport'])->name('sales.print.report');
 Route::get('/expenses/print-report',[ExpenseController::class, 'printreport'])->name('expenses.print.report');
+
+Route::get('storage-link', function () {
+    Artisan::call('storage:link');
+});

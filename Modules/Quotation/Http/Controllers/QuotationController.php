@@ -48,6 +48,7 @@ class QuotationController extends Controller
                 'note' => $request->note,
                 'tax_amount' => Cart::instance('quotation')->tax() * 100,
                 'discount_amount' => Cart::instance('quotation')->discount() * 100,
+                'branch_id' => $request->branch_id,
             ]);
 
             foreach (Cart::instance('quotation')->content() as $cart_item) {
@@ -135,6 +136,7 @@ class QuotationController extends Controller
                 'note' => $request->note,
                 'tax_amount' => Cart::instance('quotation')->tax() * 100,
                 'discount_amount' => Cart::instance('quotation')->discount() * 100,
+                'branch_id' => $request->branch_id,
             ]);
 
             foreach (Cart::instance('quotation')->content() as $cart_item) {

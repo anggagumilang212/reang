@@ -4,9 +4,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb border-0 m-0">
-        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('productstocks.index') }}">Productstock</a></li>
-        <li class="breadcrumb-item active">Edit</li>
+        <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('messages.home') }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('productstocks.index') }}">{{ __('messages.productstock') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('messages.edit') }}</li>
     </ol>
 @endsection
 <style>
@@ -46,7 +46,7 @@
                 <div class="col-lg-12">
                     @include('utils.alerts')
                     <div class="form-group">
-                        <button class="btn btn-primary">Update Productstock <i class="bi bi-check"></i></button>
+                        <button class="btn btn-primary">{{ __('messages.update') }} {{ __('messages.product_stock') }} <i class="bi bi-check"></i></button>
                     </div>
                 </div>
 
@@ -58,7 +58,7 @@
                                 <div class="col-lg-4">
                                     <div class="from-group">
                                         <div class="form-group">
-                                            <label for="product_id">Product <span class="text-danger">*</span></label>
+                                            <label for="product_id">{{ __('messages.productname')}} <span class="text-danger">*</span></label>
                                             <select class="form-control" name="product_id" id="product_id" required>
                                                 @foreach (\Modules\Product\Entities\Product::all() as $product)
                                                     <option {{ $Productstock->product_id == $product->id ? 'selected' : '' }}
@@ -73,7 +73,7 @@
                                 <div class="col-lg-4">
                                     <div class="from-group">
                                         <div class="form-group">
-                                            <label for="branch_id">Cabang Toko <span class="text-danger">*</span></label>
+                                            <label for="branch_id">{{ __('messages.branches') }} <span class="text-danger">*</span></label>
                                             <select class="form-control" name="branch_id" id="branch_id" required>
                                                 @foreach (\Modules\Branch\Entities\Branch::all() as $branch)
                                                     <option {{ $Productstock->branch_id == $branch->id ? 'selected' : '' }}
@@ -87,7 +87,7 @@
                                 <div class="col-lg-4">
                                     <div class="from-group">
                                         <div class="form-group">
-                                            <label for="quantity">Quantity <span class="text-danger">*</span></label>
+                                            <label for="quantity">{{ __('messages.quantity') }} <span class="text-danger">*</span></label>
                                             <input type="number" class="form-control" name="quantity" required
                                                 value="{{ $Productstock->quantity }}">
                                         </div>
@@ -98,9 +98,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
         </form>
     </div>

@@ -12,7 +12,8 @@ use Yajra\DataTables\Services\DataTable;
 class SalePaymentsDataTable extends DataTable
 {
 
-    public function dataTable($query) {
+    public function dataTable($query)
+    {
         return datatables()
             ->eloquent($query)
             ->addColumn('amount', function ($data) {
@@ -23,11 +24,13 @@ class SalePaymentsDataTable extends DataTable
             });
     }
 
-    public function query(SalePayment $model) {
+    public function query(SalePayment $model)
+    {
         return $model->newQuery()->bySale()->with('sale');
     }
 
-    public function html() {
+    public function html()
+    {
         return $this->builder()
             ->setTableId('sale-payments-table')
             ->columns($this->getColumns())
@@ -48,23 +51,29 @@ class SalePaymentsDataTable extends DataTable
             );
     }
 
-    protected function getColumns() {
+    protected function getColumns()
+    {
         return [
             Column::make('date')
+                ->title(__('messages.date'))
                 ->className('align-middle text-center'),
 
             Column::make('reference')
+                ->title(__('messages.reference'))
                 ->className('align-middle text-center'),
 
             Column::computed('amount')
+                ->title(__('messages.amount'))
                 ->className('align-middle text-center'),
 
             Column::make('payment_method')
+                ->title(__('messages.payment_method'))
                 ->className('align-middle text-center'),
 
             Column::computed('action')
+                ->title(__('messages.action'))
                 ->exportable(false)
-                ->printable(false)
+                ->printable(false)  
                 ->className('align-middle text-center'),
 
             Column::make('created_at')
@@ -72,7 +81,8 @@ class SalePaymentsDataTable extends DataTable
         ];
     }
 
-    protected function filename(): string {
+    protected function filename(): string
+    {
         return 'SalePayments_' . date('YmdHis');
     }
 }

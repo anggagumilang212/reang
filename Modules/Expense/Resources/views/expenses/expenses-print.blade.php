@@ -28,7 +28,7 @@
         .container {
             width: 210mm;
             margin: 0 auto;
-            padding: 20mm 25mm; /* Larger margins for A4 paper */
+            padding: 10mm;/* Larger margins for A4 paper */
         }
 
         .header {

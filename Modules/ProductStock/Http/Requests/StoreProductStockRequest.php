@@ -2,8 +2,9 @@
 
 namespace Modules\ProductStock\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Http\FormRequest;
 
 class StoreProductStockRequest extends FormRequest
 {
@@ -15,10 +16,16 @@ class StoreProductStockRequest extends FormRequest
     public function rules()
     {
         return [
-         'product_id' => ['required'],
-         'branch_id' => ['required'],
-         'quantity' => ['required'],
-
+            // 'product_id' => ['required'],
+            'branch_id' => ['required'],
+            'quantity' => ['required'],
+            // Validasi kombinasi unik antara product_id dan branch_id
+            'product_id' => [
+                'required',
+                Rule::unique('productstock')->where(function ($query) {
+                    return $query->where('branch_id', request('branch_id'));
+                })
+            ],
         ];
     }
 
