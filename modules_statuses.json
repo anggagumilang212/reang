@@ -24,5 +24,6 @@
     "Checkout": true,
     "MediaReview": true,
     "Transaction": true,
-    "Captcha": true
+    "Captcha": true,
+    "ClosingKasir": true
 }

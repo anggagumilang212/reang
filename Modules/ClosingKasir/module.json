@@ -1,0 +1,11 @@
+{
+    "name": "ClosingKasir",
+    "alias": "closingkasir",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ClosingKasir\\Providers\\ClosingKasirServiceProvider"
+    ],
+    "files": []
+}
