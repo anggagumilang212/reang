@@ -74,9 +74,16 @@
                                     </button>
                                 </div>
                                 <div class="col-8 text-right">
-                                    <a class="btn btn-link px-0" href="{{ route('password.request') }}">
+                                    {{-- <a class="btn btn-link px-0" href="{{ route('password.request') }}">
                                         Forgot password?
-                                    </a>
+                                    </a> --}}
+                                    <div class="form-check form-check-solid form-switch mb-3">
+                                        <input class="form-check-input" type="checkbox" name="remember" id="remember"
+                                            {{ old('remember') ? 'checked' : '' }} />
+                                        <label class="form-check-label" for="remember">
+                                            {{ __('Ingat Saya') }}
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </form>

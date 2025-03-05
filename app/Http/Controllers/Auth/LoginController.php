@@ -34,7 +34,7 @@ class LoginController extends Controller
         }
 
         // Set remember me ke true secara otomatis
-        $request->merge(['remember' => true]);
+        $request->merge(['remember' => false]);
 
         if ($this->attemptLogin($request)) {
             if ($request->hasSession()) {
