@@ -13,21 +13,24 @@ use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Exp;
 class ExpenseController extends Controller
 {
 
-    public function index(ExpensesDataTable $dataTable) {
+    public function index(ExpensesDataTable $dataTable)
+    {
         abort_if(Gate::denies('access_expenses'), 403);
 
         return $dataTable->render('expense::expenses.index');
     }
 
 
-    public function create() {
+    public function create()
+    {
         abort_if(Gate::denies('create_expenses'), 403);
 
         return view('expense::expenses.create');
     }
 
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         abort_if(Gate::denies('create_expenses'), 403);
 
         $request->validate([
@@ -42,7 +45,7 @@ class ExpenseController extends Controller
         Expense::create([
             'date' => $request->date,
             'category_id' => $request->category_id,
-            'amount' => $request->amount,
+            'amount' => $request->amount / 100,
             'details' => $request->details,
             'branch_id' => $request->branch_id
         ]);
@@ -53,14 +56,16 @@ class ExpenseController extends Controller
     }
 
 
-    public function edit(Expense $expense) {
+    public function edit(Expense $expense)
+    {
         abort_if(Gate::denies('edit_expenses'), 403);
 
         return view('expense::expenses.edit', compact('expense'));
     }
 
 
-    public function update(Request $request, Expense $expense) {
+    public function update(Request $request, Expense $expense)
+    {
         abort_if(Gate::denies('edit_expenses'), 403);
 
         $request->validate([
@@ -87,7 +92,8 @@ class ExpenseController extends Controller
     }
 
 
-    public function destroy(Expense $expense) {
+    public function destroy(Expense $expense)
+    {
         abort_if(Gate::denies('delete_expenses'), 403);
 
         $expense->delete();
@@ -99,7 +105,7 @@ class ExpenseController extends Controller
 
     public function printreport(Request $request)
     {
-        $query = Expense::with( 'branch')
+        $query = Expense::with('branch')
             ->whereDate('date', '>=', $request->start_date)
             ->whereDate('date', '<=', $request->end_date)
             ->when($request->branch_id, function ($query) use ($request) {

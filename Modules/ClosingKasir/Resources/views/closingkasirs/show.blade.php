@@ -50,8 +50,8 @@
             <hr>
 
             <p><strong>Detail Penjualan</strong></p>
-            @if ($penjualan_items->isNotEmpty())
-                @foreach ($penjualan_items as $penjualan)
+            @if ($penjualan_cash_items->isNotEmpty())
+                @foreach ($penjualan_cash_items as $penjualan)
                     @if ($penjualan->saleDetails->isNotEmpty())
                         <ul>
                             @foreach ($penjualan->saleDetails as $item)
@@ -63,9 +63,26 @@
                     @endif
                 @endforeach
             @else
-                <p>Tidak ada data penjualan.</p>
+                {{-- <p>Tidak ada data penjualan (Cash).</p> --}}
             @endif
 
+            <br>
+            @if ($penjualan_non_cash_items->isNotEmpty())
+                <p><strong>Detail Penjualan (Non-Cash)</strong></p>
+                @foreach ($penjualan_non_cash_items as $penjualan)
+                    @if ($penjualan->saleDetails->isNotEmpty())
+                        <ul>
+                            @foreach ($penjualan->saleDetails as $item)
+                                <li>{{ $item->product_name }} - {{ $item->quantity }} pcs x Rp
+                                    {{ number_format($item->price, 0, ',', '.') }} = Rp
+                                    {{ number_format($item->sub_total, 0, ',', '.') }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+                @endforeach
+            @else
+                <p>Tidak ada data penjualan (Non-Cash).</p>
+            @endif
             <hr>
             <p><strong>Detail Pengeluaran</strong></p>
             @if ($pengeluaran_items->isNotEmpty())
