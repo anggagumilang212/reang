@@ -15,12 +15,12 @@ use Modules\Public\Http\Controllers\PageController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('auth.login');
-// })->middleware('guest');
+Route::get('/', function () {
+    return redirect('home');
+});
 
 
-Route::get('/', 'PageController@home')->name('public.home');
+// Route::get('/', 'PageController@home')->name('public.home');
 Route::get('/blog', 'PageController@blog')->name('public.blog');
 Route::get('/blog/{post:slug}', 'PageController@detailblog')->name('public.blog-detail');
 Route::get('/store', 'PageController@store')->name('public.store');

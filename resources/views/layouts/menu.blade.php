@@ -544,8 +544,8 @@
         {{ __('messages.guidebook') }}
     </a>
 </li>
-<li class="c-sidebar-nav-item {{ request()->routeIs('/') ? 'c-active' : '' }}">
+{{-- <li class="c-sidebar-nav-item {{ request()->routeIs('/') ? 'c-active' : '' }}">
     <a class="c-sidebar-nav-link" href="{{ route('public.home') }}">
         <i class="c-sidebar-nav-icon bi bi-house" style="line-height: 1;"></i> ReangNET
     </a>
-</li>
+</li> --}}
