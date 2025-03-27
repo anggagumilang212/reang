@@ -81,7 +81,7 @@
                     @endif
                 @endforeach
             @else
-                <p>Tidak ada data penjualan (Non-Cash).</p>
+                <p>Tidak ada data penjualan (Transfer).</p>
             @endif
             <hr>
             <p><strong>Detail Pengeluaran</strong></p>
