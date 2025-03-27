@@ -20,4 +20,5 @@ Route::group([], function () {
 });
 
 
-Route::get('/closing-kasir/{tanggal}', [ClosingKasirController::class, 'show'])->name('closing-kasir.show');
+Route::get('/closing-kasir/{tanggal}/{branch_id}', [ClosingKasirController::class, 'show'])
+    ->name('closing-kasir.show');

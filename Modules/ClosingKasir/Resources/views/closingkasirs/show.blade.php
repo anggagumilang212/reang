@@ -48,7 +48,7 @@
 
 
             <hr>
-
+            {{--
             <p><strong>Detail Penjualan</strong></p>
             @if ($penjualan_cash_items->isNotEmpty())
                 @foreach ($penjualan_cash_items as $penjualan)
@@ -63,8 +63,8 @@
                     @endif
                 @endforeach
             @else
-                {{-- <p>Tidak ada data penjualan (Cash).</p> --}}
-            @endif
+
+            @endif --}}
 
             <br>
             @if ($penjualan_non_cash_items->isNotEmpty())

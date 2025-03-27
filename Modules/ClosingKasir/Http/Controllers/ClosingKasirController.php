@@ -89,13 +89,16 @@ class ClosingKasirController extends Controller
     //     return redirect()->route('closingkasir.index');
     // }
 
-    public function show($tanggal)
+    public function show($tanggal, $branch_id)
     {
-        $closing = ClosingKasir::where('tanggal', $tanggal)->firstOrFail();
+        // Ambil data closing berdasarkan tanggal dan branch_id
+        $closing = ClosingKasir::where('tanggal', $tanggal)
+            ->where('branch_id', $branch_id)
+            ->firstOrFail();
 
-        // Ambil daftar penjualan dengan filter metode pembayaran
+        // Ambil daftar penjualan berdasarkan branch_id dan metode pembayaran
         $penjualan_cash_items = Sale::whereDate('created_at', $tanggal)
-            ->where('branch_id', $closing->branch_id)
+            ->where('branch_id', $branch_id)
             ->whereHas('salePayments', function ($query) {
                 $query->where('payment_method', 'Cash');
             })
@@ -103,16 +106,16 @@ class ClosingKasirController extends Controller
             ->get();
 
         $penjualan_non_cash_items = Sale::whereDate('created_at', $tanggal)
-            ->where('branch_id', $closing->branch_id)
+            ->where('branch_id', $branch_id)
             ->whereHas('salePayments', function ($query) {
                 $query->where('payment_method', '!=', 'Cash');
             })
             ->with('saleDetails')
             ->get();
 
-        // Ambil daftar pengeluaran
+        // Ambil daftar pengeluaran berdasarkan branch_id
         $pengeluaran_items = Expense::whereDate('created_at', $tanggal)
-            ->where('branch_id', $closing->branch_id)
+            ->where('branch_id', $branch_id)
             ->get();
 
         return view('ClosingKasir::closingkasirs.show', compact(
@@ -122,6 +125,7 @@ class ClosingKasirController extends Controller
             'pengeluaran_items'
         ));
     }
+
 
 
     public function store(Request $request)

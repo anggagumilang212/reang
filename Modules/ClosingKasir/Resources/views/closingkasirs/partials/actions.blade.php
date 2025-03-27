@@ -1,5 +1,6 @@
 {{-- @can('show_closingkasir') --}}
-<a href="{{ route('closing-kasir.show', $data->tanggal) }}" class="btn btn-primary btn-sm">
+<a href="{{ route('closing-kasir.show', ['tanggal' => $data->tanggal, 'branch_id' => $data->branch_id]) }}"
+    class="btn btn-primary btn-sm">
     <i class="bi bi-eye"></i>
 </a>
 {{-- @endcan
