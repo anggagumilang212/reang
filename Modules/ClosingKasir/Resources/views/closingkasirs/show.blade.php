@@ -68,7 +68,7 @@
 
             <br>
             @if ($penjualan_non_cash_items->isNotEmpty())
-                <p><strong>Detail Penjualan (Non-Cash)</strong></p>
+                <p><strong>Detail Penjualan (Transfer)</strong></p>
                 @foreach ($penjualan_non_cash_items as $penjualan)
                     @if ($penjualan->saleDetails->isNotEmpty())
                         <ul>
