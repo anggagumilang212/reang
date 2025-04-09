@@ -45,7 +45,8 @@ class ExpenseController extends Controller
         Expense::create([
             'date' => $request->date,
             'category_id' => $request->category_id,
-            'amount' => $request->amount / 100,
+            // 'amount' => $request->amount / 100,
+            'amount' => $request->amount,
             'details' => $request->details,
             'branch_id' => $request->branch_id
         ]);
