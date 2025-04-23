@@ -22,7 +22,7 @@
                             </a>
                         </div>
                         <select wire:model.live="customer_id" id="customer_id" class="form-control">
-                            <option value="" selected>{{ __('messages.select_customer') }}</option>
+                            {{-- <option value="" selected>{{ __('messages.select_customer') }}</option> --}}
                             @foreach ($customers as $customer)
                                 <option value="{{ $customer->id }}">{{ $customer->customer_name }}</option>
                             @endforeach
@@ -87,20 +87,20 @@
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <tr>
-                                <th>{{__('messages.order_tax')}} ({{ $global_tax }}%)</th>
+                                <th>{{ __('messages.order_tax') }} ({{ $global_tax }}%)</th>
                                 <td>(+) {{ format_currency(Cart::instance($cart_instance)->tax()) }}</td>
                             </tr>
                             <tr>
-                                <th>{{__('messages.discount')}} ({{ $global_discount }}%)</th>
+                                <th>{{ __('messages.discount') }} ({{ $global_discount }}%)</th>
                                 <td>(-) {{ format_currency(Cart::instance($cart_instance)->discount()) }}</td>
                             </tr>
                             <tr>
-                                <th>{{__('messages.shipping')}}</th>
+                                <th>{{ __('messages.shipping') }}</th>
                                 <input type="hidden" value="{{ $shipping }}" name="shipping_amount">
                                 <td>(+) {{ format_currency($shipping) }}</td>
                             </tr>
                             <tr class="text-primary">
-                                <th>{{__('messages.grand_total')}}</th>
+                                <th>{{ __('messages.grand_total') }}</th>
                                 @php
                                     $total_with_shipping = Cart::instance($cart_instance)->total() + (float) $shipping;
                                 @endphp
@@ -116,21 +116,21 @@
             <div class="form-row">
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <label for="tax_percentage">{{__('messages.order_tax')}} (%)</label>
+                        <label for="tax_percentage">{{ __('messages.order_tax') }} (%)</label>
                         <input wire:model.blur="global_tax" type="number" class="form-control" min="0"
                             max="100" value="{{ $global_tax }}" required>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <label for="discount_percentage">{{__('messages.discount')}} (%)</label>
+                        <label for="discount_percentage">{{ __('messages.discount') }} (%)</label>
                         <input wire:model.blur="global_discount" type="number" class="form-control" min="0"
                             max="100" value="{{ $global_discount }}" required>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <label for="shipping_amount">{{__('messages.shipping')}}</label>
+                        <label for="shipping_amount">{{ __('messages.shipping') }}</label>
                         <input wire:model.blur="shipping" type="number" class="form-control" min="0"
                             value="0" required step="0.01">
                     </div>
@@ -139,10 +139,10 @@
 
             <div class="form-group d-flex justify-content-center flex-wrap mb-0">
                 <button wire:click="resetCart" type="button" class="btn btn-pill btn-danger mr-3"><i
-                        class="bi bi-x"></i> {{__('messages.reset')}}</button>
+                        class="bi bi-x"></i> {{ __('messages.reset') }}</button>
                 <button wire:loading.attr="disabled" wire:click="proceed" type="button"
                     class="btn btn-pill btn-primary" {{ $total_amount == 0 ? 'disabled' : '' }}><i
-                        class="bi bi-check"></i> {{__('messages.proceed')}}</button>
+                        class="bi bi-check"></i> {{ __('messages.proceed') }}</button>
             </div>
         </div>
     </div>
