@@ -161,7 +161,7 @@
 
             <div class="transaction-info">
                 <div style="display: flex; justify-content: space-between;">
-                    <div>{{__('messages.date')}}: {{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}
+                    <div>{{ __('messages.date') }}: {{ \Carbon\Carbon::parse($sale->date)->format('d M, Y') }}
                         {{ \Carbon\Carbon::parse($sale->created_at)->format('H:i') }}</div>
                 </div>
                 <div class="divider"></div>
@@ -177,8 +177,11 @@
                     <div class="item">
                         <div class="item-name">{{ $saleDetail->product->product_name }}</div>
                         <div class="item-detail">
-                            <div>{{ $saleDetail->quantity }}x{{ format_currency($saleDetail->price) }}</div>
-                            <div>{{ format_currency($saleDetail->sub_total) }}</div>
+                            {{-- <div>{{ $saleDetail->quantity }} x {{ format_currency($saleDetail->price) }}</div>
+                            <div>{{ format_currency($saleDetail->sub_total) }}</div> --}}
+                            <div>{{ $saleDetail->quantity }} x
+                                {{ number_format($saleDetail->price * 100, 0, ',', '.') }}</div>
+                            <div>{{ number_format($saleDetail->sub_total * 100, 0, ',', '.') }}</div>
                         </div>
                     </div>
                 @endforeach
@@ -189,7 +192,7 @@
             <div class="summary">
                 <div class="summary-item">
                     <div>{{ __('messages.sub_total') }}</div>
-                    <div>{{ format_currency($saleDetail->sub_total) }}</div>
+                    <div>{{ number_format($sale->sub_total * 100, 0, ',', '.') }}</div>
                 </div>
                 <div class="summary-item">
                     <div>{{ __('messages.totalamount') }}</div>

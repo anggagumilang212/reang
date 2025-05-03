@@ -24,7 +24,8 @@ class Checkout extends Component
     public $customer_id;
     public $total_amount;
 
-    public function mount($cartInstance, $customers) {
+    public function mount($cartInstance, $customers)
+    {
         $this->cart_instance = $cartInstance;
         $this->customers = $customers;
         $this->global_discount = 0;
@@ -38,8 +39,37 @@ class Checkout extends Component
         $this->total_amount = $this->calculateTotal(); // Initialize with correct total
     }
 
-    public function hydrate() {
+    public function hydrate()
+    {
         $this->total_amount = $this->calculateTotal();
+    }
+
+    // public function calculateTotal()
+    // {
+    //     $cart_total = Cart::instance($this->cart_instance)->total();
+    //     // Remove any currency symbols and thousand separators
+    //     $clean_total = preg_replace('/[^\d.-]/', '', $cart_total);
+    //     return (float) $clean_total + $this->shipping;
+    // }
+    public function calculateTotal()
+    {
+        // subtotal() return string float, tapi harga kita integer (tanpa desimal)
+        $cart_total = (float) Cart::instance($this->cart_instance)->subtotal(0, '', ''); // tanpa desimal
+        return (int) $cart_total + (int) $this->shipping;
+    }
+
+
+    // public function calculateTotal()
+    // {
+    //     $cart_total = (float) Cart::instance($this->cart_instance)->subtotal(2, '.', '');
+    //     return $cart_total + (float) $this->shipping;
+    // }
+
+
+    public function formatNumber($number)
+    {
+        // Ensure the number is treated as float
+        return number_format((float) $number, 2, '.', '');
     }
 
     // public function calculateTotal() {
@@ -47,19 +77,10 @@ class Checkout extends Component
     //     $total = is_string($cart_total) ? floatval(str_replace(',', '', $cart_total)) : $cart_total;
     //     return $total + $this->shipping;
     // }
-    public function calculateTotal() {
-        $cart_total = Cart::instance($this->cart_instance)->total();
-        // Remove any currency symbols and thousand separators
-        $clean_total = preg_replace('/[^\d.-]/', '', $cart_total);
-        return (float) $clean_total + $this->shipping;
-    }
 
-    public function formatNumber($number) {
-        // Ensure the number is treated as float
-        return number_format((float) $number, 2, '.', '');
-    }
 
-    public function proceed() {
+    public function proceed()
+    {
         if ($this->customer_id != null) {
             // Update total_amount before showing modal
             $this->total_amount = $this->calculateTotal();
@@ -69,7 +90,8 @@ class Checkout extends Component
         }
     }
 
-    public function render() {
+    public function render()
+    {
         $cart_items = Cart::instance($this->cart_instance)->content();
 
         // Always ensure total_amount is updated before rendering
@@ -81,16 +103,71 @@ class Checkout extends Component
     }
 
     // Add a method to handle cart updates
-    public function updated($name, $value) {
+    public function updated($name, $value)
+    {
         if (in_array($name, ['global_tax', 'global_discount', 'shipping'])) {
             $this->total_amount = $this->calculateTotal();
         }
     }
-    public function resetCart() {
+    public function resetCart()
+    {
         Cart::instance($this->cart_instance)->destroy();
     }
 
-    public function productSelected($product) {
+    // public function productSelected($product)
+    // {
+    //     $cart = Cart::instance($this->cart_instance);
+
+    //     $exists = $cart->search(function ($cartItem, $rowId) use ($product) {
+    //         return $cartItem->id == $product['id'];
+    //     });
+
+    //     if ($exists->isNotEmpty()) {
+    //         session()->flash('message', 'Product exists in the cart!');
+    //         return;
+    //     }
+
+    //     // Cek stock di ProductStock
+    //     $branch_id = session('selected_branch');
+    //     $stock = ProductStock::where([
+    //         'product_id' => $product['id'],
+    //         'branch_id' => $branch_id
+    //     ])->first();
+
+    //     $available_stock = $stock ? $stock->quantity : 0;
+
+    //     if ($available_stock <= 0) {
+    //         session()->flash('message', 'Product is out of stock!');
+    //         return;
+    //     }
+
+    //     $cart->add([
+    //         'id'      => $product['id'],
+    //         'name'    => $product['product_name'],
+    //         'qty'     => 1,
+    //         'price'   => $this->calculate($product)['price'],
+    //         'weight'  => 1,
+    //         'options' => [
+    //             'product_discount'      => 0.00,
+    //             'product_discount_type' => 'fixed',
+    //             'sub_total'             => $this->calculate($product)['sub_total'],
+    //             'code'                  => $product['product_code'],
+    //             'stock'                 => $available_stock, // Gunakan stock dari ProductStock
+    //             'unit'                  => $product['product_unit'],
+    //             'product_tax'           => $this->calculate($product)['product_tax'],
+    //             'unit_price'            => $this->calculate($product)['unit_price']
+    //         ]
+    //     ]);
+
+    //     $this->check_quantity[$product['id']] = $available_stock; // Gunakan stock dari ProductStock
+    //     $this->quantity[$product['id']] = 1;
+    //     $this->discount_type[$product['id']] = 'fixed';
+    //     $this->item_discount[$product['id']] = 0;
+    //     $this->total_amount = $this->calculateTotal();
+    // }
+
+    public function productSelected($product)
+    {
         $cart = Cart::instance($this->cart_instance);
 
         $exists = $cart->search(function ($cartItem, $rowId) use ($product) {
@@ -102,39 +179,39 @@ class Checkout extends Component
             return;
         }
 
-        // Cek stock di ProductStock
         $branch_id = session('selected_branch');
         $stock = ProductStock::where([
             'product_id' => $product['id'],
             'branch_id' => $branch_id
         ])->first();
 
-        $available_stock = $stock ? $stock->quantity : 0;
-
-        if ($available_stock <= 0) {
+        if (!$stock || $stock->quantity <= 0) {
             session()->flash('message', 'Product is out of stock!');
             return;
         }
+
+        $available_stock = $stock->quantity;
+        $calculated = $this->calculate($product);
 
         $cart->add([
             'id'      => $product['id'],
             'name'    => $product['product_name'],
             'qty'     => 1,
-            'price'   => $this->calculate($product)['price'],
+            'price'   => $calculated['price'],
             'weight'  => 1,
             'options' => [
                 'product_discount'      => 0.00,
                 'product_discount_type' => 'fixed',
-                'sub_total'             => $this->calculate($product)['sub_total'],
+                'sub_total'             => $calculated['sub_total'],
                 'code'                  => $product['product_code'],
-                'stock'                 => $available_stock, // Gunakan stock dari ProductStock
+                'stock'                 => $available_stock,
                 'unit'                  => $product['product_unit'],
-                'product_tax'           => $this->calculate($product)['product_tax'],
-                'unit_price'            => $this->calculate($product)['unit_price']
+                'product_tax'           => $calculated['product_tax'],
+                'unit_price'            => $calculated['unit_price']
             ]
         ]);
 
-        $this->check_quantity[$product['id']] = $available_stock; // Gunakan stock dari ProductStock
+        $this->check_quantity[$product['id']] = $available_stock;
         $this->quantity[$product['id']] = 1;
         $this->discount_type[$product['id']] = 'fixed';
         $this->item_discount[$product['id']] = 0;
@@ -142,19 +219,24 @@ class Checkout extends Component
     }
 
 
-    public function removeItem($row_id) {
+
+    public function removeItem($row_id)
+    {
         Cart::instance($this->cart_instance)->remove($row_id);
     }
 
-    public function updatedGlobalTax() {
-        Cart::instance($this->cart_instance)->setGlobalTax((integer)$this->global_tax);
+    public function updatedGlobalTax()
+    {
+        Cart::instance($this->cart_instance)->setGlobalTax((int)$this->global_tax);
     }
 
-    public function updatedGlobalDiscount() {
-        Cart::instance($this->cart_instance)->setGlobalDiscount((integer)$this->global_discount);
+    public function updatedGlobalDiscount()
+    {
+        Cart::instance($this->cart_instance)->setGlobalDiscount((int)$this->global_discount);
     }
 
-    public function updateQuantity($row_id, $product_id) {
+    public function updateQuantity($row_id, $product_id)
+    {
         // Cek stock di ProductStock
         $branch_id = session('selected_branch');
         $stock = ProductStock::where([
@@ -188,15 +270,18 @@ class Checkout extends Component
     }
 
 
-    public function updatedDiscountType($value, $name) {
+    public function updatedDiscountType($value, $name)
+    {
         $this->item_discount[$name] = 0;
     }
 
-    public function discountModalRefresh($product_id, $row_id) {
+    public function discountModalRefresh($product_id, $row_id)
+    {
         $this->updateQuantity($row_id, $product_id);
     }
 
-    public function setProductDiscount($row_id, $product_id) {
+    public function setProductDiscount($row_id, $product_id)
+    {
         $cart_item = Cart::instance($this->cart_instance)->get($row_id);
 
         if ($this->discount_type[$product_id] == 'fixed') {
@@ -222,7 +307,8 @@ class Checkout extends Component
         session()->flash('discount_message' . $product_id, 'Discount added to the product!');
     }
 
-    public function calculate($product) {
+    public function calculate($product)
+    {
         $price = 0;
         $unit_price = 0;
         $product_tax = 0;
@@ -248,7 +334,8 @@ class Checkout extends Component
         return ['price' => $price, 'unit_price' => $unit_price, 'product_tax' => $product_tax, 'sub_total' => $sub_total];
     }
 
-    public function updateCartOptions($row_id, $product_id, $cart_item, $discount_amount) {
+    public function updateCartOptions($row_id, $product_id, $cart_item, $discount_amount)
+    {
         Cart::instance($this->cart_instance)->update($row_id, ['options' => [
             'sub_total'             => $cart_item->price * $cart_item->qty,
             'code'                  => $cart_item->options->code,

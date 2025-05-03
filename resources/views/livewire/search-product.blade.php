@@ -19,7 +19,7 @@
         <div class="card-body shadow">
             <div class="d-flex justify-content-center">
                 <div class="spinner-border text-primary" role="status">
-                    <span class="sr-only">{{ __('messages.loading')}}</span>
+                    <span class="sr-only">{{ __('messages.loading') }}</span>
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
                             <li class="list-group-item list-group-item-action">
                                 <a wire:click="resetQuery" wire:click.prevent="selectProduct({{ $result }})"
                                     href="#">
-                                {{ $result->product_name }} | {{ $result->product_code }} |
+                                    {{ $result->product_name }} | {{ $result->product_code }} |
                                     {{ format_currency($result->product_price) }}
                                 </a>
                             </li>

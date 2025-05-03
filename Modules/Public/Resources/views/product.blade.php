@@ -75,7 +75,6 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-20 md:px-12">
             <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8">
                 @foreach ($products as $item)
-
                     <a href="{{ route('products.detail', $item) }}"
                         class="relative bg-cover group rounded-3xl bg-center overflow-hidden mx-auto sm:mr-0 xl:mx-auto cursor-pointer">
 

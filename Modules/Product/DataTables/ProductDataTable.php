@@ -21,14 +21,16 @@ class ProductDataTable extends DataTable
             })
             ->addColumn('product_image', function ($data) {
                 $url = $data->getFirstMediaUrl('images', 'thumb');
-                return '<img src="'.$url.'" border="0" width="50" class="img-thumbnail" align="center"/>';
+                return '<img src="' . $url . '" border="0" width="50" class="img-thumbnail" align="center"/>';
             })
             ->addColumn('product_price', function ($data) {
-                return format_currency($data->product_price);
+                return number_format($data->product_price / 1, 2, ',', '.');
             })
             ->addColumn('product_cost', function ($data) {
-                return format_currency($data->product_cost);
+                return number_format($data->product_cost / 1, 2, ',', '.');
             })
+
+
             ->addColumn('product_quantity', function ($data) {
                 // Ambil quantity dari relasi ProductStock
                 $quantity = $data->productStock->quantity ?? 0;
@@ -39,29 +41,29 @@ class ProductDataTable extends DataTable
 
     public function query(Product $model)
     {
-        return $model->newQuery()->with('category','productStock');
+        return $model->newQuery()->with('category', 'productStock');
     }
 
     public function html()
     {
         return $this->builder()
-                    ->setTableId('product-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
+            ->setTableId('product-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->dom("<'row'<'col-md-3'l><'col-md-5 mb-2'B><'col-md-4'f>> .
                                 'tr' .
                                 <'row'<'col-md-5'i><'col-md-7 mt-2'p>>")
-                    ->orderBy(7)
-                    ->buttons(
-                        Button::make('excel')
-                            ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
-                        Button::make('print')
-                            ->text('<i class="bi bi-printer-fill"></i> Print'),
-                        Button::make('reset')
-                            ->text('<i class="bi bi-x-circle"></i> Reset'),
-                        Button::make('reload')
-                            ->text('<i class="bi bi-arrow-repeat"></i> Reload')
-                    );
+            ->orderBy(7)
+            ->buttons(
+                Button::make('excel')
+                    ->text('<i class="bi bi-file-earmark-excel-fill"></i> Excel'),
+                Button::make('print')
+                    ->text('<i class="bi bi-printer-fill"></i> Print'),
+                Button::make('reset')
+                    ->text('<i class="bi bi-x-circle"></i> Reset'),
+                Button::make('reload')
+                    ->text('<i class="bi bi-arrow-repeat"></i> Reload')
+            );
     }
 
     protected function getColumns()
@@ -72,31 +74,31 @@ class ProductDataTable extends DataTable
                 ->className('text-center align-middle'),
 
             Column::make('category.category_name')
-            ->title(__('messages.category'))
+                ->title(__('messages.category'))
                 ->className('text-center align-middle'),
 
             Column::make('product_code')
-            ->title(__('messages.code'))
+                ->title(__('messages.code'))
                 ->className('text-center align-middle'),
 
             Column::make('product_name')
-            ->title(__('messages.productname'))
+                ->title(__('messages.productname'))
                 ->className('text-center align-middle'),
 
             Column::computed('product_cost')
-            ->title(__('messages.cost'))
+                ->title(__('messages.cost'))
                 ->className('text-center align-middle'),
 
             Column::computed('product_price')
-            ->title(__('messages.price'))
+                ->title(__('messages.price'))
                 ->className('text-center align-middle'),
 
             Column::computed('product_quantity')
-            ->title(__('messages.quantity'))
+                ->title(__('messages.quantity'))
                 ->className('text-center align-middle'),
 
             Column::computed('action')
-            ->title(__('messages.action'))
+                ->title(__('messages.action'))
                 ->exportable(false)
                 ->printable(false)
                 ->className('text-center align-middle'),

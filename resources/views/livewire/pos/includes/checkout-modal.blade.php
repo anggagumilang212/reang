@@ -111,7 +111,14 @@
                     <button type="submit" class="btn btn-primary">{{ __('messages.submit') }}</button>
                 </div>
             </form>
-          
+            <script>
+                document.getElementById('checkout-form').addEventListener('submit', function(e) {
+                    const submitButton = this.querySelector('button[type="submit"]');
+                    submitButton.disabled = true;
+                    submitButton.innerText = 'Processing...';
+                });
+            </script>
+
         </div>
     </div>
 </div>
