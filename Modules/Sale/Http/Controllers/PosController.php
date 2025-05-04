@@ -62,127 +62,6 @@ class PosController extends Controller
         return view('sale::pos.index', compact('product_categories', 'customers', 'products'));
     }
 
-    public function store(StorePosSaleRequest $request)
-    {
-        $branch_id = session('selected_branch');
-        $sale = null;
-
-        try {
-            DB::transaction(function () use ($request, $branch_id, &$sale) {
-                $due_amount = $request->total_amount - $request->paid_amount;
-
-                if ($due_amount == $request->total_amount) {
-                    $payment_status = 'Unpaid';
-                } elseif ($due_amount > 0) {
-                    $payment_status = 'Partial';
-                } else {
-                    $payment_status = 'Paid';
-                }
-
-                // Check stock availability before processing
-                foreach (Cart::instance('sale')->content() as $cart_item) {
-                    $stock = ProductStock::where([
-                        'product_id' => $cart_item->id,
-                        'branch_id' => $branch_id
-                    ])->first();
-
-                    if (!$stock || $stock->quantity < $cart_item->qty) {
-                        throw new \Exception('Insufficient stock for product: ' . $cart_item->name);
-                    }
-                }
-
-                $sale = Sale::create([
-                    'date' => now()->format('Y-m-d'),
-                    'reference' => 'PSL',
-                    'customer_id' => $request->customer_id,
-                    'customer_name' => Customer::findOrFail($request->customer_id)->customer_name,
-                    'tax_percentage' => $request->tax_percentage,
-                    'discount_percentage' => $request->discount_percentage,
-                    'shipping_amount' => (int) $request->shipping_amount * 100,
-                    'paid_amount' => (int) $request->paid_amount * 100,
-                    'total_amount' => (int) $request->total_amount * 100,
-                    'due_amount' => (int) $due_amount * 100,
-
-                    'status' => 'Completed',
-                    'payment_status' => $payment_status,
-                    'payment_method' => $request->payment_method,
-                    'note' => $request->note,
-                    'tax_amount' => Cart::instance('sale')->tax(),
-                    'discount_amount' => Cart::instance('sale')->discount(),
-                    'branch_id' => $branch_id
-                ]);
-
-                foreach (Cart::instance('sale')->content() as $cart_item) {
-                    SaleDetails::create([
-                        'sale_id' => $sale->id,
-                        'product_id' => $cart_item->id,
-                        'product_name' => $cart_item->name,
-                        'product_code' => $cart_item->options->code,
-                        'quantity' => $cart_item->qty,
-                        'price' => $cart_item->price,
-                        'unit_price' => $cart_item->options->unit_price,
-                        'sub_total' => $cart_item->options->sub_total,
-                        'product_discount_amount' => $cart_item->options->product_discount,
-                        'product_discount_type' => $cart_item->options->product_discount_type,
-                        'product_tax_amount' => $cart_item->options->product_tax,
-                    ]);
-
-                    $stock = ProductStock::where([
-                        'product_id' => $cart_item->id,
-                        'branch_id' => $branch_id
-                    ])->first();
-
-                    $stock->decrement('quantity', $cart_item->qty);
-                }
-
-                Cart::instance('sale')->destroy();
-
-                if ($sale->paid_amount > 0) {
-                    SalePayment::create([
-                        'date' => now()->format('Y-m-d'),
-                        'reference' => 'INV/' . $sale->reference,
-                        'amount' => $sale->paid_amount,
-                        'sale_id' => $sale->id,
-                        'payment_method' => $request->payment_method,
-                        'branch_id' => $branch_id
-                    ]);
-                }
-            });
-
-            if ($sale) {
-                $customer = Customer::find($sale->customer_id);
-
-                $message = "Terima kasih telah berbelanja di toko kami!\n"
-                    . "No. Invoice: " . $sale->reference . "\n"
-                    . "Tanggal: " . now()->format('Y-m-d') . "\n"
-                    . "Total Bayar: " . format_currency($sale->total_amount) . "\n"
-                    . "Metode Bayar: " . $sale->payment_method . "\n"
-                    . "Status: " . $sale->payment_status . "\n"
-                    . "Terimakasih " . $customer->customer_name . "!\n\n"
-                    . "Website Kami : https://www.reang.net";
-
-                $this->whatsappService->sendMessage($customer->customer_phone, $message);
-            }
-
-            toast('POS Sale Created!', 'success');
-            if ($sale) {
-                return redirect()->back()->with([
-                    'print_sale_id' => $sale->id,
-                    'success' => 'POS Sale Created!'
-                ]);
-            }
-            // return redirect()->route('sales.index');
-
-        } catch (\Exception $e) {
-            if (str_contains($e->getMessage(), 'Insufficient stock')) {
-                toast('Maaf, stok produk tidak mencukupi!', 'error');
-                return redirect()->back();
-            }
-            throw $e;
-        }
-    }
-
-    // di kali 100
     // public function store(StorePosSaleRequest $request)
     // {
     //     $branch_id = session('selected_branch');
@@ -219,16 +98,17 @@ class PosController extends Controller
     //                 'customer_name' => Customer::findOrFail($request->customer_id)->customer_name,
     //                 'tax_percentage' => $request->tax_percentage,
     //                 'discount_percentage' => $request->discount_percentage,
-    //                 'shipping_amount' => $request->shipping_amount * 100,
-    //                 'paid_amount' => $request->paid_amount * 100,
-    //                 'total_amount' => $request->total_amount * 100,
-    //                 'due_amount' => $due_amount * 100,
+    //                 'shipping_amount' => (int) $request->shipping_amount * 100,
+    //                 'paid_amount' => (int) $request->paid_amount * 100,
+    //                 'total_amount' => (int) $request->total_amount * 100,
+    //                 'due_amount' => (int) $due_amount * 100,
+
     //                 'status' => 'Completed',
     //                 'payment_status' => $payment_status,
     //                 'payment_method' => $request->payment_method,
     //                 'note' => $request->note,
-    //                 'tax_amount' => Cart::instance('sale')->tax() * 100,
-    //                 'discount_amount' => Cart::instance('sale')->discount() * 100,
+    //                 'tax_amount' => Cart::instance('sale')->tax(),
+    //                 'discount_amount' => Cart::instance('sale')->discount(),
     //                 'branch_id' => $branch_id
     //             ]);
 
@@ -239,12 +119,12 @@ class PosController extends Controller
     //                     'product_name' => $cart_item->name,
     //                     'product_code' => $cart_item->options->code,
     //                     'quantity' => $cart_item->qty,
-    //                     'price' => $cart_item->price * 100,
-    //                     'unit_price' => $cart_item->options->unit_price * 100,
-    //                     'sub_total' => $cart_item->options->sub_total * 100,
-    //                     'product_discount_amount' => $cart_item->options->product_discount * 100,
+    //                     'price' => $cart_item->price,
+    //                     'unit_price' => $cart_item->options->unit_price,
+    //                     'sub_total' => $cart_item->options->sub_total,
+    //                     'product_discount_amount' => $cart_item->options->product_discount,
     //                     'product_discount_type' => $cart_item->options->product_discount_type,
-    //                     'product_tax_amount' => $cart_item->options->product_tax * 100,
+    //                     'product_tax_amount' => $cart_item->options->product_tax,
     //                 ]);
 
     //                 $stock = ProductStock::where([
@@ -301,6 +181,126 @@ class PosController extends Controller
     //         throw $e;
     //     }
     // }
+
+    // di kali 100
+    public function store(StorePosSaleRequest $request)
+    {
+        $branch_id = session('selected_branch');
+        $sale = null;
+
+        try {
+            DB::transaction(function () use ($request, $branch_id, &$sale) {
+                $due_amount = $request->total_amount - $request->paid_amount;
+
+                if ($due_amount == $request->total_amount) {
+                    $payment_status = 'Unpaid';
+                } elseif ($due_amount > 0) {
+                    $payment_status = 'Partial';
+                } else {
+                    $payment_status = 'Paid';
+                }
+
+                // Check stock availability before processing
+                foreach (Cart::instance('sale')->content() as $cart_item) {
+                    $stock = ProductStock::where([
+                        'product_id' => $cart_item->id,
+                        'branch_id' => $branch_id
+                    ])->first();
+
+                    if (!$stock || $stock->quantity < $cart_item->qty) {
+                        throw new \Exception('Insufficient stock for product: ' . $cart_item->name);
+                    }
+                }
+
+                $sale = Sale::create([
+                    'date' => now()->format('Y-m-d'),
+                    'reference' => 'PSL',
+                    'customer_id' => $request->customer_id,
+                    'customer_name' => Customer::findOrFail($request->customer_id)->customer_name,
+                    'tax_percentage' => $request->tax_percentage,
+                    'discount_percentage' => $request->discount_percentage,
+                    'shipping_amount' => $request->shipping_amount * 100,
+                    'paid_amount' => $request->paid_amount * 100,
+                    'total_amount' => $request->total_amount * 100,
+                    'due_amount' => $due_amount * 100,
+                    'status' => 'Completed',
+                    'payment_status' => $payment_status,
+                    'payment_method' => $request->payment_method,
+                    'note' => $request->note,
+                    'tax_amount' => Cart::instance('sale')->tax() * 100,
+                    'discount_amount' => Cart::instance('sale')->discount() * 100,
+                    'branch_id' => $branch_id
+                ]);
+
+                foreach (Cart::instance('sale')->content() as $cart_item) {
+                    SaleDetails::create([
+                        'sale_id' => $sale->id,
+                        'product_id' => $cart_item->id,
+                        'product_name' => $cart_item->name,
+                        'product_code' => $cart_item->options->code,
+                        'quantity' => $cart_item->qty,
+                        'price' => $cart_item->price * 100,
+                        'unit_price' => $cart_item->options->unit_price * 100,
+                        'sub_total' => $cart_item->options->sub_total * 100,
+                        'product_discount_amount' => $cart_item->options->product_discount * 100,
+                        'product_discount_type' => $cart_item->options->product_discount_type,
+                        'product_tax_amount' => $cart_item->options->product_tax * 100,
+                    ]);
+
+                    $stock = ProductStock::where([
+                        'product_id' => $cart_item->id,
+                        'branch_id' => $branch_id
+                    ])->first();
+
+                    $stock->decrement('quantity', $cart_item->qty);
+                }
+
+                Cart::instance('sale')->destroy();
+
+                if ($sale->paid_amount > 0) {
+                    SalePayment::create([
+                        'date' => now()->format('Y-m-d'),
+                        'reference' => 'INV/' . $sale->reference,
+                        'amount' => $sale->paid_amount,
+                        'sale_id' => $sale->id,
+                        'payment_method' => $request->payment_method,
+                        'branch_id' => $branch_id
+                    ]);
+                }
+            });
+
+            if ($sale) {
+                $customer = Customer::find($sale->customer_id);
+
+                $message = "Terima kasih telah berbelanja di toko kami!\n"
+                    . "No. Invoice: " . $sale->reference . "\n"
+                    . "Tanggal: " . now()->format('Y-m-d') . "\n"
+                    . "Total Bayar: " . format_currency($sale->total_amount) . "\n"
+                    . "Metode Bayar: " . $sale->payment_method . "\n"
+                    . "Status: " . $sale->payment_status . "\n"
+                    . "Terimakasih " . $customer->customer_name . "!\n\n"
+                    . "Website Kami : https://www.reang.net";
+
+                $this->whatsappService->sendMessage($customer->customer_phone, $message);
+            }
+
+            toast('POS Sale Created!', 'success');
+            if ($sale) {
+                return redirect()->back()->with([
+                    'print_sale_id' => $sale->id,
+                    'success' => 'POS Sale Created!'
+                ]);
+            }
+            // return redirect()->route('sales.index');
+
+        } catch (\Exception $e) {
+            if (str_contains($e->getMessage(), 'Insufficient stock')) {
+                toast('Maaf, stok produk tidak mencukupi!', 'error');
+                return redirect()->back();
+            }
+            throw $e;
+        }
+    }
 
     // message stock error
     // public function store(StorePosSaleRequest $request)

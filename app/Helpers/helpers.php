@@ -11,30 +11,6 @@ if (!function_exists('settings')) {
     }
 }
 
-// if (!function_exists('format_currency')) {
-//     function format_currency($value, $format = true)
-//     {
-//         if (!$format) {
-//             return $value;
-//         }
-
-//         $settings = settings();
-//         $position = $settings->default_currency_position;
-//         $symbol = $settings->currency->symbol;
-//         $decimal_separator = $settings->currency->decimal_separator;
-//         $thousand_separator = $settings->currency->thousand_separator;
-
-//         if ($position == 'prefix') {
-//             $formatted_value = $symbol . number_format((float) $value, 2, $decimal_separator, $thousand_separator);
-//         } else {
-//             $formatted_value = number_format((float) $value, 2, $decimal_separator, $thousand_separator) . $symbol;
-//         }
-
-//         return $formatted_value;
-//     }
-// }
-
-
 if (!function_exists('format_currency')) {
     function format_currency($value, $format = true)
     {
@@ -43,15 +19,39 @@ if (!function_exists('format_currency')) {
         }
 
         $settings = settings();
-        $position = $settings->default_currency_position ?? 'prefix';
-        $symbol = $settings->currency->symbol ?? 'Rp';
-        $decimal_separator = $settings->currency->decimal_separator ?? ',';
-        $thousand_separator = $settings->currency->thousand_separator ?? '.';
+        $position = $settings->default_currency_position;
+        $symbol = $settings->currency->symbol;
+        $decimal_separator = $settings->currency->decimal_separator;
+        $thousand_separator = $settings->currency->thousand_separator;
 
-        // pastikan value dipastikan dalam bentuk integer rupiah
-        return $symbol . number_format((int) $value, 0, $decimal_separator, $thousand_separator);
+        if ($position == 'prefix') {
+            $formatted_value = $symbol . number_format((float) $value, 2, $decimal_separator, $thousand_separator);
+        } else {
+            $formatted_value = number_format((float) $value, 2, $decimal_separator, $thousand_separator) . $symbol;
+        }
+
+        return $formatted_value;
     }
 }
+
+// tanpa desimal
+// if (!function_exists('format_currency')) {
+//     function format_currency($value, $format = true)
+//     {
+//         if (!$format) {
+//             return $value;
+//         }
+
+//         $settings = settings();
+//         $position = $settings->default_currency_position ?? 'prefix';
+//         $symbol = $settings->currency->symbol ?? 'Rp';
+//         $decimal_separator = $settings->currency->decimal_separator ?? ',';
+//         $thousand_separator = $settings->currency->thousand_separator ?? '.';
+
+//         // pastikan value dipastikan dalam bentuk integer rupiah
+//         return $symbol . number_format((int) $value, 0, $decimal_separator, $thousand_separator);
+//     }
+// }
 
 if (!function_exists('make_reference_id')) {
     function make_reference_id($prefix, $number)

@@ -3,8 +3,14 @@
 namespace App\Livewire\Pos;
 
 use Livewire\Component;
+use Modules\Sale\Entities\Sale;
+use Illuminate\Support\Facades\DB;
+use Modules\People\Entities\Customer;
+use Modules\Sale\Entities\SaleDetails;
+use Modules\Sale\Entities\SalePayment;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Modules\ProductStock\Entities\ProductStock;
+
 
 class Checkout extends Component
 {
@@ -23,6 +29,168 @@ class Checkout extends Component
     public $data;
     public $customer_id;
     public $total_amount;
+
+    public $show_checkout_form = false;
+    public $payment_method = 'Cash';
+    public $notes;
+
+    public  $tax_percentage = 0;
+    public $discount_percentage = 0;
+    public $shipping_amount = 0;
+    public $paid_amount = 0;
+    public $note = '';
+
+    public function checkout()
+    {
+        // Validasi
+        $this->validate([
+            'payment_method' => 'required|string',
+        ]);
+
+        // Simpan transaksi atau logika lainnya di sini...
+
+        // Reset cart dan form
+        $this->resetCart();
+        $this->reset(['show_checkout_form', 'payment_method', 'notes']);
+
+        session()->flash('message', 'Transaksi berhasil disimpan!');
+    }
+
+
+
+    public function submitCheckout()
+    {
+        $branch_id = session('selected_branch');
+        $sale = null;
+
+        try {
+            DB::transaction(function () use ($branch_id, &$sale) {
+                $due_amount = $this->total_amount - $this->paid_amount;
+
+                if ($due_amount == $this->total_amount) {
+                    $payment_status = 'Unpaid';
+                } elseif ($due_amount > 0) {
+                    $payment_status = 'Partial';
+                } else {
+                    $payment_status = 'Paid';
+                }
+
+                // Cek stok
+                foreach (Cart::instance('sale')->content() as $cart_item) {
+                    $stock = ProductStock::where([
+                        'product_id' => $cart_item->id,
+                        'branch_id' => $branch_id
+                    ])->first();
+
+                    if (!$stock || $stock->quantity < $cart_item->qty) {
+                        throw new \Exception('Stok tidak mencukupi untuk produk: ' . $cart_item->name);
+                    }
+                }
+
+                // Simpan Sale
+                $sale = Sale::create([
+                    'date' => now()->format('Y-m-d'),
+                    'reference' => 'PSL',
+                    'customer_id' => $this->customer_id,
+                    'customer_name' => Customer::findOrFail($this->customer_id)->customer_name,
+                    'tax_percentage' => $this->tax_percentage,
+                    'discount_percentage' => $this->discount_percentage,
+                    'shipping_amount' => (int) $this->shipping_amount * 100,
+                    'paid_amount' => (int) $this->paid_amount * 100,
+                    'total_amount' => (int) $this->total_amount * 100,
+                    'due_amount' => (int) $due_amount * 100,
+                    'status' => 'Completed',
+                    'payment_status' => $payment_status,
+                    'payment_method' => $this->payment_method,
+                    'note' => $this->note,
+                    'tax_amount' => Cart::instance('sale')->tax(),
+                    'discount_amount' => Cart::instance('sale')->discount(),
+                    'branch_id' => $branch_id
+                ]);
+
+                // Simpan detail produk
+                foreach (Cart::instance('sale')->content() as $cart_item) {
+                    SaleDetails::create([
+                        'sale_id' => $sale->id,
+                        'product_id' => $cart_item->id,
+                        'product_name' => $cart_item->name,
+                        'product_code' => $cart_item->options->code,
+                        'quantity' => $cart_item->qty,
+                        'price' => $cart_item->price,
+                        'unit_price' => $cart_item->options->unit_price,
+                        'sub_total' => $cart_item->options->sub_total,
+                        'product_discount_amount' => $cart_item->options->product_discount,
+                        'product_discount_type' => $cart_item->options->product_discount_type,
+                        'product_tax_amount' => $cart_item->options->product_tax,
+                    ]);
+
+                    $stock = ProductStock::where([
+                        'product_id' => $cart_item->id,
+                        'branch_id' => $branch_id
+                    ])->first();
+
+                    $stock->decrement('quantity', $cart_item->qty);
+                }
+
+                Cart::instance('sale')->destroy();
+
+                // Simpan pembayaran
+                if ($sale->paid_amount > 0) {
+                    SalePayment::create([
+                        'date' => now()->format('Y-m-d'),
+                        'reference' => 'INV/' . $sale->reference,
+                        'amount' => $sale->paid_amount,
+                        'sale_id' => $sale->id,
+                        'payment_method' => $this->payment_method,
+                        'branch_id' => $branch_id
+                    ]);
+                }
+            });
+
+            // if ($sale) {
+            //     $customer = Customer::find($sale->customer_id);
+
+            //     $message = "Terima kasih telah berbelanja di toko kami!\n"
+            //         . "No. Invoice: " . $sale->reference . "\n"
+            //         . "Tanggal: " . now()->format('Y-m-d') . "\n"
+            //         . "Total Bayar: " . format_currency($sale->total_amount) . "\n"
+            //         . "Metode Bayar: " . $sale->payment_method . "\n"
+            //         . "Status: " . $sale->payment_status . "\n"
+            //         . "Terimakasih " . $customer->customer_name . "!\n\n"
+            //         . "Website Kami : https://www.reang.net";
+
+            //     app('App\Services\WhatsappService')->sendMessage($customer->customer_phone, $message);
+            // }
+
+            session()->flash('checkout_message', 'Checkout berhasil!');
+
+            if ($sale) {
+                return redirect()->back()->with([
+                    'print_sale_id' => $sale->id,
+                    'success' => 'POS Sale Created!'
+                ]);
+            }
+            // Reset input jika perlu
+            $this->reset([
+                'customer_id',
+                'tax_percentage',
+                'discount_percentage',
+                'shipping_amount',
+                'paid_amount',
+                'total_amount',
+                'payment_method',
+                'note'
+            ]);
+        } catch (\Exception $e) {
+            if (str_contains($e->getMessage(), 'stok tidak mencukupi')) {
+                $this->addError('stock', 'Stok tidak mencukupi!');
+                return;
+            }
+
+            throw $e;
+        }
+    }
+
 
     public function mount($cartInstance, $customers)
     {
@@ -44,26 +212,22 @@ class Checkout extends Component
         $this->total_amount = $this->calculateTotal();
     }
 
-    // public function calculateTotal()
-    // {
-    //     $cart_total = Cart::instance($this->cart_instance)->total();
-    //     // Remove any currency symbols and thousand separators
-    //     $clean_total = preg_replace('/[^\d.-]/', '', $cart_total);
-    //     return (float) $clean_total + $this->shipping;
-    // }
     public function calculateTotal()
     {
-        // subtotal() return string float, tapi harga kita integer (tanpa desimal)
-        $cart_total = (float) Cart::instance($this->cart_instance)->subtotal(0, '', ''); // tanpa desimal
-        return (int) $cart_total + (int) $this->shipping;
+        $cart_total = Cart::instance($this->cart_instance)->total();
+        // Remove any currency symbols and thousand separators
+        $clean_total = preg_replace('/[^\d.-]/', '', $cart_total);
+        return (float) $clean_total + $this->shipping;
     }
 
-
+    // tanpa desimal
     // public function calculateTotal()
     // {
-    //     $cart_total = (float) Cart::instance($this->cart_instance)->subtotal(2, '.', '');
-    //     return $cart_total + (float) $this->shipping;
+    //     // subtotal() return string float, tapi harga kita integer (tanpa desimal)
+    //     $cart_total = (float) Cart::instance($this->cart_instance)->subtotal(0, '', ''); // tanpa desimal
+    //     return (int) $cart_total + (int) $this->shipping;
     // }
+
 
 
     public function formatNumber($number)
@@ -71,13 +235,6 @@ class Checkout extends Component
         // Ensure the number is treated as float
         return number_format((float) $number, 2, '.', '');
     }
-
-    // public function calculateTotal() {
-    //     $cart_total = Cart::instance($this->cart_instance)->total();
-    //     $total = is_string($cart_total) ? floatval(str_replace(',', '', $cart_total)) : $cart_total;
-    //     return $total + $this->shipping;
-    // }
-
 
     public function proceed()
     {
@@ -89,6 +246,21 @@ class Checkout extends Component
             session()->flash('message', 'Please Select Customer!');
         }
     }
+
+
+    // public function calculateTotal() {
+    //     $cart_total = Cart::instance($this->cart_instance)->total();
+    //     $total = is_string($cart_total) ? floatval(str_replace(',', '', $cart_total)) : $cart_total;
+    //     return $total + $this->shipping;
+    // }
+
+    // public function calculateTotal()
+    // {
+    //     $cart_total = (float) Cart::instance($this->cart_instance)->subtotal(2, '.', '');
+    //     return $cart_total + (float) $this->shipping;
+    // }
+
+
 
     public function render()
     {

@@ -35,8 +35,10 @@
                                     <div class="form-group">
                                         <label for="total_amount">{{ __('messages.totalamount') }} <span
                                                 class="text-danger">*</span></label>
+                                        {{-- <input id="total_amount" type="text" class="form-control" name="total_amount"
+                                            value="0" wire:model="total_amount" readonly required> --}}
                                         <input id="total_amount" type="text" class="form-control" name="total_amount"
-                                            value="0" wire:model="total_amount" readonly required>
+                                            wire:model.defer="total_amount" readonly required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -45,6 +47,7 @@
                                                 class="text-danger">*</span></label>
                                         <input id="paid_amount" type="text" class="form-control" name="paid_amount"
                                             wire:model="total_amount" value="0" required>
+
                                     </div>
                                 </div>
                             </div>
