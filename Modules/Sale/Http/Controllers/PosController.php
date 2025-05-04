@@ -185,6 +185,11 @@ class PosController extends Controller
     // di kali 100
     public function store(StorePosSaleRequest $request)
     {
+        // dd($request->all());
+        // dd($request->shipping_amount * 100);
+        // dd($request->paid_amount * 100);
+        // dd($request->total_amount * 100);
+        // dd($request->tax_amount * 100);
         $branch_id = session('selected_branch');
         $sale = null;
 

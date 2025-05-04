@@ -220,6 +220,14 @@ class Checkout extends Component
         return (float) $clean_total + $this->shipping;
     }
 
+    // public function calculateTotal()
+    // {
+    //     $cart_total = Cart::instance($this->cart_instance)->total();
+    //     // Remove any currency symbols and thousand separators
+    //     $clean_total = preg_replace('/[^\d.-]/', '', $cart_total);
+    //     return (float) $clean_total + $this->shipping;
+    // }
+
     // tanpa desimal
     // public function calculateTotal()
     // {
@@ -240,7 +248,7 @@ class Checkout extends Component
     {
         if ($this->customer_id != null) {
             // Update total_amount before showing modal
-            $this->total_amount = $this->calculateTotal();
+            // $this->total_amount = $this->calculateTotal();
             $this->dispatch('showCheckoutModal');
         } else {
             session()->flash('message', 'Please Select Customer!');

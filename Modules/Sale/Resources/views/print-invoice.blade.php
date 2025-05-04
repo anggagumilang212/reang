@@ -177,11 +177,11 @@
                     <div class="item">
                         <div class="item-name">{{ $saleDetail->product->product_name }}</div>
                         <div class="item-detail">
-                            {{-- <div>{{ $saleDetail->quantity }} x {{ format_currency($saleDetail->price) }}</div>
-                            <div>{{ format_currency($saleDetail->sub_total) }}</div> --}}
-                            <div>{{ $saleDetail->quantity }} x
+                            <div>{{ $saleDetail->quantity }} x {{ format_currency($saleDetail->price) }}</div>
+                            <div>{{ format_currency($saleDetail->sub_total) }}</div>
+                            {{-- <div>{{ $saleDetail->quantity }} x
                                 {{ number_format($saleDetail->price * 100, 0, ',', '.') }}</div>
-                            <div>{{ number_format($saleDetail->sub_total * 100, 0, ',', '.') }}</div>
+                            <div>{{ number_format($saleDetail->sub_total * 100, 0, ',', '.') }}</div> --}}
                         </div>
                     </div>
                 @endforeach

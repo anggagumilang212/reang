@@ -45,7 +45,7 @@
     @endif
 @endsection
 
-@push('page_scripts')
+{{-- @push('page_scripts')
     <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
     <script>
         $(document).ready(function() {
@@ -74,6 +74,57 @@
                     $('#paid_amount').val(paid_amount);
                     var total_amount = $('#total_amount').maskMoney('unmasked')[0];
                     $('#total_amount').val(total_amount);
+                });
+            });
+        });
+    </script>
+@endpush --}}
+
+@push('page_scripts')
+    <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            // Tunggu event dari Livewire atau JS
+            window.addEventListener('showCheckoutModal', function(event) {
+                // Tampilkan modal
+                $('#checkoutModal').modal('show');
+
+                // Tunggu sampai modal benar-benar terlihat
+                $('#checkoutModal').on('shown.bs.modal', function() {
+                    const currencySymbol = '{{ settings()->currency->symbol ?? '' }}';
+                    const thousandSeparator =
+                        '{{ settings()->currency->thousand_separator ?? ',' }}';
+                    const decimalSeparator = '{{ settings()->currency->decimal_separator ?? '.' }}';
+
+                    // Inisialisasi maskMoney untuk kedua input
+                    $('#paid_amount').maskMoney({
+                        prefix: currencySymbol,
+                        thousands: thousandSeparator,
+                        decimal: decimalSeparator,
+                        allowZero: false,
+                    });
+
+                    $('#total_amount').maskMoney({
+                        prefix: currencySymbol,
+                        thousands: thousandSeparator,
+                        decimal: decimalSeparator,
+                        allowZero: true,
+                    });
+
+                    // Terapkan mask
+                    $('#paid_amount').maskMoney('mask');
+                    $('#total_amount').maskMoney('mask');
+
+                    // Hindari duplikasi event submit
+                    $('#checkout-form').off('submit').on('submit', function() {
+                        // Ambil nilai tanpa format mask
+                        var paid = $('#paid_amount').maskMoney('unmasked')[0];
+                        var total = $('#total_amount').maskMoney('unmasked')[0];
+
+                        // Set kembali value input ke nilai angka
+                        $('#paid_amount').val(paid);
+                        $('#total_amount').val(total);
+                    });
                 });
             });
         });

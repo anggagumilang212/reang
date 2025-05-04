@@ -116,6 +116,10 @@
             </form>
             <script>
                 document.getElementById('checkout-form').addEventListener('submit', function(e) {
+                    const totalAmount = document.getElementById('total_amount').value;
+                    const paidAmount = document.getElementById('paid_amount').value;
+                    console.log('Submitting with total_amount:', totalAmount, 'paid_amount:', paidAmount);
+
                     const submitButton = this.querySelector('button[type="submit"]');
                     submitButton.disabled = true;
                     submitButton.innerText = 'Processing...';
