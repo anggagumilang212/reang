@@ -87,7 +87,8 @@
                                         <div class="form-group">
                                             <label for="product_id">{{ __('messages.products') }} <span
                                                     class="text-danger">*</span></label>
-                                            <select class="form-control" name="product_id" id="product_id" required>
+                                            <select class="form-control select2-products" name="product_id" id="product_id"
+                                                required>
                                                 <option value="">{{ __('messages.select_product') }}</option>
                                                 @foreach (\Modules\Product\Entities\Product::all() as $product)
                                                     <option value="{{ $product->id }}">{{ $product->product_name }}
@@ -131,3 +132,29 @@
 
 
 @endsection
+
+@push('scripts')
+    {{-- Tambahkan di head --}}
+
+    <!-- Select2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Select2 JS (setelah jQuery) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pastikan jQuery sudah dimuat
+            if (typeof jQuery != 'undefined') {
+                // Inisialisasi Select2
+                $('.select2-products').select2({
+                    placeholder: 'Cari produk...',
+                    allowClear: true,
+                    width: '100%'
+                });
+            } else {
+                console.error('jQuery tidak dimuat dengan benar');
+            }
+        });
+    </script>
+@endpush
