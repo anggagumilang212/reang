@@ -190,10 +190,10 @@
             <div class="divider"></div>
 
             <div class="summary">
-                <div class="summary-item">
+                {{-- <div class="summary-item">
                     <div>{{ __('messages.sub_total') }}</div>
                     <div>{{ format_currency($sale->sub_total) }}</div>
-                </div>
+                </div> --}}
                 <div class="summary-item">
                     <div>{{ __('messages.totalamount') }}</div>
                     <div>{{ format_currency($sale->total_amount) }}</div>

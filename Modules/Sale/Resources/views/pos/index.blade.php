@@ -80,6 +80,7 @@
     </script>
 @endpush --}}
 
+{{-- fix bug --}}
 @push('page_scripts')
     <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
     <script>
@@ -130,3 +131,53 @@
         });
     </script>
 @endpush
+
+{{-- @push('page_scripts')
+    <script src="{{ asset('js/jquery-mask-money.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            window.addEventListener('showCheckoutModal', function(event) {
+                $('#checkoutModal').modal('show');
+
+                $('#checkoutModal').on('shown.bs.modal', function() {
+                    const currencySymbol = '{{ settings()->currency->symbol ?? '' }}';
+                    const thousandSeparator =
+                        '{{ settings()->currency->thousand_separator ?? ',' }}';
+                    const decimalSeparator = '{{ settings()->currency->decimal_separator ?? '.' }}';
+
+                    $('#paid_amount').maskMoney({
+                        prefix: currencySymbol,
+                        thousands: thousandSeparator,
+                        decimal: decimalSeparator,
+                        allowZero: false,
+                    });
+
+                    $('#total_amount').maskMoney({
+                        prefix: currencySymbol,
+                        thousands: thousandSeparator,
+                        decimal: decimalSeparator,
+                        allowZero: true,
+                    });
+
+                    // Terapkan mask
+                    $('#paid_amount').maskMoney('mask');
+                    $('#total_amount').maskMoney('mask');
+
+                    // Ambil nilai total_amount dan jadikan default untuk paid_amount
+                    const totalRaw = $('#total_amount').maskMoney('unmasked')[0] || 0;
+                    $('#paid_amount').val(totalRaw);
+                    $('#paid_amount').maskMoney('mask');
+
+                    // Hindari duplikasi event submit
+                    $('#checkout-form').off('submit').on('submit', function() {
+                        var paid = $('#paid_amount').maskMoney('mask')[0];
+                        var total = $('#total_amount').maskMoney('unmasked')[0];
+
+                        $('#paid_amount').val(paid);
+                        $('#total_amount').val(total);
+                    });
+                });
+            });
+        });
+    </script>
+@endpush --}}
