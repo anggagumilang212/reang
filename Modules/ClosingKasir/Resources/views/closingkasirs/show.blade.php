@@ -71,7 +71,7 @@
         .report-subtitle {
             font-family: 'Montserrat', sans-serif;
             color: #3490dc;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .report-logo {
@@ -245,12 +245,12 @@
 
             <div class="report-header">
                 <!-- Optional: Add a logo here -->
-                <!-- <img src="{{ asset('images/logo.png') }}" alt="Logo" class="report-logo"> -->
-                <h2 class="report-title">LAPORAN CLOSING KASIR</h2>
-                <h4 class="report-subtitle">
+                <img src="{{ asset('images/reangnet.png') }}" alt="Logo" class="report-logo">
+                <h3 class="report-title">LAPORAN CLOSING KASIR</h3>
+                <h5 class="report-subtitle">
                     <span>{{ $closing->branch->name }}</span> &bull;
                     <span>{{ \Carbon\Carbon::parse($closing->tanggal)->format('d F Y') }}</span>
-                </h4>
+                </h5>
             </div>
 
             {{-- @if ($penjualan_cash_items->isNotEmpty())
