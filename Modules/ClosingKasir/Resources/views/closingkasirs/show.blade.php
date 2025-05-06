@@ -167,10 +167,10 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) rotate(-30deg);
-            opacity: 0.05;
+            opacity: 0.08;
             font-size: 8rem;
             font-weight: bold;
-            color: #000;
+            color: #3490dc;
             pointer-events: none;
             z-index: 0;
         }
