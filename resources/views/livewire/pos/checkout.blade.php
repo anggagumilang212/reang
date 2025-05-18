@@ -62,7 +62,8 @@
 
                                         <td class="align-middle text-center">
                                             <a href="#"
-                                                wire:click.prevent="removeItem('{{ $cart_item->rowId }}')">
+                                                wire:click.prevent="removeItem('{{ $cart_item->rowId }}')"
+                                                wire:loading.attr="disabled">
                                                 <i class="bi bi-x-circle font-2xl text-danger"></i>
                                             </a>
                                         </td>

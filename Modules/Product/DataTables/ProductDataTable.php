@@ -2,12 +2,13 @@
 
 namespace Modules\Product\DataTables;
 
-use Modules\Product\Entities\Product;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
+use Modules\Product\Entities\Product;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Modules\ProductStock\Entities\ProductStock;
 
 class ProductDataTable extends DataTable
 {
@@ -32,10 +33,11 @@ class ProductDataTable extends DataTable
 
 
             ->addColumn('product_quantity', function ($data) {
-                // Ambil quantity dari relasi ProductStock
-                $quantity = $data->productStock->quantity ?? 0;
-                return $quantity . ' ' . $data->product_unit;
+                // Jumlahkan semua quantity dari tabel productstock berdasarkan product_id
+                $totalQuantity = ProductStock::where('product_id', $data->id)->sum('quantity');
+                return $totalQuantity . ' ' . $data->product_unit;
             })
+
             ->rawColumns(['product_image']);
     }
 
