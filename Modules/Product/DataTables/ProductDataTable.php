@@ -24,15 +24,13 @@ class ProductDataTable extends DataTable
                 $url = $data->getFirstMediaUrl('images', 'thumb');
                 return '<img src="' . $url . '" border="0" width="50" class="img-thumbnail" align="center"/>';
             })
-            ->addColumn('product_price', function ($data) {
+            ->editColumn('product_price', function ($data) {
                 return number_format($data->product_price / 1, 2, ',', '.');
             })
-            ->addColumn('product_cost', function ($data) {
+            ->editColumn('product_cost', function ($data) {
                 return number_format($data->product_cost / 1, 2, ',', '.');
             })
-
-
-            ->addColumn('product_quantity', function ($data) {
+            ->editColumn('product_quantity', function ($data) {
                 // Jumlahkan semua quantity dari tabel productstock berdasarkan product_id
                 $totalQuantity = ProductStock::where('product_id', $data->id)->sum('quantity');
                 return $totalQuantity . ' ' . $data->product_unit;
@@ -87,15 +85,15 @@ class ProductDataTable extends DataTable
                 ->title(__('messages.productname'))
                 ->className('text-center align-middle'),
 
-            Column::computed('product_cost')
+            Column::make('product_cost')
                 ->title(__('messages.cost'))
                 ->className('text-center align-middle'),
 
-            Column::computed('product_price')
+            Column::make('product_price')
                 ->title(__('messages.price'))
                 ->className('text-center align-middle'),
 
-            Column::computed('product_quantity')
+            Column::make('product_quantity')
                 ->title(__('messages.quantity'))
                 ->className('text-center align-middle'),
 
