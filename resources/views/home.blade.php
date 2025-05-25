@@ -20,9 +20,10 @@
                                     <i class="bi bi-cash-stack font-2xl"></i>
                                 </div>
                                 <div>
-                                    <div class="text-value text-success">{{ format_currency($sale / 100) }}</div>
+                                    <div class="text-value text-success">{{ format_currency($sale) }}</div>
                                     <div class="text-muted text-uppercase font-weight-bold small">Penjualan Hari Ini
-                                        ({{ $branchName }})</div>
+                                        ({{ $branchName }})
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -39,7 +40,8 @@
                                 <div>
                                     <div class="text-value text-danger">{{ format_currency($expense) }}</div>
                                     <div class="text-muted text-uppercase font-weight-bold small">Pengeluaran Hari Ini
-                                        ({{ $branchName }})</div>
+                                        ({{ $branchName }})
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -56,7 +58,8 @@
                                 <div>
                                     <div class="text-value text-primary">{{ format_currency($diff) }}</div>
                                     <div class="text-muted text-uppercase font-weight-bold small">Selisih Hari Ini
-                                        ({{ $branchName }})</div>
+                                        ({{ $branchName }})
+                                    </div>
                                 </div>
                             </div>
                         </div>
