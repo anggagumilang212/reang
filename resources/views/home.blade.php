@@ -21,7 +21,8 @@
                                 </div>
                                 <div>
                                     <div class="text-value text-success">{{ format_currency($sale) }}</div>
-                                    <div class="text-muted text-uppercase font-weight-bold small">Penjualan Hari Ini
+                                    <div class="text-muted text-uppercase font-weight-bold small">
+                                        {{ __('messages.sales_today') }}
                                         ({{ $branchName }})
                                     </div>
                                 </div>
@@ -39,7 +40,8 @@
                                 </div>
                                 <div>
                                     <div class="text-value text-danger">{{ format_currency($expense) }}</div>
-                                    <div class="text-muted text-uppercase font-weight-bold small">Pengeluaran Hari Ini
+                                    <div class="text-muted text-uppercase font-weight-bold small">
+                                        {{ __('messages.expenses_today') }}
                                         ({{ $branchName }})
                                     </div>
                                 </div>

@@ -249,4 +249,6 @@ return [
     'banner' => 'Spanduk',
     'make_sales' => 'Buat Penjualan',
     'manufacturer_barcode' => 'Barcode Pabrik',
+    'expenses_today' => 'Pengeluaran Hari Ini',
+    'sales_today' => 'Penjualan Hari Ini',
 ];

@@ -251,4 +251,6 @@ return [
     'banner' => 'Banner',
     'make_sales' => 'Make Sales',
     'manufacturer_barcode' => 'Manufacturer Barcode',
+    'expenses_today' => 'Expenses Today',
+    'sales_today' => 'Sales Today',
 ];

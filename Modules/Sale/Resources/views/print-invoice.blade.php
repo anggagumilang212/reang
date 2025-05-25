@@ -23,13 +23,13 @@
             margin: 0;
             padding: 0;
             font-family: 'Courier New', monospace;
-            font-size: 9px;
+            font-size: 11px;
             line-height: 1.2;
             display: block;
             /* Mengubah ke block dari flex */
             color: #000;
             /* Hitam pekat */
-            font-weight: 550;
+            font-weight: 900;
             /* Tebalkan teks */
 
         }
@@ -152,7 +152,7 @@
     <div class="receipt-wrapper">
         <div class="receipt">
             <div class="header">
-                <div class="shop-name">{{ settings()->company_name }}</div>
+                <div class="shop-name">{{ settings()->company_name }} </div>
                 <div>{{ $sale->branch->address }}</div>
                 <div>{{ $sale->branch->phone }}</div>
             </div>
@@ -210,14 +210,15 @@
 
             <div class="divider"></div>
 
-            <div class="footer">
+            <div class="footer" style="font-size: 10px;">
+                <br>
                 Terimakasih telah berbelanja di
                 {{ settings()->company_name }}
             </div>
-            <div class="footer">
+            {{-- <div class="footer">
                 Link {{ __('messages.kritik_saran') }}:<br>
                 reang.net
-            </div>
+            </div> --}}
         </div>
     </div>
     {{-- <script>
