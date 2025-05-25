@@ -17,7 +17,35 @@ use Modules\SalesReturn\Entities\SaleReturnPayment;
 class HomeController extends Controller
 {
 
-    public function index() {
+    public function index()
+    {
+        $today = Carbon::today();
+
+        $dailySales = Sale::completed()
+            ->whereDate('created_at', $today)
+            ->with('branch')
+            ->get()
+            ->groupBy('branch_id')
+            ->mapWithKeys(function ($sales, $branchId) {
+                $total = $sales->sum('total_amount');
+                $branchName = optional($sales->first()->branch)->name ?? 'Tidak diketahui';
+                return [$branchName => $total];
+            });
+
+        $dailyExpenses = Expense::whereDate('created_at', $today)
+            ->with('branch')
+            ->get()
+            ->groupBy('branch_id')
+            ->mapWithKeys(function ($expenses, $branchId) {
+                $total = $expenses->sum('amount');
+                $branchName = optional($expenses->first()->branch)->name ?? 'Tidak diketahui';
+                return [$branchName => $total];
+            });
+
+        $dailyDiff = $dailySales->map(function ($saleTotal, $branchName) use ($dailyExpenses) {
+            return ($saleTotal / 100) - ($dailyExpenses[$branchName] ?? 0);
+        });
+
         $sales = Sale::completed()->sum('total_amount');
         $sale_returns = SaleReturn::completed()->sum('total_amount');
         $purchase_returns = PurchaseReturn::completed()->sum('total_amount');
@@ -33,28 +61,32 @@ class HomeController extends Controller
 
         $revenue = ($sales - $sale_returns) / 100;
         $profit = $revenue - $product_costs;
-
+        // dd($dailySales, $dailyExpenses, $dailyDiff, $revenue, $profit);
         return view('home', [
             'revenue'          => $revenue,
             'sale_returns'     => $sale_returns / 100,
             'purchase_returns' => $purchase_returns / 100,
-            'profit'           => $profit
+            'profit'           => $profit,
+            'dailySales'    => $dailySales,
+            'dailyExpenses' => $dailyExpenses,
+            'dailyDiff'     => $dailyDiff,
         ]);
     }
 
 
-    public function currentMonthChart() {
+    public function currentMonthChart()
+    {
         abort_if(!request()->ajax(), 404);
 
         $currentMonthSales = Sale::where('status', 'Completed')->whereMonth('date', date('m'))
-                ->whereYear('date', date('Y'))
-                ->sum('total_amount') / 100;
+            ->whereYear('date', date('Y'))
+            ->sum('total_amount') / 100;
         $currentMonthPurchases = Purchase::where('status', 'Completed')->whereMonth('date', date('m'))
-                ->whereYear('date', date('Y'))
-                ->sum('total_amount') / 100;
+            ->whereYear('date', date('Y'))
+            ->sum('total_amount') / 100;
         $currentMonthExpenses = Expense::whereMonth('date', date('m'))
-                ->whereYear('date', date('Y'))
-                ->sum('amount') / 100;
+            ->whereYear('date', date('Y'))
+            ->sum('amount') / 100;
 
         return response()->json([
             'sales'     => $currentMonthSales,
@@ -64,7 +96,8 @@ class HomeController extends Controller
     }
 
 
-    public function salesPurchasesChart() {
+    public function salesPurchasesChart()
+    {
         abort_if(!request()->ajax(), 404);
 
         $sales = $this->salesChartData();
@@ -74,7 +107,8 @@ class HomeController extends Controller
     }
 
 
-    public function paymentChart() {
+    public function paymentChart()
+    {
         abort_if(!request()->ajax(), 404);
 
         $dates = collect();
@@ -151,7 +185,8 @@ class HomeController extends Controller
         ]);
     }
 
-    public function salesChartData() {
+    public function salesChartData()
+    {
         $dates = collect();
         foreach (range(-6, 0) as $i) {
             $date = Carbon::now()->addDays($i)->format('d-m-y');
@@ -183,7 +218,8 @@ class HomeController extends Controller
     }
 
 
-    public function purchasesChartData() {
+    public function purchasesChartData()
+    {
         $dates = collect();
         foreach (range(-6, 0) as $i) {
             $date = Carbon::now()->addDays($i)->format('d-m-y');
@@ -212,6 +248,5 @@ class HomeController extends Controller
         }
 
         return response()->json(['data' => $data, 'days' => $days]);
-
     }
 }
