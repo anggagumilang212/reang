@@ -48,7 +48,7 @@
                     </div>
                 @endforeach
 
-                @foreach ($dailyDiff as $branchName => $diff)
+                {{-- @foreach ($dailyDiff as $branchName => $diff)
                     <div class="col-md-6 col-lg-3">
                         <div class="card border-0">
                             <div class="card-body p-0 d-flex align-items-center shadow-sm">
@@ -64,7 +64,7 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @endforeach --}}
 
 
                 <div class="col-md-6 col-lg-3">
