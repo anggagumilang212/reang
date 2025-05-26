@@ -2,30 +2,33 @@
 
 namespace Modules\Purchase\Http\Controllers;
 
-use Modules\Purchase\DataTables\PurchaseDataTable;
-use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Modules\People\Entities\Supplier;
 use Modules\Product\Entities\Product;
 use Modules\Purchase\Entities\Purchase;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Modules\Purchase\Entities\PurchaseDetail;
 use Modules\Purchase\Entities\PurchasePayment;
+use Modules\ProductStock\Entities\ProductStock;
+use Modules\Purchase\DataTables\PurchaseDataTable;
 use Modules\Purchase\Http\Requests\StorePurchaseRequest;
 use Modules\Purchase\Http\Requests\UpdatePurchaseRequest;
 
 class PurchaseController extends Controller
 {
 
-    public function index(PurchaseDataTable $dataTable) {
+    public function index(PurchaseDataTable $dataTable)
+    {
         abort_if(Gate::denies('access_purchases'), 403);
 
         return $dataTable->render('purchase::index');
     }
 
 
-    public function create() {
+    public function create()
+    {
         abort_if(Gate::denies('create_purchases'), 403);
 
         Cart::instance('purchase')->destroy();
@@ -34,7 +37,8 @@ class PurchaseController extends Controller
     }
 
 
-    public function store(StorePurchaseRequest $request) {
+    public function store(StorePurchaseRequest $request)
+    {
         DB::transaction(function () use ($request) {
             $due_amount = $request->total_amount - $request->paid_amount;
             if ($due_amount == $request->total_amount) {
@@ -79,11 +83,29 @@ class PurchaseController extends Controller
                     'product_tax_amount' => $cart_item->options->product_tax * 100,
                 ]);
 
+                // if ($request->status == 'Completed') {
+                //     $product = Product::findOrFail($cart_item->id);
+                //     $product->update([
+                //         'product_quantity' => $product->product_quantity + $cart_item->qty
+                //     ]);
+                // }
+                // Update atau buat stok produk
                 if ($request->status == 'Completed') {
-                    $product = Product::findOrFail($cart_item->id);
-                    $product->update([
-                        'product_quantity' => $product->product_quantity + $cart_item->qty
-                    ]);
+                    $productStock = ProductStock::where('product_id', $cart_item->id)
+                        ->where('branch_id', $request->branch_id)
+                        ->first();
+
+                    if ($productStock) {
+                        // Update stok yang sudah ada
+                        $productStock->increment('quantity', $cart_item->qty);
+                    } else {
+                        // Buat stok baru jika belum ada
+                        ProductStock::create([
+                            'product_id' => $cart_item->id,
+                            'branch_id' => $request->branch_id,
+                            'quantity' => $cart_item->qty,
+                        ]);
+                    }
                 }
             }
 
@@ -92,7 +114,7 @@ class PurchaseController extends Controller
             if ($purchase->paid_amount > 0) {
                 PurchasePayment::create([
                     'date' => $request->date,
-                    'reference' => 'INV/'.$purchase->reference,
+                    'reference' => 'INV/' . $purchase->reference,
                     'amount' => $purchase->paid_amount,
                     'purchase_id' => $purchase->id,
                     'payment_method' => $request->payment_method
@@ -106,7 +128,8 @@ class PurchaseController extends Controller
     }
 
 
-    public function show(Purchase $purchase) {
+    public function show(Purchase $purchase)
+    {
         abort_if(Gate::denies('show_purchases'), 403);
 
         $supplier = Supplier::findOrFail($purchase->supplier_id);
@@ -115,7 +138,8 @@ class PurchaseController extends Controller
     }
 
 
-    public function edit(Purchase $purchase) {
+    public function edit(Purchase $purchase)
+    {
         abort_if(Gate::denies('edit_purchases'), 403);
 
         $purchase_details = $purchase->purchaseDetails;
@@ -147,7 +171,8 @@ class PurchaseController extends Controller
     }
 
 
-    public function update(UpdatePurchaseRequest $request, Purchase $purchase) {
+    public function update(UpdatePurchaseRequest $request, Purchase $purchase)
+    {
         DB::transaction(function () use ($request, $purchase) {
             $due_amount = $request->total_amount - $request->paid_amount;
             if ($due_amount == $request->total_amount) {
@@ -158,15 +183,30 @@ class PurchaseController extends Controller
                 $payment_status = 'Paid';
             }
 
+            // foreach ($purchase->purchaseDetails as $purchase_detail) {
+            //     if ($purchase->status == 'Completed') {
+            //         $product = Product::findOrFail($purchase_detail->product_id);
+            //         $product->update([
+            //             'product_quantity' => $product->product_quantity - $purchase_detail->quantity
+            //         ]);
+            //     }
+            //     $purchase_detail->delete();
+            // }
+
             foreach ($purchase->purchaseDetails as $purchase_detail) {
                 if ($purchase->status == 'Completed') {
-                    $product = Product::findOrFail($purchase_detail->product_id);
-                    $product->update([
-                        'product_quantity' => $product->product_quantity - $purchase_detail->quantity
-                    ]);
+                    $productStock = ProductStock::where('product_id', $purchase_detail->product_id)
+                        ->where('branch_id', $purchase->branch_id)
+                        ->first();
+
+                    if ($productStock) {
+                        $productStock->decrement('quantity', $purchase_detail->quantity);
+                    }
                 }
+
                 $purchase_detail->delete();
             }
+
 
             $purchase->update([
                 'date' => $request->date,
@@ -203,11 +243,29 @@ class PurchaseController extends Controller
                     'product_tax_amount' => $cart_item->options->product_tax * 100,
                 ]);
 
+                // if ($request->status == 'Completed') {
+                //     $product = Product::findOrFail($cart_item->id);
+                //     $product->update([
+                //         'product_quantity' => $product->product_quantity + $cart_item->qty
+                //     ]);
+                // }
+                // Update atau buat stok produk
                 if ($request->status == 'Completed') {
-                    $product = Product::findOrFail($cart_item->id);
-                    $product->update([
-                        'product_quantity' => $product->product_quantity + $cart_item->qty
-                    ]);
+                    $productStock = ProductStock::where('product_id', $cart_item->id)
+                        ->where('branch_id', $request->branch_id)
+                        ->first();
+
+                    if ($productStock) {
+                        // Update stok yang sudah ada
+                        $productStock->increment('quantity', $cart_item->qty);
+                    } else {
+                        // Buat stok baru jika belum ada
+                        ProductStock::create([
+                            'product_id' => $cart_item->id,
+                            'branch_id' => $request->branch_id,
+                            'quantity' => $cart_item->qty,
+                        ]);
+                    }
                 }
             }
 
@@ -220,12 +278,28 @@ class PurchaseController extends Controller
     }
 
 
-    public function destroy(Purchase $purchase) {
+    public function destroy(Purchase $purchase)
+    {
         abort_if(Gate::denies('delete_purchases'), 403);
 
         $purchase->delete();
 
         toast('Purchase Deleted!', 'warning');
+        // Hapus semua detail pembelian terkait
+        foreach ($purchase->purchaseDetails as $purchase_detail) {
+            if ($purchase->status == 'Completed') {
+                $productStock = ProductStock::where('product_id', $purchase_detail->product_id)
+                    ->where('branch_id', $purchase->branch_id)
+                    ->first();
+
+                if ($productStock) {
+                    $productStock->decrement('quantity', $purchase_detail->quantity);
+                }
+            }
+
+            $purchase_detail->delete();
+        }
+
 
         return redirect()->route('purchases.index');
     }
